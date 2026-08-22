@@ -26,8 +26,21 @@ a:hover{color:var(--color-brand-hover)}
 .nav-burger{display:none}
 @media (max-width:1180px){.nav-desktop{display:none !important}.nav-burger{display:inline-flex !important}}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes loaderSweep{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+#__loader{position:fixed;inset:0;z-index:9999;background:#FFFFFF;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:1;transition:opacity 420ms var(--ease-standard)}
+#__loader.is-hidden{opacity:0;pointer-events:none}
 </style>
 </helmet>
+
+<div id="__loader" aria-hidden="true">
+  <div style="display:flex;flex-direction:column;align-items:center;line-height:1">
+    <span style="font-family:var(--font-sans);font-weight:800;font-size:20px;letter-spacing:7px;color:var(--color-brand)">VINOTÉKA</span>
+    <span style="font-family:var(--font-display);font-weight:500;font-size:clamp(32px,5.5vw,48px);color:var(--color-brand);margin-top:-8px">u mazlíka</span>
+  </div>
+  <div style="width:180px;height:4px;border-radius:var(--radius-full);background:var(--wine-100);overflow:hidden">
+    <div style="width:35%;height:100%;border-radius:var(--radius-full);background:var(--color-brand);animation:loaderSweep 1.1s ease-in-out infinite"></div>
+  </div>
+</div>
 
 <div style="width:100%;background:var(--surface-page);min-height:100vh;overflow-x:hidden">
 
@@ -467,6 +480,20 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
+    const loader = document.getElementById("__loader");
+    if (loader) {
+      const hideLoader = () => {
+        loader.classList.add("is-hidden");
+        setTimeout(() => loader.remove(), 450);
+      };
+      if (document.readyState === "complete") {
+        hideLoader();
+      } else {
+        window.addEventListener("load", hideLoader, { once: true });
+      }
+      this._loaderFallback = setTimeout(hideLoader, 8000);
+    }
+
     const root = document.body;
     const links = [...root.querySelectorAll("a[data-spy]")];
     const paint = (id) => links.forEach(a => {
@@ -508,6 +535,7 @@ class Component extends DCLogic {
   componentWillUnmount() {
     if (this._spy) this._spy.disconnect();
     if (this._rev) this._rev.disconnect();
+    if (this._loaderFallback) clearTimeout(this._loaderFallback);
   }
 }
 </script>
