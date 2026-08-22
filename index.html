@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/styles.css">
 <script src="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/_ds_bundle.js"></script>
 <script src="./image-slot.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 html,body{width:100%;margin:0}
 html{scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
@@ -112,9 +113,9 @@ a:hover{color:var(--color-brand-hover)}
         </svg>
         <h3 style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;color:var(--wine-200);margin:0 0 16px">Otevírací doba</h3>
         <div style="display:grid;grid-template-columns:1fr auto;gap:10px 16px;font-size:var(--text-body)">
-          <span style="color:var(--wine-100)">Pondělí–Pátek</span><span style="font-weight:600">14:00–21:00</span>
-          <span style="color:var(--wine-100)">Sobota–Neděle</span><span style="font-weight:600">16:00–21:00</span>
-          <span style="color:var(--wine-100)">Státní svátky</span><span style="font-weight:600">16:00–21:00</span>
+          <sc-for list="{{ hours }}" as="h" hint-placeholder-count="3">
+            <span style="color:var(--wine-100)">{{ h.days }}</span><span style="font-weight:600">{{ h.time }}</span>
+          </sc-for>
         </div>
       </div><div>
         <svg viewBox="0 0 40 46" fill="none" stroke="var(--cream-50)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:34px;height:39px;margin-bottom:16px;opacity:0.85">
@@ -122,9 +123,9 @@ a:hover{color:var(--color-brand-hover)}
         </svg>
         <h3 style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;color:var(--wine-200);margin:0 0 16px">Kde nás najdete</h3>
         <address style="font-style:normal;display:flex;flex-direction:column;gap:8px;font-size:var(--text-body);color:var(--wine-100)">
-          <a href="geo:0,0?q=Rybova%201904%2F23%2C%20Hradec%20Kr%C3%A1lov%C3%A9%2C%20500%2009" style="color:inherit;text-decoration:none">
-            <span style="display:block;color:var(--white);font-weight:600">Rybova 1904/23</span>
-            <span>Hradec Králové, 500 09</span>
+          <a href="{{ mapHref }}" style="color:inherit;text-decoration:none">
+            <span style="display:block;color:var(--white);font-weight:600">{{ contact.street }}</span>
+            <span>{{ contact.city }}</span>
           </a>
           <span>Parkování přímo před vinotékou</span>
         </address>
@@ -134,12 +135,70 @@ a:hover{color:var(--color-brand-hover)}
         </svg>
         <h3 style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;color:var(--wine-200);margin:0 0 16px">Napište, zavolejte</h3>
         <div style="display:flex;flex-direction:column;gap:8px;font-size:var(--text-body)">
-          <a href="tel:+420604734956" style="color:var(--white);font-weight:600">+420 604 734 956</a>
-          <a href="mailto:vinoteka@vinotekaumazlika.cz" style="color:var(--white);font-weight:600">vinoteka@vinotekaumazlika.cz</a>
+          <a href="tel:{{ contact.phoneHref }}" style="color:var(--white);font-weight:600">{{ contact.phone }}</a>
+          <a href="mailto:{{ contact.email }}" style="color:var(--white);font-weight:600">{{ contact.email }}</a>
           <span style="color:var(--wine-100)">Rádi vám poradíme s výběrem i dárkem.</span>
         </div>
       </div>
-    </div></section><section id="stacena-vina" data-screen-label="Stáčená vína" data-reveal="" style="scroll-margin-top: 76px; padding: clamp(64px,8vw,104px) clamp(20px,3.5vw,48px)">
+    </div></section>
+
+  <sc-if value="{{ burcakEnabled }}" hint-placeholder-val="{{ false }}">
+    <section id="burcak" data-screen-label="Burčák" data-reveal="" style="scroll-margin-top: 76px; background: var(--surface-brand); color: var(--white); padding: clamp(64px,8vw,104px) clamp(20px,3.5vw,48px)">
+      <div style="max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,4vw,64px);align-items:center">
+        <div style="position:relative;height:clamp(300px,34vw,440px);border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-raised)">
+          <img src="{{ burcak.image }}" alt="Burčák" style="width:100%;height:100%;object-fit:cover;display:block">
+        </div><div>
+          <p style="display: flex; align-items: center; gap: 12px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--wine-200); font-weight: 700; margin: 0 0 18px">
+            <span style="display: block; width: 26px; height: 2px; background: var(--wine-200);"></span>{{ burcak.eyebrow }}</p>
+          <h2 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 24px;letter-spacing:-0.015em;line-height:1;color:var(--white)">
+            <span style="font-size: clamp(22px, 2.6vw, 34px); font-weight: 800; text-transform: none; white-space: nowrap;">{{ burcak.titleMain }}&nbsp;</span>
+            <span style="font-family: var(--font-display); font-weight: 500; font-size: clamp(46px, 5.5vw, 72px); line-height: 0.75; white-space: nowrap;">{{ burcak.titleAccent }}</span>
+          </h2>
+          <p style="font-size: var(--text-body); line-height: var(--lh-relaxed); color: var(--wine-100); max-width: 70ch; margin: 0 0 30px; text-wrap: pretty">{{ burcak.text }}</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px">
+            <sc-for list="{{ burcak.tiles }}" as="t" hint-placeholder-count="2">
+              <div style="background:var(--white);border-radius:var(--radius-m);padding:26px 24px;box-shadow:var(--shadow-card)">
+                <p style="font-size:26px;font-weight:800;color:var(--color-brand);margin:0 0 6px;letter-spacing:-0.01em">{{ t.label }}</p>
+                <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 0 14px">{{ t.note }}</p>
+                <p style="font-size:var(--text-h3);font-weight:700;color:var(--color-fg);margin:0">{{ t.price }}</p>
+              </div>
+            </sc-for>
+          </div>
+          <p style="font-size:var(--text-body-s);color:var(--wine-200);margin:22px 0 0">Aktuální nabídka na prodejně se může od webu lišit.</p>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ svatoEnabled }}" hint-placeholder-val="{{ false }}">
+    <section id="svatomartinska" data-screen-label="Svatomartinská vína" data-reveal="" style="scroll-margin-top: 76px; background: var(--surface-brand); color: var(--white); padding: clamp(64px,8vw,104px) clamp(20px,3.5vw,48px)">
+      <div style="max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,4vw,64px);align-items:center">
+        <div style="order:2;position:relative;height:clamp(300px,34vw,440px);border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-raised)">
+          <img src="{{ svato.image }}" alt="Svatomartinská vína" style="width:100%;height:100%;object-fit:cover;display:block">
+        </div><div style="order:1">
+          <p style="display: flex; align-items: center; gap: 12px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--wine-200); font-weight: 700; margin: 0 0 18px">
+            <span style="display: block; width: 26px; height: 2px; background: var(--wine-200);"></span>{{ svato.eyebrow }}</p>
+          <h2 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 24px;letter-spacing:-0.015em;line-height:1;color:var(--white)">
+            <span style="font-size: clamp(22px, 2.6vw, 34px); font-weight: 800; text-transform: none; white-space: nowrap;">{{ svato.titleMain }}&nbsp;</span>
+            <span style="font-family: var(--font-display); font-weight: 500; font-size: clamp(46px, 5.5vw, 72px); line-height: 0.75; white-space: nowrap;">{{ svato.titleAccent }}</span>
+          </h2>
+          <p style="font-size: var(--text-body); line-height: var(--lh-relaxed); color: var(--wine-100); max-width: 70ch; margin: 0 0 30px; text-wrap: pretty">{{ svato.text }}</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px">
+            <sc-for list="{{ svato.tiles }}" as="t" hint-placeholder-count="2">
+              <div style="background:var(--white);border-radius:var(--radius-m);padding:26px 24px;box-shadow:var(--shadow-card)">
+                <p style="font-size:26px;font-weight:800;color:var(--color-brand);margin:0 0 6px;letter-spacing:-0.01em">{{ t.label }}</p>
+                <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 0 14px">{{ t.note }}</p>
+                <p style="font-size:var(--text-h3);font-weight:700;color:var(--color-fg);margin:0">{{ t.price }}</p>
+              </div>
+            </sc-for>
+          </div>
+          <p style="font-size:var(--text-body-s);color:var(--wine-200);margin:22px 0 0">Aktuální nabídka na prodejně se může od webu lišit.</p>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <section id="stacena-vina" data-screen-label="Stáčená vína" data-reveal="" style="scroll-margin-top: 76px; padding: clamp(64px,8vw,104px) clamp(20px,3.5vw,48px)">
     <div style="max-width:1560px;margin:0 auto">
       <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--color-brand);font-weight:700;margin:0 0 18px">
         <span style="display:block;width:26px;height:2px;background:var(--color-brand)"></span>Vybráno u vinaře
@@ -154,41 +213,21 @@ a:hover{color:var(--color-brand-hover)}
 
       
 
-      <!-- TODO: napojení na admin — ceník stáčených vín (odrůda, popis, cena/l) -->
       <div style="background:var(--color-brand);color:var(--white);border-radius:var(--radius-m);box-shadow:var(--shadow-brand);overflow:hidden">
         <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:16px clamp(22px,3vw,34px);background:var(--wine-600);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;color:var(--wine-200)">
           <span>Odrůda</span><span>Popis</span><span style="text-align:right">Cena / 1 l</span>
         </div>
-        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
-          <span style="font-weight:600">Rulandské šedé</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">bílé, suché</span><span style="font-weight:700;text-align:right">129 Kč</span>
-        </div>
-        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
-          <span style="font-weight:600">Veltlínské zelené</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">bílé, suché</span><span style="font-weight:700;text-align:right">129 Kč</span>
-        </div>
-        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
-          <span style="font-weight:600">Merzling</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">bílé, suché</span><span style="font-weight:700;text-align:right">129 Kč</span>
-        </div>
-        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
-          <span style="font-weight:600">Rulandské bílé / Sylvánské zelené</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">bílé, polosuché</span><span style="font-weight:700;text-align:right">129 Kč</span>
-        </div>
-        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
-          <span style="font-weight:600">Solaris</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">bílé, polosuché</span><span style="font-weight:700;text-align:right">129 Kč</span>
-        </div>
-        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
-          <span style="font-weight:600">Zweigeltrebe &amp; Frankovka rosé</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">růžové, polosuché</span><span style="font-weight:700;text-align:right">129 Kč</span>
-        </div>
-        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
-          <span style="font-weight:600">Rul. m. &amp; Dornfelder</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">červené, suché</span><span style="font-weight:700;text-align:right">129 Kč</span>
-        </div>
-        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
-          <span style="font-weight:600">Aperol Spritz</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">míchaný, aperitiv</span><span style="font-weight:700;text-align:right">159 Kč</span>
-        </div>
+        <sc-for list="{{ wines }}" as="w" hint-placeholder-count="8">
+          <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
+            <span style="font-weight:600">{{ w.name }}</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">{{ w.desc }}</span><span style="font-weight:700;text-align:right">{{ w.price }}</span>
+          </div>
+        </sc-for>
       </div>
       <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 18px; background: var(--surface-card); border-radius: var(--radius-m); box-shadow: var(--shadow-card); padding: 20px clamp(22px,3vw,34px); margin: 0 0 28px; padding-top: 18px; padding-bottom: 18px; margin-top: 20px; margin-bottom: 20px">
         <svg viewBox="0 0 40 46" fill="none" stroke="var(--color-brand)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:30px;height:35px;flex-shrink:0">
           <path d="M17 3h6v11c0 4 6 6 6 13v15a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3V27c0-7 6-9 6-13z"></path><path d="M11 30h18"></path><path d="M11 37h18"></path>
         </svg>
-        <p style="margin:0;font-size:var(--text-body);font-weight:700">PET láhev u nás koupíte za 10 Kč</p>
+        <p style="margin:0;font-size:var(--text-body);font-weight:700">PET láhev u nás koupíte za {{ bottlePrice }}</p>
         <p style="margin:0;font-size:var(--text-body-s);color:var(--color-fg-muted)">V nabídce je 1L, 1,5L nebo 2L.</p>
       </div><p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:18px 0 0">Aktuální nabídka na prodejně se může od webu lišit. Rádi vám poradíme na místě.</p>
     </div>
@@ -231,41 +270,27 @@ a:hover{color:var(--color-brand-hover)}
         <div>
           <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--color-brand);font-weight:700;margin:0 0 18px">
             <span style="display: block; width: 26px; height: 2px; background: var(--color-brand);"></span>Blatnička</p>
-          <h2 style="margin:0 0 24px">
-            <img src="assets/vino-hruska-logo.png" alt="Víno Hruška" style="display: block; object-fit: scale-down; height: 104px; width: 273px">
+          <h2 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 24px;letter-spacing:-0.015em;line-height:1">
+            <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.9vw,64px);line-height:0.75;white-space:nowrap">{{ mainWinery.name }}</span>
           </h2>
-          <p style="font-size:var(--text-body);line-height:var(--lh-relaxed);color:var(--color-fg-muted);max-width:48ch;margin:0 0 24px;text-wrap:pretty">Základ naší nabídky lahvových vín. Rodinné vinařství z Blatničky, které navštěvujeme nejčastěji — jeho vína u nás najdete lahvová, stáčená i v bag-in-boxu.</p>
+          <p style="font-size:var(--text-body);line-height:var(--lh-relaxed);color:var(--color-fg-muted);max-width:48ch;margin:0 0 24px;text-wrap:pretty">{{ mainWinery.desc }}</p>
           <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Kompletní nabídku najdete přímo na vinotéce.</p>
         </div><div style="position:relative;height:clamp(300px,34vw,430px);border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-card)">
-          
-        <img src="assets/vino-hruska-vinice.webp" alt="Vinice s modrými hrozny" style="width:100%;height:100%;object-fit:cover;display:block"></div>
-        
+
+        <img src="{{ mainWinery.image }}" alt="{{ mainWinery.name }}" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+
       </div>
 
-      <!-- TODO: napojení na admin — loga dalších vinařství -->
       <div style="margin-top:clamp(48px,6vw,80px)">
         <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--color-brand);font-weight:700;margin:0 0 28px">
           <span style="display:block;width:26px;height:2px;background:var(--color-brand)"></span>V nabídce také najdete
         </p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px">
-          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
-            <img src="assets/logo-konecny.jpg" alt="Vinařství Konečný" style="width: 255px; height: 124px; object-fit: contain; display: block; mix-blend-mode: multiply">
-          </div>
-          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
-            <img src="assets/logo-omasta.png" alt="Vinařství Omasta" style="max-width: 100%; max-height: 76px; width: 161px; height: 56px; object-fit: contain; display: block">
-          </div>
-          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
-            <img src="assets/logo-hradil.jpg" alt="Vinařství Hradil" style="max-width: 100%; max-height: 76px; width: 177px; height: 63px; object-fit: contain; display: block; mix-blend-mode: multiply">
-          </div>
-          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
-            <img src="assets/logo-bv.png" alt="Vinařství B/V" style="max-width:100%;max-height:66px;width:auto;height:auto;object-fit:contain;display:block">
-          </div>
-          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
-            <img src="assets/logo-kosut.png" alt="Rodinné vinařství Košut" style="max-width:100%;max-height:84px;width:auto;height:auto;object-fit:contain;display:block">
-          </div>
-          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
-            <img src="assets/logo-zapletal.png" alt="Vinné sklepy Zapletal" style="max-width:100%;max-height:84px;width:auto;height:auto;object-fit:contain;display:block">
-          </div>
+          <sc-for list="{{ otherWineries }}" as="v" hint-placeholder-count="6">
+            <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+              <img src="{{ v.image }}" alt="{{ v.name }}" style="max-width:100%;max-height:84px;width:auto;height:auto;object-fit:contain;display:block">
+            </div>
+          </sc-for>
         </div>
       </div>
     </div>
@@ -361,36 +386,27 @@ a:hover{color:var(--color-brand-hover)}
         <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(46px,5.5vw,72px);line-height:0.75;white-space:nowrap">co nám drží palce</span>
       </h2>
     </div>
-    <!-- TODO: napojení na admin — partneři. Nahradit textové dlaždice reálnými logy (b/w) a doplnit odkazy. -->
     <div style="position:relative">
       <div style="display:flex;width:max-content;animation:marquee 44s linear infinite" style-hover="animation-play-state:paused">
         <div style="display:flex;align-items:center;gap:56px;padding:0 28px;flex-shrink:0">
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">Mountfield HK</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">FC Hradec Králové</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">PIZZZZA.CZ</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">Podroužek, Moník, Petera</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">ELKUM CZ</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">BK GAPA HK</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">CK Verana</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">ENERGYPACK</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">NAVITASCZ</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">BlackFox Art</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">La Vital</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">reddos productions</span>
+          <sc-for list="{{ partners }}" as="p" hint-placeholder-count="12">
+            <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
+              <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:34px;width:auto;max-width:160px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+            </sc-if>
+            <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
+              <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
+            </sc-if>
+          </sc-for>
         </div>
         <div aria-hidden="true" style="display:flex;align-items:center;gap:56px;padding:0 28px;flex-shrink:0">
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">Mountfield HK</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">FC Hradec Králové</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">PIZZZZA.CZ</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">Podroužek, Moník, Petera</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">ELKUM CZ</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">BK GAPA HK</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">CK Verana</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">ENERGYPACK</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">NAVITASCZ</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">BlackFox Art</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">La Vital</span>
-          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">reddos productions</span>
+          <sc-for list="{{ partners }}" as="p" hint-placeholder-count="12">
+            <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
+              <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:34px;width:auto;max-width:160px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+            </sc-if>
+            <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
+              <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
+            </sc-if>
+          </sc-for>
         </div>
       </div>
     </div>
@@ -409,13 +425,13 @@ a:hover{color:var(--color-brand-hover)}
           <img src="assets/vinoteka-u-mazlika-logo.png" alt="Vinotéka u Mazlíka" style="display: block; filter: brightness(0) invert(1); margin-bottom: 24px; object-fit: contain; width: 302px; height: 98px; margin-right: 0px; position: relative; left: -28px">
           <address style="font-style:normal;display:flex;flex-direction:column;gap:10px;font-size:var(--text-body);color:var(--charcoal-100)">
 
-            <a href="geo:0,0?q=Rybova%201904%2F23%2C%20Hradec%20Kr%C3%A1lov%C3%A9%2C%20500%2009" style="color:inherit;text-decoration:none">Rybova 1904/23<br>Hradec Králové, CZ</a>
-            <a href="tel:+420604734956" style="color:var(--white);font-weight:600">+420 604 734 956</a><a href="mailto:vinoteka@vinotekaumazlika.cz" style="color:var(--white);font-weight:600">vinoteka@vinotekaumazlika.cz</a>
+            <a href="{{ mapHref }}" style="color:inherit;text-decoration:none">{{ contact.street }}<br>{{ contact.city }}</a>
+            <a href="tel:{{ contact.phoneHref }}" style="color:var(--white);font-weight:600">{{ contact.phone }}</a><a href="mailto:{{ contact.email }}" style="color:var(--white);font-weight:600">{{ contact.email }}</a>
           </address><div style="display:flex;gap:10px;margin-top:24px">
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-full);border:1.5px solid rgba(255,255,255,0.25);color:var(--white)">
+            <a href="{{ contact.facebook }}" target="_blank" rel="noopener" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-full);border:1.5px solid rgba(255,255,255,0.25);color:var(--white)">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 9h3V5.5h-3c-2.2 0-4 1.8-4 4V12H7.5v3.5H10V22h3.5v-6.5H16l.5-3.5H13.5V9.5c0-.3.2-.5.5-.5z"></path></svg>
             </a>
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-full);border:1.5px solid rgba(255,255,255,0.25);color:var(--white)">
+            <a href="{{ contact.instagram }}" target="_blank" rel="noopener" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-full);border:1.5px solid rgba(255,255,255,0.25);color:var(--white)">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle></svg>
             </a>
           </div>
@@ -423,11 +439,11 @@ a:hover{color:var(--color-brand-hover)}
         <div>
           <h3 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--charcoal-300);margin:0 0 18px">Otevírací doba</h3>
           <div style="display:grid;grid-template-columns:1fr auto;gap:10px 16px;font-size:var(--text-body);color:var(--charcoal-100)">
-            <span>Po–Pá</span><span style="color:var(--white);font-weight:600">14:00–21:00</span>
-            <span>So–Ne</span><span style="color:var(--white);font-weight:600">16:00–21:00</span>
-            <span>Státní svátky</span><span style="color:var(--white);font-weight:600">16:00–21:00</span>
+            <sc-for list="{{ hours }}" as="h" hint-placeholder-count="3">
+              <span>{{ h.days }}</span><span style="color:var(--white);font-weight:600">{{ h.time }}</span>
+            </sc-for>
           </div>
-          
+
           <h3 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--charcoal-300);margin:28px 0 14px">Platební metody</h3><div style="display:flex;flex-wrap:wrap;gap:8px">
             <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;color:var(--charcoal-100);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-full);padding:7px 14px">Hotově</span>
             
@@ -440,10 +456,10 @@ a:hover{color:var(--color-brand-hover)}
         <div>
           <h3 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--charcoal-300);margin:0 0 18px">Fakturační údaje</h3>
           <div style="font-size:var(--text-body-s);color:var(--charcoal-100);line-height:var(--lh-relaxed)">
-            <p style="margin:0 0 6px">Provozovatel: <strong style="color:var(--white);font-weight:600">Energy Pack s.r.o.</strong></p>
-            <p style="margin:0 0 6px">IČO: <span style="color:var(--charcoal-300)">29031168</span></p>
-            <p style="margin:0 0 6px">DIČ: <span style="color:var(--charcoal-300)">CZ29031168</span></p>
-            <p style="margin:0">Zápis v OR: Městský soud v Praze, oddíl C, vložka 161341</p>
+            <p style="margin:0 0 6px">Provozovatel: <strong style="color:var(--white);font-weight:600">{{ contact.company }}</strong></p>
+            <p style="margin:0 0 6px">IČO: <span style="color:var(--charcoal-300)">{{ contact.ico }}</span></p>
+            <p style="margin:0 0 6px">DIČ: <span style="color:var(--charcoal-300)">{{ contact.dic }}</span></p>
+            <p style="margin:0">Zápis v OR: {{ contact.registry }}</p>
           </div>
           <h3 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--charcoal-300);margin:28px 0 14px">Dokumenty</h3>
           <div style="display:flex;flex-direction:column;gap:10px;font-size:var(--text-body-s)">
@@ -462,18 +478,109 @@ a:hover{color:var(--color-brand-hover)}
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;scrollSpy&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;animateOnScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;}}">
+const SUPABASE_URL = "https://zvvjuhqxaefkfdawnhkt.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2dmp1aHF4YWVma2ZkYXduaGt0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MDk4MTEsImV4cCI6MjEwMjk4NTgxMX0.BTv33pwLdBs2Qqe9LyeEfuSe79Scm1SSQTLtsVd-HkI";
+
+const CONTENT_DEFAULTS = {
+  wines: [
+    { name: "Rulandské šedé", desc: "bílé, suché", price: "129 Kč" },
+    { name: "Veltlínské zelené", desc: "bílé, suché", price: "129 Kč" },
+    { name: "Merzling", desc: "bílé, suché", price: "129 Kč" },
+    { name: "Rulandské bílé / Sylvánské zelené", desc: "bílé, polosuché", price: "129 Kč" },
+    { name: "Solaris", desc: "bílé, polosuché", price: "129 Kč" },
+    { name: "Zweigeltrebe & Frankovka rosé", desc: "růžové, polosuché", price: "129 Kč" },
+    { name: "Rul. m. & Dornfelder", desc: "červené, suché", price: "129 Kč" },
+    { name: "Aperol Spritz", desc: "míchaný, aperitiv", price: "159 Kč" },
+  ],
+  bottlePrice: "10 Kč",
+  mainWinery: 0,
+  wineries: [
+    { name: "Víno Hruška", desc: "Blatnička, Slovácká podoblast — základ naší nabídky lahvových vín.", image: "assets/vino-hruska-vinice.webp" },
+    { name: "Vinařství Konečný", desc: "", image: "assets/logo-konecny.jpg" },
+    { name: "Vinařství Omasta", desc: "", image: "assets/logo-omasta.png" },
+    { name: "Vinařství Hradil", desc: "", image: "assets/logo-hradil.jpg" },
+    { name: "Vinařství B/V", desc: "", image: "assets/logo-bv.png" },
+    { name: "Rodinné vinařství KOŠUT", desc: "", image: "assets/logo-kosut.png" },
+    { name: "Vinné sklepy Zapletal", desc: "", image: "assets/logo-zapletal.png" },
+  ],
+  partners: [
+    "Mountfield HK", "FC Hradec Králové", "PIZZZZA.CZ", "Podroužek, Moník, Petera",
+    "ELKUM CZ", "BK GAPA HK", "CK Verana", "ENERGYPACK",
+    "NAVITASCZ", "BlackFox Art", "La Vital", "reddos productions",
+  ].map(name => ({ name, logo: "", url: "" })),
+  hours: [
+    { days: "Pondělí–Pátek", time: "14:00–21:00" },
+    { days: "Sobota–Neděle", time: "16:00–21:00" },
+    { days: "Státní svátky", time: "16:00–21:00" },
+  ],
+  contact: {
+    street: "Rybova 1904/23",
+    city: "Hradec Králové, 500 09",
+    phone: "+420 604 734 956",
+    email: "vinoteka@vinotekaumazlika.cz",
+    company: "Energy Pack s.r.o.",
+    ico: "29031168",
+    dic: "CZ29031168",
+    registry: "Městský soud v Praze, oddíl C, vložka 161341",
+    facebook: "https://www.facebook.com/",
+    instagram: "https://www.instagram.com/",
+  },
+  seasonal: {
+    burcak: { enabled: false, eyebrow: "", titleMain: "", titleAccent: "", text: "", image: "", tiles: [] },
+    svatomartinska: { enabled: false, eyebrow: "", titleMain: "", titleAccent: "", text: "", image: "", tiles: [] },
+  },
+};
+
 class Component extends DCLogic {
-  state = { menuOpen: false };
+  state = { menuOpen: false, content: JSON.parse(JSON.stringify(CONTENT_DEFAULTS)) };
+
+  async loadContent() {
+    try {
+      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      const { data, error } = await client.from("site_content").select("data").eq("id", 1).single();
+      if (!error && data && data.data) {
+        const merged = JSON.parse(JSON.stringify(CONTENT_DEFAULTS));
+        Object.assign(merged, data.data);
+        merged.seasonal = Object.assign(merged.seasonal || {}, data.data.seasonal || {});
+        this.setState({ content: merged });
+      }
+    } catch (e) { /* keep defaults */ }
+  }
 
   renderVals() {
+    const c = this.state.content;
+    const mapHref = (street, city) => "geo:0,0?q=" + encodeURIComponent(street + ", " + city);
+    const mainWinery = c.wineries[c.mainWinery] || c.wineries[0] || {};
+    const otherWineries = c.wineries.filter((_, i) => i !== c.mainWinery);
+    const burcak = c.seasonal.burcak || {};
+    const svato = c.seasonal.svatomartinska || {};
+
     return {
       menuDisplay: this.state.menuOpen ? "flex" : "none",
       toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
       closeMenu: () => this.setState({ menuOpen: false }),
+
+      wines: c.wines,
+      bottlePrice: c.bottlePrice,
+      mainWinery,
+      otherWineries,
+      partners: c.partners.map(p => ({ name: p.name, logo: p.logo, noLogo: !p.logo })),
+      hours: c.hours,
+      contact: {
+        ...c.contact,
+        phoneHref: (c.contact.phone || "").replace(/\s+/g, ""),
+      },
+      mapHref: mapHref(c.contact.street, c.contact.city),
+
+      burcakEnabled: !!burcak.enabled,
+      burcak,
+      svatoEnabled: !!svato.enabled,
+      svato,
     };
   }
 
   componentDidMount() {
+    this.loadContent();
     const loader = document.getElementById("__loader");
     if (loader) {
       const hideLoader = () => {

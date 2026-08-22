@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="../_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/tokens/base.css">
 <link rel="stylesheet" href="../_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/styles.css">
 <script src="../_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/_ds_bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 html,body{width:100%;margin:0}
 body{background:var(--surface-page);color:var(--color-fg);font-family:var(--font-sans)}
@@ -29,6 +30,24 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
 
 <div style="width:100%;min-height:100vh;background:var(--surface-page)">
 
+  <sc-if value="{{ showLogin }}" hint-placeholder-val="{{ false }}">
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px">
+      <div style="width:100%;max-width:380px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:36px">
+        <img src="../assets/vinoteka-u-mazlika-logo.png" alt="Vinotéka u Mazlíka" style="height:36px;width:auto;display:block;margin:0 auto 26px">
+        <h1 style="font-size:var(--text-h3);font-weight:800;margin:0 0 6px;text-align:center">Přihlášení</h1>
+        <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 0 26px;text-align:center">Správa obsahu vyžaduje přihlášení.</p>
+        <div style="margin-bottom:14px"><label>E-mail</label><input type="email" autocomplete="username" value="{{ loginEmail }}" onChange="{{ setLoginEmail }}" onKeyDown="{{ handleLoginKey }}"></div>
+        <div style="margin-bottom:8px"><label>Heslo</label><input type="password" autocomplete="current-password" value="{{ loginPassword }}" onChange="{{ setLoginPassword }}" onKeyDown="{{ handleLoginKey }}"></div>
+        <sc-if value="{{ loginError }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size:var(--text-body-s);color:var(--color-brand);margin:10px 0 0">{{ loginError }}</p>
+        </sc-if>
+        <button onClick="{{ login }}" style="width:100%;margin-top:18px;border:none;cursor:pointer;background:var(--color-brand);color:var(--white);font-family:var(--font-sans);font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;padding:14px;border-radius:var(--radius-full)">{{ loginButtonLabel }}</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isAuthed }}" hint-placeholder-val="{{ false }}">
+
   <header style="position:sticky;top:0;z-index:50;width:100%;background:var(--color-brand);color:var(--white)">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px clamp(20px,3.5vw,48px)">
       <div style="display:flex;align-items:center;gap:18px">
@@ -39,6 +58,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
         <span style="font-size:12px;color:var(--wine-100);display:{{ dirtyDisplay }}">Neuložené změny</span>
         <button onClick="{{ save }}" style="border:none;cursor:pointer;background:var(--white);color:var(--color-brand);font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:12px 24px;border-radius:var(--radius-full)">{{ saveLabel }}</button>
         <a href="../" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--white);white-space:nowrap">Zobrazit web →</a>
+        <button onClick="{{ logout }}" style="border:1px solid rgba(255,255,255,0.4);cursor:pointer;background:transparent;color:var(--white);font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:11px 18px;border-radius:var(--radius-full);white-space:nowrap">Odhlásit</button>
       </div>
     </div>
   </header>
@@ -47,11 +67,11 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
 
     <nav aria-label="Sekce správy" style="position:sticky;top:66px;display:flex;flex-direction:column;gap:2px;padding:28px 18px;border-right:1px solid var(--border-subtle);min-height:calc(100vh - 66px)">
       <p style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin:0 12px 14px">Sekce</p>
-      <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="5">
+      <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="6">
         <button onClick="{{ tab.select }}" style="{{ tab.style }}">{{ tab.label }}</button>
       </sc-for>
       <div style="height:1px;background:var(--border-subtle);margin:20px 12px"></div>
-      <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 12px;line-height:var(--lh-relaxed)">Změny se ukládají do prohlížeče. Napojení na databázi doplní vývojář.</p>
+      <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 12px;line-height:var(--lh-relaxed)">Změny se ukládají do databáze a projeví se na webu ihned po uložení.</p>
     </nav>
 
     <main style="min-width:0;padding:clamp(28px,3.5vw,48px)">
@@ -106,7 +126,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
             <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Vinařství</span>
             <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">a lahve</span>
           </h1>
-          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Vinařství v sekci Lahvová vína. Hlavní vinařství se zobrazuje uprostřed mřížky ve velké kartě.</p>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Vinařství v sekci Lahvová vína. Hlavní vinařství se zobrazuje jako velká karta s fotografií, ostatní jako loga v mřížce.</p>
 
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
             <sc-for list="{{ wineries }}" as="v" hint-placeholder-count="4">
@@ -120,7 +140,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
                   <input type="text" value="{{ v.desc }}" onChange="{{ v.setDesc }}">
                 </div>
                 <div>
-                  <label>Cesta k fotografii</label>
+                  <label>Cesta k fotografii / logu</label>
                   <input type="text" value="{{ v.image }}" onChange="{{ v.setImage }}">
                 </div>
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
@@ -194,6 +214,65 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
         </section>
       </sc-if>
 
+      <!-- SEZÓNNÍ NABÍDKA -->
+      <sc-if value="{{ isSeasonal }}" hint-placeholder-val="{{ false }}">
+        <section>
+          <h1 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 10px;letter-spacing:-0.015em;line-height:1">
+            <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Sezónní</span>
+            <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">nabídka</span>
+          </h1>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Zapněte sekci jen na dobu sezóny. Zobrazí se na webu hned nad Stáčenými víny.</p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:20px">
+
+            <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <h2 style="font-size:var(--text-h3);font-weight:800;margin:0">Burčák</h2>
+                <button onClick="{{ burcak.toggle }}" style="{{ burcak.toggleStyle }}">{{ burcak.toggleLabel }}</button>
+              </div>
+              <div><label>Nadpis (malý, nad titulkem)</label><input type="text" value="{{ burcak.eyebrow }}" onChange="{{ burcak.setEyebrow }}"></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div><label>Titulek</label><input type="text" value="{{ burcak.titleMain }}" onChange="{{ burcak.setTitleMain }}"></div>
+                <div><label>Titulek (zvýrazněný)</label><input type="text" value="{{ burcak.titleAccent }}" onChange="{{ burcak.setTitleAccent }}"></div>
+              </div>
+              <div><label>Text</label><textarea rows="3" value="{{ burcak.text }}" onChange="{{ burcak.setText }}"></textarea></div>
+              <div><label>Cesta k fotografii</label><input type="text" value="{{ burcak.image }}" onChange="{{ burcak.setImage }}"></div>
+              <label style="margin-bottom:0">Dlaždice s cenami</label>
+              <sc-for list="{{ burcak.tiles }}" as="t" hint-placeholder-count="2">
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px">
+                  <div><label>Popisek</label><input type="text" value="{{ t.label }}" onChange="{{ t.setLabel }}"></div>
+                  <div><label>Poznámka</label><input type="text" value="{{ t.note }}" onChange="{{ t.setNote }}"></div>
+                  <div><label>Cena</label><input type="text" value="{{ t.price }}" onChange="{{ t.setPrice }}"></div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <h2 style="font-size:var(--text-h3);font-weight:800;margin:0">Svatomartinská vína</h2>
+                <button onClick="{{ svato.toggle }}" style="{{ svato.toggleStyle }}">{{ svato.toggleLabel }}</button>
+              </div>
+              <div><label>Nadpis (malý, nad titulkem)</label><input type="text" value="{{ svato.eyebrow }}" onChange="{{ svato.setEyebrow }}"></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div><label>Titulek</label><input type="text" value="{{ svato.titleMain }}" onChange="{{ svato.setTitleMain }}"></div>
+                <div><label>Titulek (zvýrazněný)</label><input type="text" value="{{ svato.titleAccent }}" onChange="{{ svato.setTitleAccent }}"></div>
+              </div>
+              <div><label>Text</label><textarea rows="3" value="{{ svato.text }}" onChange="{{ svato.setText }}"></textarea></div>
+              <div><label>Cesta k fotografii</label><input type="text" value="{{ svato.image }}" onChange="{{ svato.setImage }}"></div>
+              <label style="margin-bottom:0">Dlaždice s cenami</label>
+              <sc-for list="{{ svato.tiles }}" as="t" hint-placeholder-count="2">
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px">
+                  <div><label>Popisek</label><input type="text" value="{{ t.label }}" onChange="{{ t.setLabel }}"></div>
+                  <div><label>Poznámka</label><input type="text" value="{{ t.note }}" onChange="{{ t.setNote }}"></div>
+                  <div><label>Cena</label><input type="text" value="{{ t.price }}" onChange="{{ t.setPrice }}"></div>
+                </div>
+              </sc-for>
+            </div>
+
+          </div>
+        </section>
+      </sc-if>
+
       <!-- KONTAKT -->
       <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
         <section>
@@ -201,7 +280,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
             <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Kontakt</span>
             <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">a údaje</span>
           </h1>
-          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Kontaktní a fakturační údaje v patičce a na právních podstránkách.</p>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Kontaktní a fakturační údaje v patičce, sekci Návštěva a na právních podstránkách.</p>
 
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:1000px">
             <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:16px">
@@ -229,10 +308,12 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
 
     </main>
   </div>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
-const KEY = "vum-admin-v1";
+const SUPABASE_URL = "https://zvvjuhqxaefkfdawnhkt.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2dmp1aHF4YWVma2ZkYXduaGt0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MDk4MTEsImV4cCI6MjEwMjk4NTgxMX0.BTv33pwLdBs2Qqe9LyeEfuSe79Scm1SSQTLtsVd-HkI";
 
 const DEFAULTS = {
   wines: [
@@ -248,13 +329,13 @@ const DEFAULTS = {
   bottlePrice: "10 Kč",
   mainWinery: 0,
   wineries: [
-    { name: "Víno Hruška", desc: "Blatnička, Slovácká podoblast — základ naší nabídky lahvových vín.", image: "assets/lahvova-vina.png" },
-    { name: "Vinařství Konečný", desc: "", image: "assets/vin-konecny.png" },
-    { name: "Vinařství Omasta", desc: "", image: "assets/vin-omasta.png" },
-    { name: "Vinařství Hradil", desc: "", image: "assets/vin-hradil.png" },
-    { name: "Vinařství B/V", desc: "", image: "assets/vin-bv.png" },
-    { name: "Rodinné vinařství KOŠUT", desc: "", image: "assets/vin-kosut.png" },
-    { name: "Vinné sklepy Zapletal", desc: "", image: "assets/vin-zapletal.png" },
+    { name: "Víno Hruška", desc: "Blatnička, Slovácká podoblast — základ naší nabídky lahvových vín.", image: "assets/vino-hruska-vinice.webp" },
+    { name: "Vinařství Konečný", desc: "", image: "assets/logo-konecny.jpg" },
+    { name: "Vinařství Omasta", desc: "", image: "assets/logo-omasta.png" },
+    { name: "Vinařství Hradil", desc: "", image: "assets/logo-hradil.jpg" },
+    { name: "Vinařství B/V", desc: "", image: "assets/logo-bv.png" },
+    { name: "Rodinné vinařství KOŠUT", desc: "", image: "assets/logo-kosut.png" },
+    { name: "Vinné sklepy Zapletal", desc: "", image: "assets/logo-zapletal.png" },
   ],
   partners: [
     "Mountfield HK", "FC Hradec Králové", "PIZZZZA.CZ", "Podroužek, Moník, Petera",
@@ -272,11 +353,37 @@ const DEFAULTS = {
     phone: "+420 604 734 956",
     email: "vinoteka@vinotekaumazlika.cz",
     company: "Energy Pack s.r.o.",
-    ico: "",
-    dic: "",
+    ico: "29031168",
+    dic: "CZ29031168",
     registry: "Městský soud v Praze, oddíl C, vložka 161341",
     facebook: "https://www.facebook.com/",
     instagram: "https://www.instagram.com/",
+  },
+  seasonal: {
+    burcak: {
+      enabled: false,
+      eyebrow: "Jen na podzim",
+      titleMain: "Burčák",
+      titleAccent: "je tady",
+      text: "Mladé kvasící víno přímo od moravských vinařů. Čerstvý burčák stáčíme na počkání, dokud vydrží sezóna.",
+      image: "assets/bag-in-box.png",
+      tiles: [
+        { label: "bílý", note: "polosladký", price: "od 79 Kč / l" },
+        { label: "červený", note: "polosladký", price: "od 79 Kč / l" },
+      ],
+    },
+    svatomartinska: {
+      enabled: false,
+      eyebrow: "Svatomartinské",
+      titleMain: "Svatomartinská",
+      titleAccent: "vína",
+      text: "Tradiční mladá vína ročníku, otevíraná na svatého Martina. Naskladníme v omezeném množství přímo od vinařů.",
+      image: "assets/darkove-baleni.png",
+      tiles: [
+        { label: "bílé", note: "suché", price: "od 189 Kč" },
+        { label: "rosé", note: "suché", price: "od 189 Kč" },
+      ],
+    },
   },
 };
 
@@ -285,18 +392,78 @@ const TABS = [
   ["wineries", "Vinařství"],
   ["partners", "Partneři"],
   ["hours", "Otevírací doba"],
+  ["seasonal", "Sezónní nabídka"],
   ["contact", "Kontakt"],
 ];
 
 class Component extends DCLogic {
-  state = { tab: "wines", data: JSON.parse(JSON.stringify(DEFAULTS)), dirty: false, saved: false };
+  state = {
+    tab: "wines",
+    data: JSON.parse(JSON.stringify(DEFAULTS)),
+    dirty: false,
+    saved: false,
+    session: null,
+    authChecked: false,
+    loginEmail: "",
+    loginPassword: "",
+    loginError: "",
+    loginBusy: false,
+  };
 
   componentDidMount() {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (raw) this.setState({ data: Object.assign(JSON.parse(JSON.stringify(DEFAULTS)), JSON.parse(raw)) });
-    } catch (e) { /* keep defaults */ }
+    this.client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    this.client.auth.getSession().then(({ data }) => {
+      this.setState({ session: data.session, authChecked: true });
+      if (data.session) this.loadContent();
+    });
+
+    const { data: sub } = this.client.auth.onAuthStateChange((_event, session) => {
+      this.setState({ session, authChecked: true });
+      if (session) this.loadContent();
+    });
+    this._authSub = sub;
   }
+
+  componentWillUnmount() {
+    if (this._authSub) this._authSub.subscription.unsubscribe();
+    clearTimeout(this._t);
+  }
+
+  async loadContent() {
+    const { data, error } = await this.client.from("site_content").select("data").eq("id", 1).single();
+    if (!error && data && data.data) {
+      const merged = JSON.parse(JSON.stringify(DEFAULTS));
+      Object.assign(merged, data.data);
+      merged.seasonal = Object.assign(JSON.parse(JSON.stringify(DEFAULTS.seasonal)), data.data.seasonal || {});
+      this.setState({ data: merged, dirty: false });
+    }
+  }
+
+  setLoginEmail = (e) => this.setState({ loginEmail: e.target.value, loginError: "" });
+  setLoginPassword = (e) => this.setState({ loginPassword: e.target.value, loginError: "" });
+
+  handleLoginKey = (e) => {
+    if (e.key === "Enter") this.login();
+  };
+
+  login = async () => {
+    this.setState({ loginBusy: true, loginError: "" });
+    const { error } = await this.client.auth.signInWithPassword({
+      email: this.state.loginEmail,
+      password: this.state.loginPassword,
+    });
+    if (error) {
+      this.setState({ loginBusy: false, loginError: "Nesprávný e-mail nebo heslo." });
+    } else {
+      this.setState({ loginBusy: false, loginPassword: "" });
+    }
+  };
+
+  logout = async () => {
+    await this.client.auth.signOut();
+    this.setState({ session: null });
+  };
 
   patch(fn) {
     const data = JSON.parse(JSON.stringify(this.state.data));
@@ -304,24 +471,76 @@ class Component extends DCLogic {
     this.setState({ data, dirty: true, saved: false });
   }
 
-  save = () => {
-    try { localStorage.setItem(KEY, JSON.stringify(this.state.data)); } catch (e) { /* ignore */ }
-    this.setState({ dirty: false, saved: true });
-    clearTimeout(this._t);
-    this._t = setTimeout(() => this.setState({ saved: false }), 2200);
+  seasonalPatch(key, fn) {
+    this.patch(d => fn(d.seasonal[key]));
+  }
+
+  save = async () => {
+    const { error } = await this.client
+      .from("site_content")
+      .update({ data: this.state.data })
+      .eq("id", 1);
+    if (!error) {
+      this.setState({ dirty: false, saved: true });
+      clearTimeout(this._t);
+      this._t = setTimeout(() => this.setState({ saved: false }), 2200);
+    }
   };
 
   field(path, i, key) {
     return (e) => { const v = e.target.value; this.patch(d => { d[path][i][key] = v; }); };
   }
 
-  render0() { return null; }
+  tileField(key, i, prop) {
+    return (e) => { const v = e.target.value; this.seasonalPatch(key, s => { s.tiles[i][prop] = v; }); };
+  }
+
+  seasonalView(key) {
+    const d = this.state.data;
+    const s = d.seasonal[key];
+    return {
+      enabled: s.enabled,
+      toggleLabel: s.enabled ? "Zapnuto na webu" : "Skryto na webu",
+      toggleStyle: "cursor:pointer;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:10px 16px;border-radius:var(--radius-full);white-space:nowrap;" + (s.enabled
+        ? "border:none;background:var(--color-brand);color:var(--white)"
+        : "border:1px solid var(--border-subtle);background:transparent;color:var(--color-fg-muted)"),
+      toggle: () => this.seasonalPatch(key, ss => { ss.enabled = !ss.enabled; }),
+      eyebrow: s.eyebrow,
+      setEyebrow: (e) => { const v = e.target.value; this.seasonalPatch(key, ss => { ss.eyebrow = v; }); },
+      titleMain: s.titleMain,
+      setTitleMain: (e) => { const v = e.target.value; this.seasonalPatch(key, ss => { ss.titleMain = v; }); },
+      titleAccent: s.titleAccent,
+      setTitleAccent: (e) => { const v = e.target.value; this.seasonalPatch(key, ss => { ss.titleAccent = v; }); },
+      text: s.text,
+      setText: (e) => { const v = e.target.value; this.seasonalPatch(key, ss => { ss.text = v; }); },
+      image: s.image,
+      setImage: (e) => { const v = e.target.value; this.seasonalPatch(key, ss => { ss.image = v; }); },
+      tiles: s.tiles.map((t, i) => ({
+        label: t.label, note: t.note, price: t.price,
+        setLabel: this.tileField(key, i, "label"),
+        setNote: this.tileField(key, i, "note"),
+        setPrice: this.tileField(key, i, "price"),
+      })),
+    };
+  }
 
   renderVals() {
     const d = this.state.data;
     const tabBase = "text-align:left;border:none;background:transparent;cursor:pointer;font-family:var(--font-sans);font-size:13px;font-weight:600;padding:11px 12px;border-radius:var(--radius-s);";
 
     return {
+      isAuthed: !!this.state.session,
+      showLogin: this.state.authChecked && !this.state.session,
+      loginEmail: this.state.loginEmail,
+      loginPassword: this.state.loginPassword,
+      setLoginEmail: this.setLoginEmail,
+      setLoginPassword: this.setLoginPassword,
+      handleLoginKey: this.handleLoginKey,
+      login: this.login,
+      logout: this.logout,
+      loginError: this.state.loginError,
+      loginButtonLabel: this.state.loginBusy ? "Přihlašuji…" : "Přihlásit se",
+
       tabs: TABS.map(([id, label]) => ({
         label,
         select: () => this.setState({ tab: id }),
@@ -333,6 +552,7 @@ class Component extends DCLogic {
       isWineries: this.state.tab === "wineries",
       isPartners: this.state.tab === "partners",
       isHours: this.state.tab === "hours",
+      isSeasonal: this.state.tab === "seasonal",
       isContact: this.state.tab === "contact",
 
       dirtyDisplay: this.state.dirty ? "inline" : "none",
@@ -385,6 +605,9 @@ class Component extends DCLogic {
         remove: () => this.patch(dd => dd.hours.splice(i, 1)),
       })),
       addHours: () => this.patch(dd => dd.hours.push({ days: "", time: "" })),
+
+      burcak: this.seasonalView("burcak"),
+      svato: this.seasonalView("svatomartinska"),
 
       contact: d.contact,
       setStreet: (e) => { const v = e.target.value; this.patch(dd => { dd.contact.street = v; }); },
