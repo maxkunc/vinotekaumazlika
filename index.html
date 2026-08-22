@@ -403,21 +403,45 @@ a:hover{color:var(--color-brand-hover)}
       <div style="display:flex;width:max-content;animation:marquee 44s linear infinite" style-hover="animation-play-state:paused">
         <div style="display:flex;align-items:center;gap:56px;padding:0 28px;flex-shrink:0">
           <sc-for list="{{ partners }}" as="p" hint-placeholder-count="12">
-            <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
-              <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:34px;width:auto;max-width:160px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+            <sc-if value="{{ p.hasUrl }}" hint-placeholder-val="{{ false }}">
+              <a href="{{ p.url }}" target="_blank" rel="noopener" style="display:flex;align-items:center">
+                <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
+                  <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:34px;width:auto;max-width:160px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+                </sc-if>
+                <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
+                  <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
+                </sc-if>
+              </a>
             </sc-if>
-            <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
-              <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
+            <sc-if value="{{ p.noUrl }}" hint-placeholder-val="{{ true }}">
+              <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
+                <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:34px;width:auto;max-width:160px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+              </sc-if>
+              <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
+                <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
+              </sc-if>
             </sc-if>
           </sc-for>
         </div>
         <div aria-hidden="true" style="display:flex;align-items:center;gap:56px;padding:0 28px;flex-shrink:0">
           <sc-for list="{{ partners }}" as="p" hint-placeholder-count="12">
-            <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
-              <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:34px;width:auto;max-width:160px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+            <sc-if value="{{ p.hasUrl }}" hint-placeholder-val="{{ false }}">
+              <a href="{{ p.url }}" tabindex="-1" target="_blank" rel="noopener" style="display:flex;align-items:center">
+                <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
+                  <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:34px;width:auto;max-width:160px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+                </sc-if>
+                <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
+                  <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
+                </sc-if>
+              </a>
             </sc-if>
-            <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
-              <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
+            <sc-if value="{{ p.noUrl }}" hint-placeholder-val="{{ true }}">
+              <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
+                <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:34px;width:auto;max-width:160px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+              </sc-if>
+              <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
+                <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
+              </sc-if>
             </sc-if>
           </sc-for>
         </div>
@@ -563,7 +587,10 @@ class Component extends DCLogic {
 
       wines: c.wines,
       bottlePrice: c.bottlePrice,
-      partners: c.partners.map(p => ({ name: p.name, logo: p.logo, noLogo: !p.logo })),
+      partners: c.partners.map(p => {
+        const url = p.url && !/^https?:\/\//i.test(p.url) ? "https://" + p.url : p.url;
+        return { name: p.name, logo: p.logo, noLogo: !p.logo, url, hasUrl: !!url, noUrl: !url };
+      }),
       hours: c.hours,
       contact: {
         ...c.contact,
