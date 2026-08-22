@@ -1,8 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vinotéka u Mazlíka | Vinotéka a vinný bar v Hradci Králové</title>
+<meta name="description" content="Rodinná vinotéka v Hradci Králové s pečlivě vybranou nabídkou stáčených i lahvových vín, sektů, destilátů, delikates a dárkových balení na míru.">
+<link rel="canonical" href="https://vinotekaumazlika.cz/">
+<meta property="og:type" content="business.business">
+<meta property="og:site_name" content="Vinotéka u Mazlíka">
+<meta property="og:title" content="Vinotéka u Mazlíka | Vinotéka a vinný bar v Hradci Králové">
+<meta property="og:description" content="Rodinná vinotéka v Hradci Králové s pečlivě vybranou nabídkou stáčených i lahvových vín, sektů, destilátů, delikates a dárkových balení na míru.">
+<meta property="og:image" content="https://vinotekaumazlika.cz/assets/hero-prkenko.png">
+<meta property="og:url" content="https://vinotekaumazlika.cz/">
+<meta property="og:locale" content="cs_CZ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vinotéka u Mazlíka | Vinotéka a vinný bar v Hradci Králové">
+<meta name="twitter:description" content="Rodinná vinotéka v Hradci Králové s pečlivě vybranou nabídkou stáčených i lahvových vín, sektů, destilátů, delikates a dárkových balení na míru.">
+<meta name="twitter:image" content="https://vinotekaumazlika.cz/assets/hero-prkenko.png">
+<!-- Google Search Console verification: paste your code's content value below once you create the property at search.google.com/search-console -->
+<!-- <meta name="google-site-verification" content="PASTE_YOUR_VERIFICATION_CODE_HERE"> -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WineStore",
+  "name": "Vinotéka u Mazlíka",
+  "image": "https://vinotekaumazlika.cz/assets/hero-prkenko.png",
+  "url": "https://vinotekaumazlika.cz/",
+  "telephone": "+420604734956",
+  "email": "vinoteka@vinotekaumazlika.cz",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Rybova 1904/23",
+    "addressLocality": "Hradec Králové",
+    "postalCode": "500 09",
+    "addressCountry": "CZ"
+  },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "14:00", "closes": "21:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday","Sunday"], "opens": "16:00", "closes": "21:00" }
+  ],
+  "sameAs": ["https://www.facebook.com/", "https://www.instagram.com/"]
+}
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -512,6 +551,18 @@ a:hover{color:var(--color-brand-hover)}
       <p style="font-size:var(--text-caption);color:var(--charcoal-300);margin:0">© 2026 Vinotéka u Mazlíka</p>
     </div>
   </footer>
+
+  <sc-if value="{{ showCookieBanner }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:0;right:0;bottom:0;z-index:9997;background:var(--surface-dark);color:var(--cream-50);padding:20px clamp(20px,3.5vw,48px);box-shadow:0 -4px 24px rgba(0,0,0,0.22)">
+      <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px">
+        <p style="margin:0;font-size:var(--text-body-s);line-height:var(--lh-relaxed);color:var(--charcoal-100);max-width:70ch">Používáme pouze technická uložení nezbytná pro chod webu a — s vaším souhlasem — analytické cookies Google Analytics ke zlepšování webu. Více v <a href="gdpr/" style="color:var(--white);text-decoration:underline">zásadách ochrany osobních údajů</a>.</p>
+        <div style="display:flex;gap:10px;flex-shrink:0">
+          <button onClick="{{ rejectCookies }}" style="border:1px solid rgba(255,255,255,0.35);background:transparent;color:var(--white);cursor:pointer;font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:12px 22px;border-radius:var(--radius-full);white-space:nowrap">Odmítnout</button>
+          <button onClick="{{ acceptCookies }}" style="border:none;background:var(--color-brand);color:var(--white);cursor:pointer;font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:12px 22px;border-radius:var(--radius-full);box-shadow:var(--shadow-brand);white-space:nowrap">Přijmout</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;scrollSpy&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;animateOnScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;}}">
@@ -558,8 +609,37 @@ const CONTENT_DEFAULTS = {
   },
 };
 
+// TODO: paste your GA4 Measurement ID (looks like G-XXXXXXXXXX) here to enable Google Analytics.
+const GA_MEASUREMENT_ID = "";
+const COOKIE_CONSENT_KEY = "vum-cookie-consent";
+
+function loadGoogleAnalytics() {
+  if (!GA_MEASUREMENT_ID || window.__gaLoaded) return;
+  window.__gaLoaded = true;
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag("js", new Date());
+  gtag("config", GA_MEASUREMENT_ID);
+}
+
 class Component extends DCLogic {
-  state = { menuOpen: false, content: JSON.parse(JSON.stringify(CONTENT_DEFAULTS)) };
+  state = { menuOpen: false, cookieConsent: null, content: JSON.parse(JSON.stringify(CONTENT_DEFAULTS)) };
+
+  acceptCookies = () => {
+    try { localStorage.setItem(COOKIE_CONSENT_KEY, "accepted"); } catch (e) { /* ignore */ }
+    this.setState({ cookieConsent: "accepted" });
+    loadGoogleAnalytics();
+  };
+
+  rejectCookies = () => {
+    try { localStorage.setItem(COOKIE_CONSENT_KEY, "rejected"); } catch (e) { /* ignore */ }
+    this.setState({ cookieConsent: "rejected" });
+  };
 
   async loadContent() {
     try {
@@ -585,6 +665,10 @@ class Component extends DCLogic {
       toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
       closeMenu: () => this.setState({ menuOpen: false }),
 
+      showCookieBanner: this.state.cookieConsent === null,
+      acceptCookies: this.acceptCookies,
+      rejectCookies: this.rejectCookies,
+
       wines: c.wines,
       bottlePrice: c.bottlePrice,
       partners: c.partners.map(p => {
@@ -607,6 +691,11 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.loadContent();
+    try {
+      const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
+      if (stored === "accepted" || stored === "rejected") this.setState({ cookieConsent: stored });
+      if (stored === "accepted") loadGoogleAnalytics();
+    } catch (e) { /* ignore */ }
     const loader = document.getElementById("__loader");
     if (loader) {
       const hideLoader = () => {

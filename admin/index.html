@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Správa obsahu | Vinotéka u Mazlíka</title>
+<meta name="robots" content="noindex, nofollow">
 <script src="../support.js"></script>
 </head>
 <body>
@@ -274,6 +276,18 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
     </main>
   </div>
   </sc-if>
+
+  <sc-if value="{{ showCookieBanner }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:0;right:0;bottom:0;z-index:9997;background:var(--surface-dark);color:var(--cream-50);padding:20px clamp(20px,3.5vw,48px);box-shadow:0 -4px 24px rgba(0,0,0,0.22)">
+      <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px">
+        <p style="margin:0;font-size:var(--text-body-s);line-height:var(--lh-relaxed);color:var(--charcoal-100);max-width:70ch">Používáme pouze technická uložení nezbytná pro chod webu a — s vaším souhlasem — analytické cookies Google Analytics ke zlepšování webu. Více v <a href="../gdpr/" style="color:var(--white);text-decoration:underline">zásadách ochrany osobních údajů</a>.</p>
+        <div style="display:flex;gap:10px;flex-shrink:0">
+          <button onClick="{{ rejectCookies }}" style="border:1px solid rgba(255,255,255,0.35);background:transparent;color:var(--white);cursor:pointer;font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:12px 22px;border-radius:var(--radius-full);white-space:nowrap">Odmítnout</button>
+          <button onClick="{{ acceptCookies }}" style="border:none;background:var(--color-brand);color:var(--white);cursor:pointer;font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:12px 22px;border-radius:var(--radius-full);box-shadow:var(--shadow-brand);white-space:nowrap">Přijmout</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
@@ -350,6 +364,8 @@ const TABS = [
   ["contact", "Kontakt"],
 ];
 
+const COOKIE_CONSENT_KEY = "vum-cookie-consent";
+
 class Component extends DCLogic {
   state = {
     tab: "wines",
@@ -362,6 +378,17 @@ class Component extends DCLogic {
     loginPassword: "",
     loginError: "",
     loginBusy: false,
+    cookieConsent: null,
+  };
+
+  acceptCookies = () => {
+    try { localStorage.setItem(COOKIE_CONSENT_KEY, "accepted"); } catch (e) { /* ignore */ }
+    this.setState({ cookieConsent: "accepted" });
+  };
+
+  rejectCookies = () => {
+    try { localStorage.setItem(COOKIE_CONSENT_KEY, "rejected"); } catch (e) { /* ignore */ }
+    this.setState({ cookieConsent: "rejected" });
   };
 
   componentDidMount() {
@@ -377,6 +404,11 @@ class Component extends DCLogic {
       if (session) this.loadContent();
     });
     this._authSub = sub;
+
+    try {
+      const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
+      if (stored === "accepted" || stored === "rejected") this.setState({ cookieConsent: stored });
+    } catch (e) { /* ignore */ }
   }
 
   componentWillUnmount() {
@@ -494,6 +526,10 @@ class Component extends DCLogic {
       logout: this.logout,
       loginError: this.state.loginError,
       loginButtonLabel: this.state.loginBusy ? "Přihlašuji…" : "Přihlásit se",
+
+      showCookieBanner: this.state.cookieConsent === null,
+      acceptCookies: this.acceptCookies,
+      rejectCookies: this.rejectCookies,
 
       tabs: TABS.map(([id, label]) => ({
         label,

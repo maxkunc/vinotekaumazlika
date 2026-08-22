@@ -1,8 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Směrnice provozování kamerového systému | Vinotéka u Mazlíka</title>
+<meta name="description" content="Informace o účelu, rozsahu a podmínkách provozu kamerového systému v prostorách Vinotéky u Mazlíka v souladu s GDPR.">
+<link rel="canonical" href="https://vinotekaumazlika.cz/kamery/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vinotéka u Mazlíka">
+<meta property="og:title" content="Směrnice provozování kamerového systému | Vinotéka u Mazlíka">
+<meta property="og:description" content="Informace o účelu, rozsahu a podmínkách provozu kamerového systému v prostorách Vinotéky u Mazlíka v souladu s GDPR.">
+<meta property="og:url" content="https://vinotekaumazlika.cz/kamery/">
+<meta property="og:locale" content="cs_CZ">
 <script src="../support.js"></script>
 </head>
 <body>
@@ -142,7 +151,68 @@ a:hover{color:var(--color-brand-hover)}
       <span>© 2026 Vinotéka u Mazlíka</span>
     </div>
   </footer>
+
+  <sc-if value="{{ showCookieBanner }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:0;right:0;bottom:0;z-index:9997;background:var(--surface-dark);color:var(--cream-50);padding:20px clamp(20px,3.5vw,48px);box-shadow:0 -4px 24px rgba(0,0,0,0.22)">
+      <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px">
+        <p style="margin:0;font-size:var(--text-body-s);line-height:var(--lh-relaxed);color:var(--charcoal-100);max-width:70ch">Používáme pouze technická uložení nezbytná pro chod webu a — s vaším souhlasem — analytické cookies Google Analytics ke zlepšování webu. Více v <a href="../gdpr/" style="color:var(--white);text-decoration:underline">zásadách ochrany osobních údajů</a>.</p>
+        <div style="display:flex;gap:10px;flex-shrink:0">
+          <button onClick="{{ rejectCookies }}" style="border:1px solid rgba(255,255,255,0.35);background:transparent;color:var(--white);cursor:pointer;font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:12px 22px;border-radius:var(--radius-full);white-space:nowrap">Odmítnout</button>
+          <button onClick="{{ acceptCookies }}" style="border:none;background:var(--color-brand);color:var(--white);cursor:pointer;font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:12px 22px;border-radius:var(--radius-full);box-shadow:var(--shadow-brand);white-space:nowrap">Přijmout</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
 </div>
 </x-dc>
+<script type="text/x-dc" data-dc-script>
+const GA_MEASUREMENT_ID = ""; // TODO: paste your GA4 Measurement ID (G-XXXXXXXXXX) here to enable Google Analytics.
+const COOKIE_CONSENT_KEY = "vum-cookie-consent";
+
+function loadGoogleAnalytics() {
+  if (!GA_MEASUREMENT_ID || window.__gaLoaded) return;
+  window.__gaLoaded = true;
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag("js", new Date());
+  gtag("config", GA_MEASUREMENT_ID);
+}
+
+class Component extends DCLogic {
+  state = { cookieConsent: null };
+
+  acceptCookies = () => {
+    try { localStorage.setItem(COOKIE_CONSENT_KEY, "accepted"); } catch (e) { /* ignore */ }
+    this.setState({ cookieConsent: "accepted" });
+    loadGoogleAnalytics();
+  };
+
+  rejectCookies = () => {
+    try { localStorage.setItem(COOKIE_CONSENT_KEY, "rejected"); } catch (e) { /* ignore */ }
+    this.setState({ cookieConsent: "rejected" });
+  };
+
+  componentDidMount() {
+    try {
+      const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
+      if (stored === "accepted" || stored === "rejected") this.setState({ cookieConsent: stored });
+      if (stored === "accepted") loadGoogleAnalytics();
+    } catch (e) { /* ignore */ }
+  }
+
+  renderVals() {
+    return {
+      showCookieBanner: this.state.cookieConsent === null,
+      acceptCookies: this.acceptCookies,
+      rejectCookies: this.rejectCookies,
+    };
+  }
+}
+</script>
 </body>
 </html>
