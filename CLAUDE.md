@@ -8,14 +8,18 @@ A **Claude Design canvas** project for "Vinotéka u Mazlíka," a wine shop and w
 
 ## Structure
 
-- `*.dc.html` — the artboards (pages), one file each:
-  - `Vinotéka u Mazlíka.dc.html` — the marketing homepage (nav, hero, product category sections, partners, contact/footer).
-  - `Admin.dc.html` — admin view.
-  - `GDPR.dc.html` — GDPR/privacy page.
-  - `Kamerový systém.dc.html` — camera system page.
-- `support.js` — **generated** runtime for the `<x-dc>` custom element that powers every `.dc.html` file. Header comment: `GENERATED from dc-runtime/src/*.ts — do not edit. Rebuild with 'cd dc-runtime && bun run build'.` The `dc-runtime` source isn't part of this repo — treat this file as vendored/read-only.
+This is deployed on **GitHub Pages** (repo `maxkunc/vinotekaumazlika`, served from `main` / root), so each page lives as `index.html` inside a route directory instead of a bare `*.dc.html` file at repo root — GitHub Pages resolves `/admin`, `/gdpr`, `/kamery` to `<dir>/index.html` automatically:
+
+- `index.html` (repo root) — the marketing homepage at `/` (nav, hero, product category sections, partners, contact/footer).
+- `admin/index.html` — admin view at `/admin`.
+- `gdpr/index.html` — GDPR/privacy page at `/gdpr`.
+- `kamery/index.html` — camera system page at `/kamery`.
+
+Every page still carries the original `.dc.html` scaffolding (`<x-dc>`, `<helmet>`, etc.) — only the filename/location changed, so the runtime and design-system links below still apply. Because the three sub-pages sit one directory deep, their `assets/`, `_ds/`, `support.js`, `image-slot.js` references are prefixed `../`, and cross-page links use relative paths (e.g. `../gdpr/`, `../` back to home) — keep this in mind when copy-pasting markup between pages, and never re-introduce a root-relative (`assets/...` without `../`) or old `*.dc.html` filename link inside a sub-page.
+
+- `support.js` — **generated** runtime for the `<x-dc>` custom element that powers every page. Header comment: `GENERATED from dc-runtime/src/*.ts — do not edit. Rebuild with 'cd dc-runtime && bun run build'.` The `dc-runtime` source isn't part of this repo — treat this file as vendored/read-only.
 - `image-slot.js` — the `<image-slot>` custom element (user-fillable image placeholder), copied from a starter scaffold. Marked `@ds-adherence-ignore`; re-running the starter copy overwrites this file, so don't hand-tune it beyond what the component's own usage doc (in its header comment) allows.
-- `_ds/vinot-ka-u-mazl-ka-design-system-.../` — the design system consumed by every artboard:
+- `_ds/vinot-ka-u-mazl-ka-design-system-.../` — the design system consumed by every page:
   - `tokens/` — `colors.css`, `typography.css`, `spacing.css` (incl. radius/shadow/motion), `fonts.css` (`@font-face`), `base.css` (resets).
   - `styles.css` — root stylesheet importing all tokens.
   - `_ds_bundle.js` — compiled component bundle (Button, IconButton, Badge, Input, Select, QuantityStepper, ProductCard, NavBar, Footer — see `_ds_manifest.json` for the full list and `readme.md` in that folder for authored guidance).
@@ -34,4 +38,4 @@ A **Claude Design canvas** project for "Vinotéka u Mazlíka," a wine shop and w
 
 ## Running / previewing
 
-There's no dev server config. Open a `.dc.html` file directly in a browser (or serve the folder statically) to preview — relative paths (`assets/...`, `_ds/...`) require the file to stay in this directory root.
+Opening a page as a bare `file://` URL only renders a static snapshot (the `<x-dc>` runtime needs an HTTP origin). Use the `vinotka-static` launch config (`.claude/launch.json`, a dependency-free PowerShell `HttpListener` script) to serve the project at `http://localhost:8791` with GitHub-Pages-style routing (`/admin`, `/gdpr`, `/kamery` resolve to that directory's `index.html`, with or without a trailing slash).

@@ -9,7 +9,7 @@
         "-ExecutionPolicy",
         "Bypass",
         "-File",
-        "C:\\Users\\kuncm\\AppData\\Local\\Temp\\claude\\C--Users-kuncm-Desktop-vinotka\\d57f2679-88b0-4fc0-ac6b-81ae6cea55eb\\scratchpad\\static-server.ps1"
+        "C:\\Users\\kuncm\\Desktop\\vinotka\\.claude\\static-server.ps1"
       ],
       "port": 8791
     }
