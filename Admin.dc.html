@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/tokens/colors.css">
+<link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/tokens/typography.css">
+<link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/tokens/base.css">
+<link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/styles.css">
+<script src="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/_ds_bundle.js"></script>
+<style>
+html,body{width:100%;margin:0}
+body{background:var(--surface-page);color:var(--color-fg);font-family:var(--font-sans)}
+a{color:var(--color-brand);text-decoration:none}
+a:hover{color:var(--color-brand-hover)}
+input,select,textarea{font-family:var(--font-sans);font-size:14px;color:var(--color-fg);background:var(--white);border:1px solid var(--border-subtle);border-radius:var(--radius-full);padding:10px 16px;width:100%;box-sizing:border-box}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--color-brand);outline-offset:1px}
+textarea{border-radius:var(--radius-s);resize:vertical}
+label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin-bottom:7px}
+</style>
+</helmet>
+
+<div style="width:100%;min-height:100vh;background:var(--surface-page)">
+
+  <header style="position:sticky;top:0;z-index:50;width:100%;background:var(--color-brand);color:var(--white)">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px clamp(20px,3.5vw,48px)">
+      <div style="display:flex;align-items:center;gap:18px">
+        <img src="assets/vinoteka-u-mazlika-logo.png" alt="Vinotéka u Mazlíka" style="height:38px;width:auto;display:block;filter:brightness(0) invert(1)">
+        <span style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;color:var(--wine-200);border-left:1px solid rgba(255,255,255,0.3);padding-left:18px">Správa obsahu</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:18px">
+        <span style="font-size:12px;color:var(--wine-100);display:{{ dirtyDisplay }}">Neuložené změny</span>
+        <button onClick="{{ save }}" style="border:none;cursor:pointer;background:var(--white);color:var(--color-brand);font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:12px 24px;border-radius:var(--radius-full)">{{ saveLabel }}</button>
+        <a href="./Vinotéka u Mazlíka.dc.html" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--white);white-space:nowrap">Zobrazit web →</a>
+      </div>
+    </div>
+  </header>
+
+  <div style="display:grid;grid-template-columns:minmax(200px,240px) minmax(0,1fr);gap:0;align-items:start">
+
+    <nav aria-label="Sekce správy" style="position:sticky;top:66px;display:flex;flex-direction:column;gap:2px;padding:28px 18px;border-right:1px solid var(--border-subtle);min-height:calc(100vh - 66px)">
+      <p style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin:0 12px 14px">Sekce</p>
+      <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="5">
+        <button onClick="{{ tab.select }}" style="{{ tab.style }}">{{ tab.label }}</button>
+      </sc-for>
+      <div style="height:1px;background:var(--border-subtle);margin:20px 12px"></div>
+      <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 12px;line-height:var(--lh-relaxed)">Změny se ukládají do prohlížeče. Napojení na databázi doplní vývojář.</p>
+    </nav>
+
+    <main style="min-width:0;padding:clamp(28px,3.5vw,48px)">
+
+      <!-- STÁČENÁ VÍNA -->
+      <sc-if value="{{ isWines }}" hint-placeholder-val="{{ true }}">
+        <section>
+          <h1 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 10px;letter-spacing:-0.015em;line-height:1">
+            <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Stáčená</span>
+            <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">vína</span>
+          </h1>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Ceník na hlavní stránce. Řádky lze přidávat, mazat i přeřazovat — pořadí odpovídá pořadí na webu.</p>
+
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ wines }}" as="w" hint-placeholder-count="4">
+              <div style="display:grid;grid-template-columns:2fr 1.4fr 0.9fr auto;gap:14px;align-items:end;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:20px 22px">
+                <div>
+                  <label>Odrůda</label>
+                  <input type="text" value="{{ w.name }}" onChange="{{ w.setName }}">
+                </div>
+                <div>
+                  <label>Popis</label>
+                  <input type="text" value="{{ w.desc }}" onChange="{{ w.setDesc }}">
+                </div>
+                <div>
+                  <label>Cena / 1 l</label>
+                  <input type="text" value="{{ w.price }}" onChange="{{ w.setPrice }}">
+                </div>
+                <button onClick="{{ w.remove }}" aria-label="Odebrat řádek" style="border:1px solid var(--border-subtle);background:transparent;color:var(--color-fg-muted);cursor:pointer;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:11px 18px;border-radius:var(--radius-full);white-space:nowrap" style-hover="border-color:var(--color-brand);color:var(--color-brand)">Odebrat</button>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:20px">
+            <button onClick="{{ addWine }}" style="border:none;cursor:pointer;background:var(--color-brand);color:var(--white);font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:14px 26px;border-radius:var(--radius-full);box-shadow:var(--shadow-brand)">+ Přidat odrůdu</button>
+            <span style="font-size:var(--text-body-s);color:var(--color-fg-muted)">Položek v ceníku: {{ wineCount }}</span>
+          </div>
+
+          <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:24px;margin-top:32px;max-width:520px">
+            <h2 style="font-size:var(--text-h3);font-weight:800;margin:0 0 6px">PET láhev</h2>
+            <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 0 18px">Cena prázdné láhve zobrazená nad ceníkem.</p>
+            <label>Cena za kus</label>
+            <input type="text" value="{{ bottlePrice }}" onChange="{{ setBottlePrice }}">
+          </div>
+        </section>
+      </sc-if>
+
+      <!-- VINAŘSTVÍ -->
+      <sc-if value="{{ isWineries }}" hint-placeholder-val="{{ false }}">
+        <section>
+          <h1 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 10px;letter-spacing:-0.015em;line-height:1">
+            <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Vinařství</span>
+            <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">a lahve</span>
+          </h1>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Vinařství v sekci Lahvová vína. Hlavní vinařství se zobrazuje uprostřed mřížky ve velké kartě.</p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
+            <sc-for list="{{ wineries }}" as="v" hint-placeholder-count="4">
+              <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+                <div>
+                  <label>Název</label>
+                  <input type="text" value="{{ v.name }}" onChange="{{ v.setName }}">
+                </div>
+                <div>
+                  <label>Popis (jen u hlavního)</label>
+                  <input type="text" value="{{ v.desc }}" onChange="{{ v.setDesc }}">
+                </div>
+                <div>
+                  <label>Cesta k fotografii</label>
+                  <input type="text" value="{{ v.image }}" onChange="{{ v.setImage }}">
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+                  <button onClick="{{ v.setMain }}" style="{{ v.mainStyle }}">{{ v.mainLabel }}</button>
+                  <button onClick="{{ v.remove }}" style="border:1px solid var(--border-subtle);background:transparent;color:var(--color-fg-muted);cursor:pointer;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:10px 16px;border-radius:var(--radius-full)">Odebrat</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <button onClick="{{ addWinery }}" style="border:none;cursor:pointer;background:var(--color-brand);color:var(--white);font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:14px 26px;border-radius:var(--radius-full);box-shadow:var(--shadow-brand);margin-top:20px">+ Přidat vinařství</button>
+        </section>
+      </sc-if>
+
+      <!-- PARTNEŘI -->
+      <sc-if value="{{ isPartners }}" hint-placeholder-val="{{ false }}">
+        <section>
+          <h1 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 10px;letter-spacing:-0.015em;line-height:1">
+            <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Partneři</span>
+            <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">a loga</span>
+          </h1>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Loga v pohyblivém pásu. Bez nahraného loga se zobrazí název partnera jako text.</p>
+
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ partners }}" as="p" hint-placeholder-count="6">
+              <div style="display:grid;grid-template-columns:1.4fr 1.6fr 1.6fr auto;gap:14px;align-items:end;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:20px 22px">
+                <div>
+                  <label>Název</label>
+                  <input type="text" value="{{ p.name }}" onChange="{{ p.setName }}">
+                </div>
+                <div>
+                  <label>Logo (cesta k souboru)</label>
+                  <input type="text" value="{{ p.logo }}" onChange="{{ p.setLogo }}">
+                </div>
+                <div>
+                  <label>Odkaz</label>
+                  <input type="text" value="{{ p.url }}" onChange="{{ p.setUrl }}">
+                </div>
+                <button onClick="{{ p.remove }}" style="border:1px solid var(--border-subtle);background:transparent;color:var(--color-fg-muted);cursor:pointer;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:11px 18px;border-radius:var(--radius-full);white-space:nowrap">Odebrat</button>
+              </div>
+            </sc-for>
+          </div>
+          <button onClick="{{ addPartner }}" style="border:none;cursor:pointer;background:var(--color-brand);color:var(--white);font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:14px 26px;border-radius:var(--radius-full);box-shadow:var(--shadow-brand);margin-top:20px">+ Přidat partnera</button>
+        </section>
+      </sc-if>
+
+      <!-- OTEVÍRACÍ DOBA -->
+      <sc-if value="{{ isHours }}" hint-placeholder-val="{{ false }}">
+        <section>
+          <h1 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 10px;letter-spacing:-0.015em;line-height:1">
+            <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Otevírací</span>
+            <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">doba</span>
+          </h1>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Zobrazuje se v sekci Návštěva a v patičce webu.</p>
+
+          <div style="display:flex;flex-direction:column;gap:12px;max-width:640px">
+            <sc-for list="{{ hours }}" as="h" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:end;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:20px 22px">
+                <div>
+                  <label>Dny</label>
+                  <input type="text" value="{{ h.days }}" onChange="{{ h.setDays }}">
+                </div>
+                <div>
+                  <label>Hodiny</label>
+                  <input type="text" value="{{ h.time }}" onChange="{{ h.setTime }}">
+                </div>
+                <button onClick="{{ h.remove }}" style="border:1px solid var(--border-subtle);background:transparent;color:var(--color-fg-muted);cursor:pointer;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:11px 18px;border-radius:var(--radius-full)">Odebrat</button>
+              </div>
+            </sc-for>
+          </div>
+          <button onClick="{{ addHours }}" style="border:none;cursor:pointer;background:var(--color-brand);color:var(--white);font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:14px 26px;border-radius:var(--radius-full);box-shadow:var(--shadow-brand);margin-top:20px">+ Přidat řádek</button>
+        </section>
+      </sc-if>
+
+      <!-- KONTAKT -->
+      <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+        <section>
+          <h1 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 10px;letter-spacing:-0.015em;line-height:1">
+            <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Kontakt</span>
+            <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">a údaje</span>
+          </h1>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Kontaktní a fakturační údaje v patičce a na právních podstránkách.</p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:1000px">
+            <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:16px">
+              <h2 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin:0">Prodejna</h2>
+              <div><label>Adresa</label><input type="text" value="{{ contact.street }}" onChange="{{ setStreet }}"></div>
+              <div><label>Město a PSČ</label><input type="text" value="{{ contact.city }}" onChange="{{ setCity }}"></div>
+              <div><label>Telefon</label><input type="text" value="{{ contact.phone }}" onChange="{{ setPhone }}"></div>
+              <div><label>E-mail</label><input type="text" value="{{ contact.email }}" onChange="{{ setEmail }}"></div>
+            </div>
+            <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:16px">
+              <h2 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin:0">Fakturační údaje</h2>
+              <div><label>Provozovatel</label><input type="text" value="{{ contact.company }}" onChange="{{ setCompany }}"></div>
+              <div><label>IČO</label><input type="text" value="{{ contact.ico }}" onChange="{{ setIco }}"></div>
+              <div><label>DIČ</label><input type="text" value="{{ contact.dic }}" onChange="{{ setDic }}"></div>
+              <div><label>Zápis v OR</label><input type="text" value="{{ contact.registry }}" onChange="{{ setRegistry }}"></div>
+            </div>
+            <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:16px">
+              <h2 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin:0">Sociální sítě</h2>
+              <div><label>Facebook</label><input type="text" value="{{ contact.facebook }}" onChange="{{ setFacebook }}"></div>
+              <div><label>Instagram</label><input type="text" value="{{ contact.instagram }}" onChange="{{ setInstagram }}"></div>
+            </div>
+          </div>
+        </section>
+      </sc-if>
+
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const KEY = "vum-admin-v1";
+
+const DEFAULTS = {
+  wines: [
+    { name: "Rulandské šedé", desc: "bílé, suché", price: "129 Kč" },
+    { name: "Veltlínské zelené", desc: "bílé, suché", price: "129 Kč" },
+    { name: "Merzling", desc: "bílé, suché", price: "129 Kč" },
+    { name: "Rulandské bílé / Sylvánské zelené", desc: "bílé, polosuché", price: "129 Kč" },
+    { name: "Solaris", desc: "bílé, polosuché", price: "129 Kč" },
+    { name: "Zweigeltrebe & Frankovka rosé", desc: "růžové, polosuché", price: "129 Kč" },
+    { name: "Rul. m. & Dornfelder", desc: "červené, suché", price: "129 Kč" },
+    { name: "Aperol Spritz", desc: "míchaný, aperitiv", price: "159 Kč" },
+  ],
+  bottlePrice: "10 Kč",
+  mainWinery: 0,
+  wineries: [
+    { name: "Víno Hruška", desc: "Blatnička, Slovácká podoblast — základ naší nabídky lahvových vín.", image: "assets/lahvova-vina.png" },
+    { name: "Vinařství Konečný", desc: "", image: "assets/vin-konecny.png" },
+    { name: "Vinařství Omasta", desc: "", image: "assets/vin-omasta.png" },
+    { name: "Vinařství Hradil", desc: "", image: "assets/vin-hradil.png" },
+    { name: "Vinařství B/V", desc: "", image: "assets/vin-bv.png" },
+    { name: "Rodinné vinařství KOŠUT", desc: "", image: "assets/vin-kosut.png" },
+    { name: "Vinné sklepy Zapletal", desc: "", image: "assets/vin-zapletal.png" },
+  ],
+  partners: [
+    "Mountfield HK", "FC Hradec Králové", "PIZZZZA.CZ", "Podroužek, Moník, Petera",
+    "ELKUM CZ", "BK GAPA HK", "CK Verana", "ENERGYPACK",
+    "NAVITASCZ", "BlackFox Art", "La Vital", "reddos productions",
+  ].map(name => ({ name, logo: "", url: "" })),
+  hours: [
+    { days: "Pondělí–Pátek", time: "14:00–21:00" },
+    { days: "Sobota–Neděle", time: "16:00–21:00" },
+    { days: "Státní svátky", time: "16:00–21:00" },
+  ],
+  contact: {
+    street: "Rybova 1904/23",
+    city: "Hradec Králové, 500 09",
+    phone: "+420 604 734 956",
+    email: "vinoteka@vinotekaumazlika.cz",
+    company: "Energy Pack s.r.o.",
+    ico: "",
+    dic: "",
+    registry: "Městský soud v Praze, oddíl C, vložka 161341",
+    facebook: "https://www.facebook.com/",
+    instagram: "https://www.instagram.com/",
+  },
+};
+
+const TABS = [
+  ["wines", "Stáčená vína"],
+  ["wineries", "Vinařství"],
+  ["partners", "Partneři"],
+  ["hours", "Otevírací doba"],
+  ["contact", "Kontakt"],
+];
+
+class Component extends DCLogic {
+  state = { tab: "wines", data: JSON.parse(JSON.stringify(DEFAULTS)), dirty: false, saved: false };
+
+  componentDidMount() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (raw) this.setState({ data: Object.assign(JSON.parse(JSON.stringify(DEFAULTS)), JSON.parse(raw)) });
+    } catch (e) { /* keep defaults */ }
+  }
+
+  patch(fn) {
+    const data = JSON.parse(JSON.stringify(this.state.data));
+    fn(data);
+    this.setState({ data, dirty: true, saved: false });
+  }
+
+  save = () => {
+    try { localStorage.setItem(KEY, JSON.stringify(this.state.data)); } catch (e) { /* ignore */ }
+    this.setState({ dirty: false, saved: true });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ saved: false }), 2200);
+  };
+
+  field(path, i, key) {
+    return (e) => { const v = e.target.value; this.patch(d => { d[path][i][key] = v; }); };
+  }
+
+  render0() { return null; }
+
+  renderVals() {
+    const d = this.state.data;
+    const tabBase = "text-align:left;border:none;background:transparent;cursor:pointer;font-family:var(--font-sans);font-size:13px;font-weight:600;padding:11px 12px;border-radius:var(--radius-s);";
+
+    return {
+      tabs: TABS.map(([id, label]) => ({
+        label,
+        select: () => this.setState({ tab: id }),
+        style: tabBase + (this.state.tab === id
+          ? "background:var(--color-brand-tint);color:var(--color-brand);font-weight:700"
+          : "color:var(--color-fg)"),
+      })),
+      isWines: this.state.tab === "wines",
+      isWineries: this.state.tab === "wineries",
+      isPartners: this.state.tab === "partners",
+      isHours: this.state.tab === "hours",
+      isContact: this.state.tab === "contact",
+
+      dirtyDisplay: this.state.dirty ? "inline" : "none",
+      saveLabel: this.state.saved ? "Uloženo ✓" : "Uložit změny",
+      save: this.save,
+
+      wineCount: d.wines.length,
+      wines: d.wines.map((w, i) => ({
+        name: w.name, desc: w.desc, price: w.price,
+        setName: this.field("wines", i, "name"),
+        setDesc: this.field("wines", i, "desc"),
+        setPrice: this.field("wines", i, "price"),
+        remove: () => this.patch(dd => dd.wines.splice(i, 1)),
+      })),
+      addWine: () => this.patch(dd => dd.wines.push({ name: "Nová odrůda", desc: "bílé, suché", price: "129 Kč" })),
+
+      bottlePrice: d.bottlePrice,
+      setBottlePrice: (e) => { const v = e.target.value; this.patch(dd => { dd.bottlePrice = v; }); },
+
+      wineries: d.wineries.map((v, i) => ({
+        name: v.name, desc: v.desc, image: v.image,
+        setName: this.field("wineries", i, "name"),
+        setDesc: this.field("wineries", i, "desc"),
+        setImage: this.field("wineries", i, "image"),
+        remove: () => this.patch(dd => {
+          dd.wineries.splice(i, 1);
+          if (dd.mainWinery >= dd.wineries.length) dd.mainWinery = 0;
+        }),
+        setMain: () => this.patch(dd => { dd.mainWinery = i; }),
+        mainLabel: d.mainWinery === i ? "Hlavní vinařství" : "Nastavit jako hlavní",
+        mainStyle: "cursor:pointer;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:10px 16px;border-radius:var(--radius-full);" + (d.mainWinery === i
+          ? "border:none;background:var(--color-brand);color:var(--white)"
+          : "border:1px solid var(--border-subtle);background:transparent;color:var(--color-fg-muted)"),
+      })),
+      addWinery: () => this.patch(dd => dd.wineries.push({ name: "Nové vinařství", desc: "", image: "" })),
+
+      partners: d.partners.map((p, i) => ({
+        name: p.name, logo: p.logo, url: p.url,
+        setName: this.field("partners", i, "name"),
+        setLogo: this.field("partners", i, "logo"),
+        setUrl: this.field("partners", i, "url"),
+        remove: () => this.patch(dd => dd.partners.splice(i, 1)),
+      })),
+      addPartner: () => this.patch(dd => dd.partners.push({ name: "Nový partner", logo: "", url: "" })),
+
+      hours: d.hours.map((h, i) => ({
+        days: h.days, time: h.time,
+        setDays: this.field("hours", i, "days"),
+        setTime: this.field("hours", i, "time"),
+        remove: () => this.patch(dd => dd.hours.splice(i, 1)),
+      })),
+      addHours: () => this.patch(dd => dd.hours.push({ days: "", time: "" })),
+
+      contact: d.contact,
+      setStreet: (e) => { const v = e.target.value; this.patch(dd => { dd.contact.street = v; }); },
+      setCity: (e) => { const v = e.target.value; this.patch(dd => { dd.contact.city = v; }); },
+      setPhone: (e) => { const v = e.target.value; this.patch(dd => { dd.contact.phone = v; }); },
+      setEmail: (e) => { const v = e.target.value; this.patch(dd => { dd.contact.email = v; }); },
+      setCompany: (e) => { const v = e.target.value; this.patch(dd => { dd.contact.company = v; }); },
+      setIco: (e) => { const v = e.target.value; this.patch(dd => { dd.contact.ico = v; }); },
+      setDic: (e) => { const v = e.target.value; this.patch(dd => { dd.contact.dic = v; }); },
+      setRegistry: (e) => { const v = e.target.value; this.patch(dd => { dd.contact.registry = v; }); },
+      setFacebook: (e) => { const v = e.target.value; this.patch(dd => { dd.contact.facebook = v; }); },
+      setInstagram: (e) => { const v = e.target.value; this.patch(dd => { dd.contact.instagram = v; }); },
+    };
+  }
+}
+</script>
+</body>
+</html>

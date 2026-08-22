@@ -1,0 +1,27 @@
+:root{
+--font-display:"Vinoteka",cursive;
+--font-sans:"Exo",sans-serif;
+--text-display-xl:clamp(40px,6vw,72px);
+--text-display-l:clamp(32px,4.5vw,52px);
+--text-display-m:clamp(26px,3.2vw,36px);
+--text-h1:32px;
+--text-h2:24px;
+--text-h3:19px;
+--text-body-l:18px;
+--text-body:16px;
+--text-body-s:14px;
+--text-caption:12px;
+--text-eyebrow:13px;
+--lh-tight:1.1; /* @kind other */
+--lh-snug:1.25; /* @kind other */
+--lh-normal:1.5; /* @kind other */
+--lh-relaxed:1.65; /* @kind other */
+--ls-eyebrow:0.14em;
+--ls-tight:-0.01em;
+--weight-light:300;
+--weight-regular:400;
+--weight-medium:500;
+--weight-semibold:600;
+--weight-bold:700;
+--weight-extrabold:800;
+}

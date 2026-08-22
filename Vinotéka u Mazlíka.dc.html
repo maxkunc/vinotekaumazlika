@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/tokens/colors.css">
+<link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/tokens/typography.css">
+<link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/tokens/base.css">
+<link rel="stylesheet" href="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/styles.css">
+<script src="_ds/vinot-ka-u-mazl-ka-design-system-923bd719-3ddd-4338-a7e4-218e5ebc24e3/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+html,body{width:100%;margin:0}
+html{scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
+html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}
+body{background:var(--surface-page);color:var(--color-fg);font-family:var(--font-sans)}
+a{color:var(--color-brand);text-decoration:none}
+a:hover{color:var(--color-brand-hover)}
+.nav-burger{display:none}
+@media (max-width:1180px){.nav-desktop{display:none !important}.nav-burger{display:inline-flex !important}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+</helmet>
+
+<div style="width:100%;background:var(--surface-page);min-height:100vh;overflow-x:hidden">
+
+  <header style="position:sticky;top:0;z-index:50;width:100%;background:var(--color-brand);color:var(--white)">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:28px;padding:14px clamp(20px,3.5vw,48px)">
+      <a href="#uvod" style="flex-shrink:0;display:block">
+        <img src="assets/vinoteka-u-mazlika-logo.png" alt="Vinotéka u Mazlíka" style="height:42px;width:auto;display:block;filter:brightness(0) invert(1)">
+      </a>
+      <nav class="nav-desktop" aria-label="Hlavní navigace" style="display:flex;align-items:center;gap:24px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase">
+        <a data-spy="stacena-vina" href="#stacena-vina" style="color:var(--white);opacity:0.92;white-space:nowrap;padding:4px 0;border-bottom:1.5px solid transparent">Stáčená vína</a>
+        <a data-spy="bag-in-box" href="#bag-in-box" style="color:var(--white);opacity:0.92;white-space:nowrap;padding:4px 0;border-bottom:1.5px solid transparent">Bag-in-box</a>
+        <a data-spy="lahvova-vina" href="#lahvova-vina" style="color:var(--white);opacity:0.92;white-space:nowrap;padding:4px 0;border-bottom:1.5px solid transparent">Lahvová vína</a>
+        <a data-spy="sekty-champagne" href="#sekty-champagne" style="color:var(--white);opacity:0.92;white-space:nowrap;padding:4px 0;border-bottom:1.5px solid transparent">Prosecca &amp; Champagne</a>
+        <a data-spy="rumy-destilaty" href="#rumy-destilaty" style="color:var(--white);opacity:0.92;white-space:nowrap;padding:4px 0;border-bottom:1.5px solid transparent">Rumy &amp; destiláty</a>
+        <a data-spy="delikatesy" href="#delikatesy" style="color:var(--white);opacity:0.92;white-space:nowrap;padding:4px 0;border-bottom:1.5px solid transparent">Delikatesy</a>
+        <a data-spy="darkove-baleni" href="#darkove-baleni" style="color:var(--white);opacity:0.92;white-space:nowrap;padding:4px 0;border-bottom:1.5px solid transparent">Dárkové balení</a>
+        <a data-spy="partneri" href="#partneri" style="color:var(--white);opacity:0.92;white-space:nowrap;padding:4px 0;border-bottom:1.5px solid transparent">Partneři</a>
+        <a data-spy="kontakt" href="#kontakt" style="color:var(--white);opacity:0.92;white-space:nowrap;padding:4px 0;border-bottom:1.5px solid transparent">Kontakt</a>
+      </nav>
+      <div style="display:flex;gap:18px;align-items:center;flex-shrink:0">
+        <a href="mailto:vinoteka@vinotekaumazlika.cz" aria-label="Napsat e-mail" style="display:flex"><img src="https://unpkg.com/lucide-static@latest/icons/mail.svg" alt="" style="width:18px;height:18px;filter:brightness(0) invert(1)"></a>
+        <a href="#kontakt" aria-label="Kde nás najdete" style="display:flex"><img src="https://unpkg.com/lucide-static@latest/icons/map-pin.svg" alt="" style="width:18px;height:18px;filter:brightness(0) invert(1)"></a>
+        <a href="tel:+420604734956" aria-label="Zavolat" style="display:flex"><img src="https://unpkg.com/lucide-static@latest/icons/phone.svg" alt="" style="width:18px;height:18px;filter:brightness(0) invert(1)"></a>
+        <button class="nav-burger" onClick="{{ toggleMenu }}" aria-label="Menu" style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:44px;height:44px;border:none;background:transparent;cursor:pointer;padding:0">
+          <span style="display:block;width:20px;height:2px;background:var(--white)"></span>
+          <span style="display:block;width:20px;height:2px;background:var(--white)"></span>
+          <span style="display:block;width:20px;height:2px;background:var(--white)"></span>
+        </button>
+      </div>
+    </div>
+    <nav aria-label="Mobilní navigace" style="display:{{ menuDisplay }};flex-direction:column;background:var(--wine-600);padding:8px clamp(20px,3.5vw,48px) 20px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase">
+      <a onClick="{{ closeMenu }}" href="#stacena-vina" style="color:var(--white);padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.18)">Stáčená vína</a>
+      <a onClick="{{ closeMenu }}" href="#bag-in-box" style="color:var(--white);padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.18)">Bag-in-box</a>
+      <a onClick="{{ closeMenu }}" href="#lahvova-vina" style="color:var(--white);padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.18)">Lahvová vína</a>
+      <a onClick="{{ closeMenu }}" href="#sekty-champagne" style="color:var(--white);padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.18)">Sekty &amp; Champagne</a>
+      <a onClick="{{ closeMenu }}" href="#rumy-destilaty" style="color:var(--white);padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.18)">Rumy &amp; destiláty</a>
+      <a onClick="{{ closeMenu }}" href="#delikatesy" style="color:var(--white);padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.18)">Delikatesy</a>
+      <a onClick="{{ closeMenu }}" href="#darkove-baleni" style="color:var(--white);padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.18)">Dárkové balení</a>
+      <a onClick="{{ closeMenu }}" href="#partneri" style="color:var(--white);padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.18)">Partneři</a>
+      <a onClick="{{ closeMenu }}" href="#kontakt" style="color:var(--white);padding:14px 0">Kontakt</a>
+    </nav>
+  </header>
+
+  <section id="uvod" data-screen-label="Hero" style="position: relative; width: 100%; min-height: min(84vh,720px); display: flex; align-items: center; overflow: hidden; height: 1180px">
+    <div style="position:absolute;inset:0">
+      <img src="assets/hero-prkenko.png" alt="Prkénko s klobásou, olivami a sklenkou vína ve vinotéce" style="width:100%;height:100%;object-fit:cover;display:block">
+    </div>
+    <div style="position: absolute; inset: 0; background: linear-gradient(90deg, #000000EB, #00000024); pointer-events: none; overflow: auto"></div>
+    
+    
+  <div style="position: relative; width: 100%; max-width: 1560px; margin: 0 auto; padding: clamp(64px,8vw,120px) clamp(20px,3.5vw,48px); pointer-events: none">
+      <p style="display: flex; align-items: center; gap: 12px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--wine-400); font-weight: 600; margin: 0 0 22px">
+        <span style="display: block; width: 26px; height: 2px; background-color: var(--wine-400);"></span>víno, které chutná</p>
+      <h1 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0;color:var(--white);letter-spacing:-0.015em;line-height:1">
+        
+        
+      </h1>
+      <span style="font-size: 33px; font-weight: 800; text-transform: none; white-space: nowrap; color: var(--wine-50); letter-spacing: 11.8px">VINOTÉKA</span><span style="font-family: var(--font-display); font-weight: 500; color: var(--wine-600); font-size: clamp(59px,9.7vw,135px); line-height: 0.75; white-space: nowrap; display: block; margin-bottom: 0px; margin-top: -47px">u mazlíka</span><p style="font-size:var(--text-body-l);line-height:var(--lh-relaxed);color:var(--cream-50);max-width:46ch;margin:30px 0 34px;text-wrap:pretty">Rodinná vinotéka v Hradci Králové s pečlivě vybranou nabídkou stáčených i lahvových vín, delikates a dárkových balení.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:center;pointer-events:auto">
+        <a href="#stacena-vina" style="display:inline-flex;align-items:center;background:var(--color-brand);color:var(--white);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:15px 30px;border-radius:var(--radius-full);box-shadow:var(--shadow-brand)">Prohlédnout nabídku</a>
+        <a href="#kontakt" style="display:inline-flex;align-items:center;gap:10px;color:var(--white);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase">Kde nás najdete <span style="font-size:15px">→</span></a>
+      </div>
+    </div></section>
+
+  
+
+  <section id="navsteva" data-screen-label="Návštěva" data-reveal="" style="background: var(--color-brand); color: var(--white); padding: clamp(48px,5.5vw,72px) clamp(20px,3.5vw,48px)">
+    
+  <div style="max-width: 1560px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: clamp(28px,3.5vw,56px); align-items: start; justify-content: flex-start">
+      
+      
+      
+      <div>
+        <svg viewBox="0 0 40 46" fill="none" stroke="var(--cream-50)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:34px;height:39px;margin-bottom:16px;opacity:0.85">
+          <path d="M10 4h20l-2.5 17a7.5 7.5 0 0 1-15 0z"></path><path d="M20 28v12"></path><path d="M11 42h18"></path>
+        </svg>
+        <h3 style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;color:var(--wine-200);margin:0 0 16px">Otevírací doba</h3>
+        <div style="display:grid;grid-template-columns:1fr auto;gap:10px 16px;font-size:var(--text-body)">
+          <span style="color:var(--wine-100)">Pondělí–Pátek</span><span style="font-weight:600">14:00–21:00</span>
+          <span style="color:var(--wine-100)">Sobota–Neděle</span><span style="font-weight:600">16:00–21:00</span>
+          <span style="color:var(--wine-100)">Státní svátky</span><span style="font-weight:600">16:00–21:00</span>
+        </div>
+      </div><div>
+        <svg viewBox="0 0 40 46" fill="none" stroke="var(--cream-50)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:34px;height:39px;margin-bottom:16px;opacity:0.85">
+          <path d="M20 43s13-14 13-24a13 13 0 0 0-26 0c0 10 13 24 13 24z"></path><circle cx="20" cy="19" r="5"></circle>
+        </svg>
+        <h3 style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;color:var(--wine-200);margin:0 0 16px">Kde nás najdete</h3>
+        <address style="font-style:normal;display:flex;flex-direction:column;gap:8px;font-size:var(--text-body);color:var(--wine-100)">
+          <span style="color:var(--white);font-weight:600">Rybova 1904/23</span>
+          <span>Hradec Králové, 500 09</span>
+          <span>Parkování přímo před vinotékou</span>
+        </address>
+      </div><div>
+        <svg viewBox="0 0 40 46" fill="none" stroke="var(--cream-50)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:34px;height:39px;margin-bottom:16px;opacity:0.85">
+          <rect x="5" y="12" width="30" height="22" rx="3"></rect><path d="M5 15l15 11 15-11"></path>
+        </svg>
+        <h3 style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;color:var(--wine-200);margin:0 0 16px">Napište, zavolejte</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:var(--text-body)">
+          <a href="tel:+420604734956" style="color:var(--white);font-weight:600">+420 604 734 956</a>
+          <a href="mailto:vinoteka@vinotekaumazlika.cz" style="color:var(--white);font-weight:600">vinoteka@vinotekaumazlika.cz</a>
+          <span style="color:var(--wine-100)">Rádi vám poradíme s výběrem i dárkem.</span>
+        </div>
+      </div>
+    </div></section><section id="stacena-vina" data-screen-label="Stáčená vína" data-reveal="" style="scroll-margin-top: 76px; padding: clamp(64px,8vw,104px) clamp(20px,3.5vw,48px)">
+    <div style="max-width:1560px;margin:0 auto">
+      <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--color-brand);font-weight:700;margin:0 0 18px">
+        <span style="display:block;width:26px;height:2px;background:var(--color-brand)"></span>Vybráno u vinaře
+      </p>
+      <h2 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 24px;letter-spacing:-0.015em;line-height:1">
+        <span style="font-size: clamp(22px,2.6vw,34px); font-weight: 800; text-transform: none; white-space: nowrap">Stáčená&nbsp;</span>
+        <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(46px,5.5vw,72px);line-height:0.75;white-space:nowrap">vína</span>
+      </h2>
+      <p style="font-size: var(--text-body); line-height: var(--lh-relaxed); color: var(--color-fg-muted); margin: 0 0 36px; text-wrap: pretty">Stáčená vína odebíráme přímo od moravského vinařství Víno Hruška, které osobně a pravidelně navštvěvujeme. Odnesete si kvalitu, jakou byste v regálu za tuto cenu nenašli.</p>
+
+      
+
+      
+
+      <!-- TODO: napojení na admin — ceník stáčených vín (odrůda, popis, cena/l) -->
+      <div style="background:var(--color-brand);color:var(--white);border-radius:var(--radius-m);box-shadow:var(--shadow-brand);overflow:hidden">
+        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:16px clamp(22px,3vw,34px);background:var(--wine-600);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;color:var(--wine-200)">
+          <span>Odrůda</span><span>Popis</span><span style="text-align:right">Cena / 1 l</span>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
+          <span style="font-weight:600">Rulandské šedé</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">bílé, suché</span><span style="font-weight:700;text-align:right">129 Kč</span>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
+          <span style="font-weight:600">Veltlínské zelené</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">bílé, suché</span><span style="font-weight:700;text-align:right">129 Kč</span>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
+          <span style="font-weight:600">Merzling</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">bílé, suché</span><span style="font-weight:700;text-align:right">129 Kč</span>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
+          <span style="font-weight:600">Rulandské bílé / Sylvánské zelené</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">bílé, polosuché</span><span style="font-weight:700;text-align:right">129 Kč</span>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
+          <span style="font-weight:600">Solaris</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">bílé, polosuché</span><span style="font-weight:700;text-align:right">129 Kč</span>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
+          <span style="font-weight:600">Zweigeltrebe &amp; Frankovka rosé</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">růžové, polosuché</span><span style="font-weight:700;text-align:right">129 Kč</span>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
+          <span style="font-weight:600">Rul. m. &amp; Dornfelder</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">červené, suché</span><span style="font-weight:700;text-align:right">129 Kč</span>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1.4fr 0.7fr;gap:16px;padding:17px clamp(22px,3vw,34px);border-top:1px solid rgba(255,255,255,0.16);font-size:var(--text-body);align-items:center">
+          <span style="font-weight:600">Aperol Spritz</span><span style="color:var(--wine-100);font-size:var(--text-body-s)">míchaný, aperitiv</span><span style="font-weight:700;text-align:right">159 Kč</span>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 18px; background: var(--surface-card); border-radius: var(--radius-m); box-shadow: var(--shadow-card); padding: 20px clamp(22px,3vw,34px); margin: 0 0 28px; padding-top: 18px; padding-bottom: 18px; margin-top: 20px; margin-bottom: 20px">
+        <svg viewBox="0 0 40 46" fill="none" stroke="var(--color-brand)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:30px;height:35px;flex-shrink:0">
+          <path d="M17 3h6v11c0 4 6 6 6 13v15a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3V27c0-7 6-9 6-13z"></path><path d="M11 30h18"></path><path d="M11 37h18"></path>
+        </svg>
+        <p style="margin:0;font-size:var(--text-body);font-weight:700">PET láhev u nás koupíte za 10 Kč</p>
+        <p style="margin:0;font-size:var(--text-body-s);color:var(--color-fg-muted)">V nabídce je 1L, 1,5L nebo 2L.</p>
+      </div><p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:18px 0 0">Aktuální nabídka na prodejně se může od webu lišit. Rádi vám poradíme na místě.</p>
+    </div>
+  </section>
+
+  <section id="bag-in-box" data-screen-label="Bag-in-box" data-reveal="" style="scroll-margin-top: 76px; background: var(--surface-brand); color: var(--white); padding: clamp(64px,8vw,104px) clamp(20px,3.5vw,48px)">
+    <div style="max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,4vw,64px);align-items:center">
+      <div style="position:relative;height:clamp(300px,34vw,440px);border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-raised)">
+        <img src="assets/bag-in-box.png" alt="Bag-in-box balení vína Hruška" style="width:100%;height:100%;object-fit:cover;display:block">
+      </div><div>
+        <p style="display: flex; align-items: center; gap: 12px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--wine-200); font-weight: 700; margin: 0 0 18px">
+          <span style="display: block; width: 26px; height: 2px; background: var(--wine-200);"></span>Na cestu i dlouhý večer<br></p>
+        <h2 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 24px;letter-spacing:-0.015em;line-height:1;color:var(--white)">
+          <span style="font-size: clamp(22px, 2.6vw, 34px); font-weight: 800; text-transform: none; white-space: nowrap;">Bag-in-box&nbsp;</span>
+          <span style="font-family: var(--font-display); font-weight: 500; font-size: clamp(46px, 5.5vw, 72px); line-height: 0.75; white-space: nowrap;">vydrží</span>
+        </h2>
+        <p style="font-size: var(--text-body); line-height: var(--lh-relaxed); color: var(--wine-100); max-width: 70ch; margin: 0 0 30px; text-wrap: pretty">Praktické boxy s výpustným kohoutem udrží víno svěží několik týdnů po otevření. Ideální na chalupu, na oslavu i pro každodenní sklenku.</p>
+        <!-- TODO: napojení na admin — varianty bag-in-box a ceny -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px">
+          <div style="background:var(--white);border-radius:var(--radius-m);padding:26px 24px;box-shadow:var(--shadow-card)">
+            <p style="font-size:26px;font-weight:800;color:var(--color-brand);margin:0 0 6px;letter-spacing:-0.01em">3 l</p>
+            <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 0 14px">bílé · rosé · červené</p>
+            <p style="font-size:var(--text-h3);font-weight:700;color:var(--color-fg);margin:0">od 349 Kč</p>
+          </div>
+          <div style="background:var(--white);border-radius:var(--radius-m);padding:26px 24px;box-shadow:var(--shadow-card)">
+            <p style="font-size:26px;font-weight:800;color:var(--color-brand);margin:0 0 6px;letter-spacing:-0.01em">10 l</p>
+            <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 0 14px">bílé · rosé · červené</p>
+            <p style="font-size:var(--text-h3);font-weight:700;color:var(--color-fg);margin:0">od 990 Kč</p>
+          </div>
+        </div>
+        <p style="font-size:var(--text-body-s);color:var(--wine-200);margin:22px 0 0">Aktuální nabídka na prodejně se může od webu lišit.</p>
+      </div>
+      
+    </div>
+  </section>
+
+  <section id="lahvova-vina" data-screen-label="Lahvová vína" data-reveal="" style="scroll-margin-top:76px;width:100%;padding:clamp(64px,8vw,104px) clamp(20px,3.5vw,48px)">
+    <div style="max-width:1560px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(32px,4vw,64px);align-items:center">
+        <div>
+          <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--color-brand);font-weight:700;margin:0 0 18px">
+            <span style="display: block; width: 26px; height: 2px; background: var(--color-brand);"></span>Blatnička</p>
+          <h2 style="margin:0 0 24px">
+            <img src="assets/vino-hruska-logo.png" alt="Víno Hruška" style="display: block; object-fit: scale-down; height: 104px; width: 273px">
+          </h2>
+          <p style="font-size:var(--text-body);line-height:var(--lh-relaxed);color:var(--color-fg-muted);max-width:48ch;margin:0 0 24px;text-wrap:pretty">Základ naší nabídky lahvových vín. Rodinné vinařství z Blatničky, které navštěvujeme nejčastěji — jeho vína u nás najdete lahvová, stáčená i v bag-in-boxu.</p>
+          <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Kompletní nabídku najdete přímo na vinotéce.</p>
+        </div><div style="position:relative;height:clamp(300px,34vw,430px);border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-card)">
+          
+        <img src="assets/vino-hruska-vinice.webp" alt="Vinice s modrými hrozny" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+        
+      </div>
+
+      <!-- TODO: napojení na admin — loga dalších vinařství -->
+      <div style="margin-top:clamp(48px,6vw,80px)">
+        <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--color-brand);font-weight:700;margin:0 0 28px">
+          <span style="display:block;width:26px;height:2px;background:var(--color-brand)"></span>V nabídce také najdete
+        </p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px">
+          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+            <img src="assets/logo-konecny.jpg" alt="Vinařství Konečný" style="width: 255px; height: 124px; object-fit: contain; display: block; mix-blend-mode: multiply">
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+            <img src="assets/logo-omasta.png" alt="Vinařství Omasta" style="max-width: 100%; max-height: 76px; width: 161px; height: 56px; object-fit: contain; display: block">
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+            <img src="assets/logo-hradil.jpg" alt="Vinařství Hradil" style="max-width: 100%; max-height: 76px; width: 177px; height: 63px; object-fit: contain; display: block; mix-blend-mode: multiply">
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+            <img src="assets/logo-bv.png" alt="Vinařství B/V" style="max-width:100%;max-height:66px;width:auto;height:auto;object-fit:contain;display:block">
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+            <img src="assets/logo-kosut.png" alt="Rodinné vinařství Košut" style="max-width:100%;max-height:84px;width:auto;height:auto;object-fit:contain;display:block">
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+            <img src="assets/logo-zapletal.png" alt="Vinné sklepy Zapletal" style="max-width:100%;max-height:84px;width:auto;height:auto;object-fit:contain;display:block">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sekty-champagne" data-screen-label="Sekty a Champagne" data-reveal="" style="scroll-margin-top:76px;width:100%;background:var(--charcoal-900);color:var(--cream-50);padding:clamp(64px,8vw,104px) clamp(20px,3.5vw,48px)">
+    <div style="max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(32px,4vw,64px);align-items:center">
+      <div style="position:relative;height:clamp(300px,34vw,430px);border-radius:var(--radius-l);overflow:hidden">
+        <img src="assets/sekty-champagne.png" alt="Prosecca a Champagne v ledu" style="width:100%;height:100%;object-fit:cover;display:block">
+      </div>
+      <div>
+        <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-300);font-weight:700;margin:0 0 18px">
+          <span style="display:block;width:26px;height:2px;background:var(--gold-500)"></span>Připijme si
+        </p>
+        <h2 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 24px;letter-spacing:-0.015em;line-height:1;color:var(--white)">
+          <span style="font-size: clamp(20px,2.3vw,30px); font-weight: 800; text-transform: none; white-space: nowrap">Prosecca&nbsp;</span>
+          <span style="font-family:var(--font-display);font-weight:500;color:var(--gold-300);font-size:clamp(42px,4.9vw,64px);line-height:0.75;white-space:nowrap">a champagne</span>
+        </h2>
+        <p style="font-size:var(--text-body);line-height:var(--lh-relaxed);color:var(--charcoal-100);max-width:48ch;margin:0 0 24px;text-wrap:pretty">Italská prosecca <strong style="color: var(--gold-300); font-weight: 700;">Soligo</strong> a <strong style="color: var(--gold-300); font-weight: 700;">Ciodet</strong>, i pravé Champagne. Od lehkého aperitivu po láhev, která z večera udělá událost.</p>
+        <div style="display:flex;align-items:center;gap:22px">
+          <svg viewBox="0 0 40 60" fill="none" stroke="var(--gold-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:34px;height:52px;flex-shrink:0;opacity:0.9">
+            <path d="M13 4h14l-2 24a5 5 0 0 1-10 0z"></path><path d="M20 33v19"></path><path d="M12 55h16"></path>
+          </svg>
+          <p style="font-size:var(--text-body-s);color:var(--charcoal-300);margin:0">Kompletní nabídku najdete přímo na vinotéce.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="rumy-destilaty" data-screen-label="Rumy a destiláty" data-reveal="" style="scroll-margin-top:76px;width:100%;padding:clamp(64px,8vw,104px) clamp(20px,3.5vw,48px)">
+    <div style="max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(32px,4vw,64px);align-items:center">
+      <div>
+        <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--color-brand);font-weight:700;margin:0 0 18px">
+          <span style="display:block;width:26px;height:2px;background:var(--color-brand)"></span>Nejen víno
+        </p>
+        <h2 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 24px;letter-spacing:-0.015em;line-height:1">
+          <span style="font-size:clamp(22px,2.6vw,34px);font-weight:800;white-space:nowrap">Rumy&nbsp;</span>
+          <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(46px,5.5vw,72px);line-height:0.75;white-space:nowrap">a destiláty</span>
+        </h2>
+        <p style="font-size:var(--text-body);line-height:var(--lh-relaxed);color:var(--color-fg-muted);max-width:48ch;margin:0 0 24px;text-wrap:pretty">Zrající rumy z Karibiku i Filipín, moravské slivovice a řemeslné giny. Vybíráme lahve, které stojí za pomalé usrkávání — a rády dělají dobrý dárek.</p>
+        <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Kompletní nabídku najdete přímo na vinotéce.</p>
+      </div>
+      <div style="position:relative;height:clamp(300px,34vw,430px);border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-card)">
+        <img src="assets/rumy-destilaty.png" alt="Rumy, slivovice a gin ve vinotéce" style="width:100%;height:100%;object-fit:cover;display:block">
+      </div>
+    </div>
+  </section>
+
+  <section id="delikatesy" data-screen-label="Delikatesy" data-reveal="" style="scroll-margin-top:76px;width:100%;background:var(--surface-brand);color:var(--white);padding:clamp(64px,8vw,104px) clamp(20px,3.5vw,48px)">
+    <div style="max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(32px,4vw,64px);align-items:center">
+      <div style="position:relative;height:clamp(300px,34vw,430px);border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-raised)">
+        <img src="assets/delikatesy.png" alt="Delikatesy — paštiky, olivy, oříšky, tyčinky a čokoláda" style="width:100%;height:100%;object-fit:cover;display:block">
+      </div>
+      <div>
+        <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--wine-200);font-weight:700;margin:0 0 18px">
+          <span style="display:block;width:26px;height:2px;background:var(--wine-200)"></span>K vínu patří
+        </p>
+        <h2 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 24px;letter-spacing:-0.015em;line-height:1;color:var(--white)">
+          <span style="font-size:clamp(22px,2.6vw,34px);font-weight:800;white-space:nowrap">Delikatesy&nbsp;</span>
+          <span style="font-family:var(--font-display);font-weight:500;font-size:clamp(46px,5.5vw,72px);line-height:0.75;white-space:nowrap">a pochutiny</span>
+        </h2>
+        <p style="font-size:var(--text-body);line-height:var(--lh-relaxed);color:var(--wine-100);max-width:48ch;margin:0 0 24px;text-wrap:pretty">Paštiky, olivy, sušené uzeniny, škvarky, oříšky, sýrové a semínkové tyčinky, hroznový cukr i čokoláda. Vybíráme tak, aby každá pochutina dělala dobrou společnost vínu z našich regálů.</p>
+        <p style="font-size:var(--text-body-s);color:var(--wine-200);margin:0">Kompletní nabídku najdete přímo na vinotéce.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="darkove-baleni" data-screen-label="Dárková balení" data-reveal="" style="scroll-margin-top:76px;width:100%;background:var(--surface-sunken);padding:clamp(64px,8vw,104px) clamp(20px,3.5vw,48px)">
+    
+  <div style="max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(32px,4vw,64px);align-items:center">
+      <div style="order:2;position:relative;height:clamp(300px,34vw,430px);border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-card)">
+        <img src="assets/darkove-baleni.png" alt="Dárková kazeta s vínem, sklenkami a delikatesami" style="width:100%;height:100%;object-fit:cover;display:block">
+      </div>
+      <div style="order:1">
+        <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--color-brand);font-weight:700;margin:0 0 18px">
+          <span style="display:block;width:26px;height:2px;background:var(--color-brand)"></span>Balíme na míru
+        </p>
+        <h2 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 24px;letter-spacing:-0.015em;line-height:1">
+          <span style="font-size: clamp(20px,2.3vw,30px); font-weight: 800; text-transform: none; white-space: nowrap">Dárková balení</span>
+          <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.9vw,64px);line-height:0.75;white-space:nowrap">udělají radost.</span>
+        </h2>
+        <p style="font-size:var(--text-body);line-height:var(--lh-relaxed);color:var(--color-fg-muted);max-width:48ch;margin:0 0 30px;text-wrap:pretty">Kazety na jednu až šest lahví, kombinace vína s delikatesami, personalizovaná stužka nebo přání. Pro firmy připravíme i větší série vánočních a obchodních dárků s vaším logem.</p>
+        <a href="#kontakt" style="display:inline-flex;align-items:center;background:var(--color-brand);color:var(--white);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:15px 30px;border-radius:var(--radius-full);box-shadow:var(--shadow-brand)">Poptat dárkové balení</a>
+      </div>
+    </div></section>
+
+  <section id="partneri" data-screen-label="Partneři" data-reveal="" style="scroll-margin-top:76px;width:100%;padding:clamp(64px,8vw,104px) 0;overflow:hidden">
+    <div style="max-width:1560px;margin:0 auto;padding:0 clamp(20px,3.5vw,48px)">
+      <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--color-brand);font-weight:700;margin:0 0 18px">
+        <span style="display:block;width:26px;height:2px;background:var(--color-brand)"></span>Držíme si palce
+      </p>
+      <h2 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 40px;letter-spacing:-0.015em;line-height:1">
+        <span style="font-size: clamp(22px,2.6vw,34px); font-weight: 800; text-transform: none; white-space: nowrap">Partneři,&nbsp;</span>
+        <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(46px,5.5vw,72px);line-height:0.75;white-space:nowrap">co nám drží palce</span>
+      </h2>
+    </div>
+    <!-- TODO: napojení na admin — partneři. Nahradit textové dlaždice reálnými logy (b/w) a doplnit odkazy. -->
+    <div style="position:relative">
+      <div style="display:flex;width:max-content;animation:marquee 44s linear infinite" style-hover="animation-play-state:paused">
+        <div style="display:flex;align-items:center;gap:56px;padding:0 28px;flex-shrink:0">
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">Mountfield HK</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">FC Hradec Králové</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">PIZZZZA.CZ</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">Podroužek, Moník, Petera</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">ELKUM CZ</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">BK GAPA HK</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">CK Verana</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">ENERGYPACK</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">NAVITASCZ</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">BlackFox Art</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">La Vital</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">reddos productions</span>
+        </div>
+        <div aria-hidden="true" style="display:flex;align-items:center;gap:56px;padding:0 28px;flex-shrink:0">
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">Mountfield HK</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">FC Hradec Králové</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">PIZZZZA.CZ</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">Podroužek, Moník, Petera</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">ELKUM CZ</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">BK GAPA HK</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">CK Verana</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">ENERGYPACK</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">NAVITASCZ</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">BlackFox Art</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">La Vital</span>
+          <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">reddos productions</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="kontakt" data-screen-label="Kontakt / patička" style="scroll-margin-top:76px;width:100%;position:relative;background:var(--surface-dark);color:var(--cream-50);padding:clamp(56px,7vw,88px) clamp(20px,3.5vw,48px) 36px;overflow:hidden">
+    <svg viewBox="0 0 120 200" fill="none" stroke="var(--wine-400)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position:absolute;right:-10px;bottom:-20px;height:230px;opacity:0.28;pointer-events:none">
+      <path d="M52 62h16v26c0 8 14 14 14 30v70H38V118c0-16 14-22 14-30z"></path>
+      <path d="M38 140h44"></path><path d="M38 164h44"></path>
+      <path d="M60 62V30"></path><path d="M60 44c-10-6-20-2-24 4 10 6 18 4 24-4z"></path><path d="M60 34c-2-14 8-22 18-22 2 14-8 22-18 22z"></path>
+    </svg>
+    <div style="position:relative;max-width:1560px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:48px">
+        <div>
+          
+          <img src="assets/vinoteka-u-mazlika-logo.png" alt="Vinotéka u Mazlíka" style="display: block; filter: brightness(0) invert(1); margin-bottom: 24px; object-fit: contain; width: 302px; height: 98px; margin-right: 0px; position: relative; left: -28px">
+          <address style="font-style:normal;display:flex;flex-direction:column;gap:10px;font-size:var(--text-body);color:var(--charcoal-100)">
+            
+            <span>Rybova 1904/23<br>Hradec Králové, CZ</span>
+            <a href="tel:+420604734956" style="color:var(--white);font-weight:600">+420 604 734 956</a><a href="mailto:vinoteka@vinotekaumazlika.cz" style="color:var(--white);font-weight:600">vinoteka@vinotekaumazlika.cz</a>
+          </address><div style="display:flex;gap:10px;margin-top:24px">
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-full);border:1.5px solid rgba(255,255,255,0.25);color:var(--white)">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 9h3V5.5h-3c-2.2 0-4 1.8-4 4V12H7.5v3.5H10V22h3.5v-6.5H16l.5-3.5H13.5V9.5c0-.3.2-.5.5-.5z"></path></svg>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-full);border:1.5px solid rgba(255,255,255,0.25);color:var(--white)">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle></svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--charcoal-300);margin:0 0 18px">Otevírací doba</h3>
+          <div style="display:grid;grid-template-columns:1fr auto;gap:10px 16px;font-size:var(--text-body);color:var(--charcoal-100)">
+            <span>Po–Pá</span><span style="color:var(--white);font-weight:600">14:00–21:00</span>
+            <span>So–Ne</span><span style="color:var(--white);font-weight:600">16:00–21:00</span>
+            <span>Státní svátky</span><span style="color:var(--white);font-weight:600">16:00–21:00</span>
+          </div>
+          
+          <h3 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--charcoal-300);margin:28px 0 14px">Platební metody</h3><div style="display:flex;flex-wrap:wrap;gap:8px">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;color:var(--charcoal-100);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-full);padding:7px 14px">Hotově</span>
+            
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;color:var(--charcoal-100);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-full);padding:7px 14px">Visa</span>
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;color:var(--charcoal-100);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-full);padding:7px 14px">Mastercard</span>
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;color:var(--charcoal-100);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-full);padding:7px 14px">Apple&nbsp;Pay</span>
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;color:var(--charcoal-100);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-full);padding:7px 14px">Google&nbsp;Pay</span>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--charcoal-300);margin:0 0 18px">Fakturační údaje</h3>
+          <div style="font-size:var(--text-body-s);color:var(--charcoal-100);line-height:var(--lh-relaxed)">
+            <p style="margin:0 0 6px">Provozovatel: <strong style="color:var(--white);font-weight:600">Energy Pack s.r.o.</strong></p>
+            <p style="margin:0 0 6px">IČO: <span style="color:var(--charcoal-300)">29031168</span></p>
+            <p style="margin:0 0 6px">DIČ: <span style="color:var(--charcoal-300)">CZ29031168</span></p>
+            <p style="margin:0">Zápis v OR: Městský soud v Praze, oddíl C, vložka 161341</p>
+          </div>
+          <h3 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--charcoal-300);margin:28px 0 14px">Dokumenty</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:var(--text-body-s)">
+            <a href="./GDPR.dc.html" style="color:var(--white)">Zásady ochrany osobních údajů</a>
+            <a href="./Kamerový systém.dc.html" style="color:var(--white)">Směrnice provozování kamerového systému</a>
+            <a href="./Admin.dc.html" style="color:var(--charcoal-300)">Správa obsahu</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:1px;background:rgba(255,255,255,0.14);margin:44px 0 24px"></div>
+      <p style="font-size:var(--text-caption);line-height:var(--lh-relaxed);color:var(--charcoal-300);max-width:90ch;margin:0 0 18px">K mimosoudnímu řešení spotřebitelských sporů z kupní smlouvy je příslušná Česká obchodní inspekce, se sídlem Štěpánská 796/44, 110 00 Praha 1, IČO 000 20 869, internetová adresa <a href="https://adr.coi.cz" target="_blank" rel="noopener" style="color:var(--charcoal-100)">adr.coi.cz</a>, e-mail <a href="mailto:adr@coi.cz" style="color:var(--charcoal-100)">adr@coi.cz</a>.</p>
+      <p style="font-size:var(--text-caption);color:var(--charcoal-300);margin:0">© 2026 Vinotéka u Mazlíka</p>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;scrollSpy&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;animateOnScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;}}">
+class Component extends DCLogic {
+  state = { menuOpen: false };
+
+  renderVals() {
+    return {
+      menuDisplay: this.state.menuOpen ? "flex" : "none",
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+    };
+  }
+
+  componentDidMount() {
+    const root = document.body;
+    const links = [...root.querySelectorAll("a[data-spy]")];
+    const paint = (id) => links.forEach(a => {
+      const on = a.dataset.spy === id;
+      a.style.borderBottomColor = on ? "var(--white)" : "transparent";
+      a.style.opacity = on ? "1" : "0.92";
+    });
+
+    if (this.props.scrollSpy !== false) {
+      const targets = [...root.querySelectorAll("section[id], footer[id]")];
+      this._spy = new IntersectionObserver(entries => {
+        const vis = entries.filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (vis) paint(vis.target.id);
+      }, { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.2, 0.6, 1] });
+      targets.forEach(t => this._spy.observe(t));
+    }
+
+    if (this.props.animateOnScroll !== false) {
+      const reveals = [...root.querySelectorAll("[data-reveal]")];
+      reveals.forEach(el => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(22px)";
+        el.style.transition = "opacity 620ms var(--ease-standard), transform 620ms var(--ease-standard)";
+      });
+      this._rev = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.style.opacity = "1";
+            e.target.style.transform = "none";
+            this._rev.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: "0px 0px -12% 0px", threshold: 0.06 });
+      reveals.forEach(el => this._rev.observe(el));
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._spy) this._spy.disconnect();
+    if (this._rev) this._rev.disconnect();
+  }
+}
+</script>
+</body>
+</html>

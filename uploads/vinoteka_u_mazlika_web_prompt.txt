@@ -1,0 +1,161 @@
+# Prompt: Landing page „Vinotéka u Mazlíka“ (jednostránkový web se scroll navigací)
+
+## Cíl
+Vytvoř moderní, responzivní jednostránkový web (one-page site) pro vinotéku
+„Vinotéka u Mazlíka“ v Hradci Králové. Web je jedna dlouhá stránka rozdělená
+na sekce, mezi kterými se navigace v headeru plynule scrolluje (smooth scroll,
+anchor linky `#sekce`). Dvě právní podstránky (GDPR, kamerový systém) mohou
+zůstat jako samostatné route, na které vedou pouze odkazy z patičky — nejsou
+součástí hlavního scrollu.
+
+## Doporučený tech stack
+- Next.js (App Router) nebo čistě statický HTML/CSS/JS, podle preference
+- Tailwind CSS pro styling
+- Smooth scroll (`scroll-behavior: smooth` + `scroll-margin-top` na sekcích
+  kvůli sticky headeru)
+- Sticky/fixed header s aktivním zvýrazněním sekce podle scroll pozice
+  (scroll-spy)
+- Mobilní hamburger menu pro navigaci
+
+## Jazyk a tón
+Celý obsah webu je v češtině. Tón: útulná, rodinná vinotéka s důrazem na
+kvalitu, osobní přístup a poměr cena/kvalita. Zachovej diakritiku všude.
+
+---
+
+## 1. HEADER (sticky, napříč celou stránkou)
+- Logo vlevo — proklik na `#uvod` / úplný začátek stránky
+- Horní navigace (scroll-linky na sekce téže stránky):
+  - Stáčená vína → `#stacena-vina`
+  - Bag-in-box → `#bag-in-box`
+  - Lahvová vína → `#lahvova-vina`
+  - Prosecca, Sekty a Champagne → `#sekty-champagne`
+  - Delikatesy → `#delikatesy`
+  - Dárkové balení → `#darkove-baleni`
+  - Partneři → `#partneri`
+  - Kontakt → `#kontakt` (odkaz do patičky, kde jsou kontaktní údaje)
+- Na mobilu: hamburger ikonka, rozbalovací menu se stejnými odkazy
+
+## 2. HERO SEKCE (`#uvod`, úplný vrchol stránky)
+- Velký úvodní vizuál/pozadí evokující vinotéku (láhve, sklep, degustace)
+- Blok „Vinotéka u Mazlíka" s klíčovými údaji:
+  - Adresa: Rybova 1904/23, Hradec Králové, 500 09
+  - Otevírací doba:
+    - Po–Pá: 14:00–21:00
+    - So–Ne: 16:00–21:00
+    - Státní svátky: 16:00–21:00
+  - Telefon (klikací): `tel:+420604734956`
+  - E-mail (klikací): `mailto:vinoteka@vinotekaumazlika.cz`
+
+
+## 3. SEKCE „STÁČENÁ VÍNA / BAG-IN-BOX" (`#stacena-vina`, `#bag-in-box`)
+- Nadpis + podnadpis: krátký marketingový text o kvalitě a výhodném poměru
+  cena/kvalita stáčených vín
+- Blok pro aktuální nabídku a ceník — připrav jako placeholder/komponentu
+  napojitelnou na administraci (např. tabulka nebo karty s odrůdou, typem
+  a cenou za litr/500 ml, dynamicky načítané z CMS nebo API — označ jako
+  `TODO: napojení na admin`)
+- Poznámka (menším písmem): aktuální nabídka na prodejně se může od webu
+  lišit
+
+## 4. SEKCE „LAHVOVÁ VÍNA" (`#lahvova-vina`)
+- Nadpis + krátký úvod o partnerských vinařstvích
+- Grid/karusel karet partnerských vinařství — každá karta obsahuje obrázek
+  (láhev/logo vinařství) a název:
+  1. Víno Hruška (Blatnička, Slovácká podoblast) — zvýraznit jako hlavní
+     partner (větší/výraznější karta)
+  2. Vinselekt Michlovský
+  3. Vinařství Konečný
+  4. Vinařství Omasta
+  5. Santa Alicia (chilská vína)
+  6. Vinařství Hradil
+  7. Vinařství B/V
+  8. Rodinné vinařství KOŠUT
+  9. Vinné sklepy Zapletal
+- Označ jako `TODO: napojení na admin` (pokud se nabídka/vinařství budou
+  časem měnit přes CMS)
+
+## 5. SEKCE „PROSECCA, SEKTY A CHAMPAGNE" (`#sekty-champagne`)
+- Nadpis + popisný text zmiňující značky Soligo, Ciodet a obecně kategorie
+  prosecco / sekty / champagne
+- Jeden ilustrační obrázek (lahve v ledu / degustace apod.)
+- Text upozorňující, že kompletní nabídka je k vidění přímo na vinotéce
+  (web neobsahuje celý sortiment)
+
+## 6. SEKCE „DELIKATESY" (`#delikatesy`)
+- Nadpis + krátký text o doplňkovém sortimentu k vínu (sýry, uzeniny,
+  pochutiny apod. — doplň vhodný marketingový text)
+- Prostor pro obrázkovou galerii/ukázky produktů (placeholder)
+- Text upozorňující, že kompletní nabídka je k vidění přímo na vinotéce
+  (web neobsahuje celý sortiment)
+
+## 7. SEKCE „DÁRKOVÁ BALENÍ" (`#darkove-baleni`)
+- Nadpis „DÁRKOVÁ BALENÍ" + podnadpis
+- Popisný text o možnosti balení na míru (personalizace, firemní dárky
+  apod.)
+- Obrázek ukázky dárkových kazet
+
+## 8. SEKCE „PARTNEŘI" (`#partneri`)
+- Nadpis „PARTNEŘI"
+- Řádek partnerských log — každé logo je klikací odkaz na web
+  partnera (otevírat v novém okně, `target="_blank" rel="noopener"`):
+  1. Mountfield HK
+  2. FC Hradec Králové
+  3. PIZZZZA.CZ
+  4. Podroužek, Moník, Petera
+  5. ELKUM CZ, s.r.o.
+  6. BK GAPA HK
+  7. CK Verana
+  8. ENERGYPACK, s.r.o.
+  9. NAVITASCZ s.r.o.
+  10. BlackFox Art s.r.o.
+  11. La Vital
+  12. reddos productions
+- Označ jako `TODO: napojení na admin` (pokud se nabídka/vinařství budou
+  časem měnit přes CMS)
+
+## 9. FOOTER / KONTAKT (`#kontakt`)
+- Adresa: Rybova 1904/23, Hradec Králové, CZ
+- Blok „Vinotéka u Mazlíka" s fakturačními údaji:
+  - Provozovatel: Energy Pack s.r.o.
+  - IČO, DIČ (placeholder pro doplnění)
+  - Zápis v OR: Městský soud v Praze, oddíl C, vložka 161341
+- Klikací telefon: `tel:+420604734956`
+- Klikací e-mail: `mailto:vinoteka@vinotekaumazlika.cz`
+- Odkazy na Facebook a Instagram (ikony)
+- Ikony podporovaných platebních metod
+- Odkaz na `/gdpr/` (Zásady ochrany osobních údajů)
+- Odkaz na `/kamery/` (Směrnice provozování kamerového systému)
+- Právní text o mimosoudním řešení spotřebitelských sporů — odkaz na Českou
+  obchodní inspekci (ČOI), jejich adresu, e-mail a web `adr.coi.cz`
+- Copyright: „© 2026 Vinotéka u Mazlíka"
+
+---
+
+## 10. SAMOSTATNÉ PRÁVNÍ/SYSTÉMOVÉ PODSTRÁNKY (mimo hlavní scroll)
+
+### `/gdpr/` — Zásady ochrany osobních údajů
+- Správce údajů: Energy Pack s.r.o. + kontaktní osoba
+- Jaké osobní údaje se zpracovávají a proč: objednávky, degustace,
+  B2B vztahy, kontaktní formulář, účetnictví, obhajoba právních nároků
+- Doby uchování údajů
+- Zdroje osobních údajů
+- Příjemci osobních údajů
+- Explicitně uvést: web NEPOUŽÍVÁ cookies pro zpracování osobních údajů
+
+### `/kamery/` — Směrnice provozování kamerového systému
+- Standardní právní text o provozu kamerového systému v prostorách
+  vinotéky (účel, rozsah záznamu, doba uchování, práva subjektů údajů)
+
+---
+
+## Design & UX poznámky
+- Sticky header s scroll-spy (aktivní odkaz se zvýrazní podle viditelné
+  sekce)
+- Plynulé fade-in/scroll animace při vjezdu sekcí do viewportu
+- Plně responzivní (mobil, tablet, desktop)
+- Sekce s nabídkou (stáčená vína, lahvová vína) navrhni jako komponenty
+  s jasně oddělenými placeholder daty, aby šly později snadno napojit na
+  administraci/CMS
+- Dodržet korektní sémantické HTML (`<header>`, `<nav>`, `<section id="...">`,
+  `<footer>`) kvůli přístupnosti a SEO

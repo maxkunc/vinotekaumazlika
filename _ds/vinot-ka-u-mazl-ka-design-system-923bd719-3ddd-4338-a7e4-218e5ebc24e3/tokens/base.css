@@ -1,0 +1,5 @@
+*{box-sizing:border-box}
+body{margin:0;background:var(--surface-page);color:var(--color-fg);font-family:var(--font-sans);font-size:var(--text-body);line-height:var(--lh-normal)}
+a{color:var(--color-brand);text-decoration:none}
+a:hover{color:var(--color-brand-hover);text-decoration:underline}
+h1,h2,h3,h4{font-family:var(--font-sans);font-weight:var(--weight-bold);margin:0;letter-spacing:var(--ls-tight)}
