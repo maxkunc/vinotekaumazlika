@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "vinotka-static",
+      "runtimeExecutable": "powershell.exe",
+      "runtimeArgs": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "C:\\Users\\kuncm\\AppData\\Local\\Temp\\claude\\C--Users-kuncm-Desktop-vinotka\\d57f2679-88b0-4fc0-ac6b-81ae6cea55eb\\scratchpad\\static-server.ps1"
+      ],
+      "port": 8791
+    }
+  ]
+}
