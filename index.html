@@ -270,14 +270,14 @@ a:hover{color:var(--color-brand-hover)}
         <div>
           <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--color-brand);font-weight:700;margin:0 0 18px">
             <span style="display: block; width: 26px; height: 2px; background: var(--color-brand);"></span>Blatnička</p>
-          <h2 style="display:flex;flex-wrap:nowrap;align-items:baseline;gap:0.22em;margin:0 0 24px;letter-spacing:-0.015em;line-height:1">
-            <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.9vw,64px);line-height:0.75;white-space:nowrap">{{ mainWinery.name }}</span>
+          <h2 style="margin:0 0 24px">
+            <img src="assets/vino-hruska-logo.png" alt="Víno Hruška" style="display: block; object-fit: scale-down; height: 104px; width: 273px">
           </h2>
-          <p style="font-size:var(--text-body);line-height:var(--lh-relaxed);color:var(--color-fg-muted);max-width:48ch;margin:0 0 24px;text-wrap:pretty">{{ mainWinery.desc }}</p>
+          <p style="font-size:var(--text-body);line-height:var(--lh-relaxed);color:var(--color-fg-muted);max-width:48ch;margin:0 0 24px;text-wrap:pretty">Základ naší nabídky lahvových vín. Rodinné vinařství z Blatničky, které navštěvujeme nejčastěji — jeho vína u nás najdete lahvová, stáčená i v bag-in-boxu.</p>
           <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Kompletní nabídku najdete přímo na vinotéce.</p>
         </div><div style="position:relative;height:clamp(300px,34vw,430px);border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-card)">
 
-        <img src="{{ mainWinery.image }}" alt="{{ mainWinery.name }}" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+        <img src="assets/vino-hruska-vinice.webp" alt="Vinice s modrými hrozny" style="width:100%;height:100%;object-fit:cover;display:block"></div>
 
       </div>
 
@@ -286,11 +286,24 @@ a:hover{color:var(--color-brand-hover)}
           <span style="display:block;width:26px;height:2px;background:var(--color-brand)"></span>V nabídce také najdete
         </p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px">
-          <sc-for list="{{ otherWineries }}" as="v" hint-placeholder-count="6">
-            <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
-              <img src="{{ v.image }}" alt="{{ v.name }}" style="max-width:100%;max-height:84px;width:auto;height:auto;object-fit:contain;display:block">
-            </div>
-          </sc-for>
+          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+            <img src="assets/logo-konecny.jpg" alt="Vinařství Konečný" style="width: 255px; height: 124px; object-fit: contain; display: block; mix-blend-mode: multiply">
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+            <img src="assets/logo-omasta.png" alt="Vinařství Omasta" style="max-width: 100%; max-height: 76px; width: 161px; height: 56px; object-fit: contain; display: block">
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+            <img src="assets/logo-hradil.jpg" alt="Vinařství Hradil" style="max-width: 100%; max-height: 76px; width: 177px; height: 63px; object-fit: contain; display: block; mix-blend-mode: multiply">
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+            <img src="assets/logo-bv.png" alt="Vinařství B/V" style="max-width:100%;max-height:66px;width:auto;height:auto;object-fit:contain;display:block">
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+            <img src="assets/logo-kosut.png" alt="Rodinné vinařství Košut" style="max-width:100%;max-height:84px;width:auto;height:auto;object-fit:contain;display:block">
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;height:120px;padding:18px;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);text-align:center">
+            <img src="assets/logo-zapletal.png" alt="Vinné sklepy Zapletal" style="max-width:100%;max-height:84px;width:auto;height:auto;object-fit:contain;display:block">
+          </div>
         </div>
       </div>
     </div>
@@ -493,16 +506,6 @@ const CONTENT_DEFAULTS = {
     { name: "Aperol Spritz", desc: "míchaný, aperitiv", price: "159 Kč" },
   ],
   bottlePrice: "10 Kč",
-  mainWinery: 0,
-  wineries: [
-    { name: "Víno Hruška", desc: "Blatnička, Slovácká podoblast — základ naší nabídky lahvových vín.", image: "assets/vino-hruska-vinice.webp" },
-    { name: "Vinařství Konečný", desc: "", image: "assets/logo-konecny.jpg" },
-    { name: "Vinařství Omasta", desc: "", image: "assets/logo-omasta.png" },
-    { name: "Vinařství Hradil", desc: "", image: "assets/logo-hradil.jpg" },
-    { name: "Vinařství B/V", desc: "", image: "assets/logo-bv.png" },
-    { name: "Rodinné vinařství KOŠUT", desc: "", image: "assets/logo-kosut.png" },
-    { name: "Vinné sklepy Zapletal", desc: "", image: "assets/logo-zapletal.png" },
-  ],
   partners: [
     "Mountfield HK", "FC Hradec Králové", "PIZZZZA.CZ", "Podroužek, Moník, Petera",
     "ELKUM CZ", "BK GAPA HK", "CK Verana", "ENERGYPACK",
@@ -550,8 +553,6 @@ class Component extends DCLogic {
   renderVals() {
     const c = this.state.content;
     const mapHref = (street, city) => "geo:0,0?q=" + encodeURIComponent(street + ", " + city);
-    const mainWinery = c.wineries[c.mainWinery] || c.wineries[0] || {};
-    const otherWineries = c.wineries.filter((_, i) => i !== c.mainWinery);
     const burcak = c.seasonal.burcak || {};
     const svato = c.seasonal.svatomartinska || {};
 
@@ -562,8 +563,6 @@ class Component extends DCLogic {
 
       wines: c.wines,
       bottlePrice: c.bottlePrice,
-      mainWinery,
-      otherWineries,
       partners: c.partners.map(p => ({ name: p.name, logo: p.logo, noLogo: !p.logo })),
       hours: c.hours,
       contact: {
