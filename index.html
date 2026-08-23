@@ -65,6 +65,7 @@ a{color:var(--color-brand);text-decoration:none}
 a:hover{color:var(--color-brand-hover)}
 .nav-burger{display:none}
 @media (max-width:1180px){.nav-desktop{display:none !important}.nav-burger{display:inline-flex !important}}
+@media (max-width:1024px){.hero-bg-img{object-position:right center !important}}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes loaderSweep{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
 #__loader{position:fixed;inset:0;z-index:9999;background:#FFFFFF;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:1;transition:opacity 420ms var(--ease-standard)}
@@ -123,7 +124,7 @@ a:hover{color:var(--color-brand-hover)}
 
   <section id="uvod" data-screen-label="Hero" style="position: relative; width: 100%; min-height: min(84vh,720px); display: flex; align-items: center; overflow: hidden; height: 1180px">
     <div style="position:absolute;inset:0">
-      <img src="assets/hero-prkenko.png" alt="Prkénko s klobásou, olivami a sklenkou vína ve vinotéce" style="width:100%;height:100%;object-fit:cover;display:block">
+      <img class="hero-bg-img" src="assets/hero-prkenko.png" alt="Prkénko s klobásou, olivami a sklenkou vína ve vinotéce" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block">
     </div>
     <div style="position: absolute; inset: 0; background: linear-gradient(90deg, #000000EB, #00000024); pointer-events: none; overflow: auto"></div>
     
@@ -135,7 +136,7 @@ a:hover{color:var(--color-brand-hover)}
         
         
       </h1>
-      <span style="font-size: 33px; font-weight: 800; text-transform: none; white-space: nowrap; color: var(--wine-50); letter-spacing: 11.8px">VINOTÉKA</span><span style="font-family: var(--font-display); font-weight: 500; color: var(--wine-600); font-size: clamp(59px,9.7vw,135px); line-height: 0.75; white-space: nowrap; display: block; margin-bottom: 0px; margin-top: -47px">u mazlíka</span><p style="font-size:var(--text-body-l);line-height:var(--lh-relaxed);color:var(--cream-50);max-width:46ch;margin:30px 0 34px;text-wrap:pretty">Rodinná vinotéka v Hradci Králové s pečlivě vybranou nabídkou stáčených i lahvových vín, delikates a dárkových balení.</p>
+      <span style="font-size: clamp(15px,4.6vw,33px); font-weight: 800; text-transform: none; white-space: nowrap; color: var(--wine-50); letter-spacing: clamp(3.5px,1.65vw,11.8px)">VINOTÉKA</span><span style="font-family: var(--font-display); font-weight: 500; color: var(--wine-600); font-size: clamp(30px,9.7vw,135px); line-height: 0.75; white-space: nowrap; display: block; margin-bottom: 0px; margin-top: clamp(-47px,-3.4vw,-18px)">u mazlíka</span><p style="font-size:var(--text-body-l);line-height:var(--lh-relaxed);color:var(--cream-50);max-width:46ch;margin:30px 0 34px;text-wrap:pretty">Rodinná vinotéka v Hradci Králové s pečlivě vybranou nabídkou stáčených i lahvových vín, delikates a dárkových balení.</p>
     </div></section>
 
   
@@ -194,6 +195,7 @@ a:hover{color:var(--color-brand-hover)}
             <span style="font-family: var(--font-display); font-weight: 500; font-size: clamp(46px, 5.5vw, 72px); line-height: 0.75; white-space: nowrap;">{{ burcak.titleAccent }}</span>
           </h2>
           <p style="font-size: var(--text-body); line-height: var(--lh-relaxed); color: var(--wine-100); max-width: 70ch; margin: 0 0 30px; text-wrap: pretty">{{ burcak.text }}</p>
+          <p style="display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,0.35);color:var(--wine-100);font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 12px;border-radius:var(--radius-full);margin:0 0 14px">Aktuální nabídka</p>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px">
             <sc-for list="{{ burcak.tiles }}" as="t" hint-placeholder-count="2">
               <div style="background:var(--white);border-radius:var(--radius-m);padding:26px 24px;box-shadow:var(--shadow-card)">
@@ -206,6 +208,25 @@ a:hover{color:var(--color-brand-hover)}
           <p style="font-size:var(--text-body-s);color:var(--wine-200);margin:22px 0 0">Aktuální nabídka na prodejně se může od webu lišit.</p>
         </div>
       </div>
+
+      <sc-if value="{{ burcak.nextDelivery.hasContent }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:1560px;margin:clamp(32px,4vw,48px) auto 0">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:28px;background:var(--white);color:var(--color-fg);border-radius:var(--radius-l);box-shadow:var(--shadow-raised);padding:clamp(24px,3vw,34px) clamp(24px,3.4vw,40px);border-left:8px solid var(--color-brand)">
+            <sc-if value="{{ burcak.nextDelivery.image }}" hint-placeholder-val="{{ false }}">
+              <div style="width:120px;height:120px;border-radius:var(--radius-m);overflow:hidden;flex-shrink:0;box-shadow:var(--shadow-card)">
+                <img src="{{ burcak.nextDelivery.image }}" alt="Příští závoz burčáku" style="width:100%;height:100%;object-fit:cover;display:block">
+              </div>
+            </sc-if>
+            <div style="flex:1;min-width:220px">
+              <p style="display:inline-flex;align-items:center;gap:8px;background:var(--color-brand);color:var(--white);font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;border-radius:var(--radius-full);margin:0 0 14px;box-shadow:var(--shadow-brand)">Příští závoz</p>
+              <p style="font-size:var(--text-body-l);font-weight:700;line-height:var(--lh-relaxed);margin:0 0 12px;color:var(--color-fg);text-wrap:pretty">{{ burcak.nextDelivery.text }}</p>
+              <sc-if value="{{ burcak.nextDelivery.phone }}" hint-placeholder-val="{{ false }}">
+                <p style="margin:0;font-size:var(--text-h3);font-weight:800">Objednáte na čísle <a href="tel:{{ burcak.nextDelivery.phoneHref }}" style="color:var(--color-brand)">{{ burcak.nextDelivery.phone }}</a></p>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </sc-if>
     </section>
   </sc-if>
 
@@ -604,7 +625,7 @@ const CONTENT_DEFAULTS = {
     instagram: "https://www.instagram.com/",
   },
   seasonal: {
-    burcak: { enabled: false, eyebrow: "", titleMain: "", titleAccent: "", text: "", image: "", tiles: [] },
+    burcak: { enabled: false, eyebrow: "", titleMain: "", titleAccent: "", text: "", image: "", tiles: [], nextDelivery: { text: "", phone: "", image: "" } },
     svatomartinska: { enabled: false, eyebrow: "", titleMain: "", titleAccent: "", text: "", image: "", tiles: [] },
   },
 };
@@ -659,6 +680,17 @@ class Component extends DCLogic {
     const mapHref = (street, city) => "geo:0,0?q=" + encodeURIComponent(street + ", " + city);
     const burcak = c.seasonal.burcak || {};
     const svato = c.seasonal.svatomartinska || {};
+    const nd = burcak.nextDelivery || {};
+    const burcakWithDelivery = {
+      ...burcak,
+      nextDelivery: {
+        text: nd.text || "",
+        phone: nd.phone || "",
+        phoneHref: (nd.phone || "").replace(/\s+/g, ""),
+        image: nd.image || "",
+        hasContent: !!(nd.text || nd.phone || nd.image),
+      },
+    };
 
     return {
       menuDisplay: this.state.menuOpen ? "flex" : "none",
@@ -683,7 +715,7 @@ class Component extends DCLogic {
       mapHref: mapHref(c.contact.street, c.contact.city),
 
       burcakEnabled: !!burcak.enabled,
-      burcak,
+      burcak: burcakWithDelivery,
       svatoEnabled: !!svato.enabled,
       svato,
     };
