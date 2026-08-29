@@ -66,6 +66,10 @@ a:hover{color:var(--color-brand-hover)}
 .nav-burger{display:none}
 @media (max-width:1180px){.nav-desktop{display:none !important}.nav-burger{display:inline-flex !important}}
 @media (max-width:1024px){.hero-bg-img{object-position:right center !important}}
+.next-delivery-card{display:grid;grid-template-columns:1fr}
+.next-delivery-card.has-image{grid-template-columns:200px 1fr}
+.next-delivery-card .next-delivery-img{width:100%;height:100%;min-height:200px}
+@media (max-width:640px){.next-delivery-card.has-image{grid-template-columns:1fr}.next-delivery-card .next-delivery-img{height:220px;min-height:0}}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes loaderSweep{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
 #__loader{position:fixed;inset:0;z-index:9999;background:#FFFFFF;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:1;transition:opacity 420ms var(--ease-standard)}
@@ -122,7 +126,7 @@ a:hover{color:var(--color-brand-hover)}
     </nav>
   </header>
 
-  <section id="uvod" data-screen-label="Hero" style="position: relative; width: 100%; min-height: min(84vh,720px); display: flex; align-items: center; overflow: hidden; height: 1180px">
+  <section id="uvod" data-screen-label="Hero" style="position: relative; width: 100%; min-height: clamp(500px,84vh,1180px); display: flex; align-items: center; overflow: hidden">
     <div style="position:absolute;inset:0">
       <img class="hero-bg-img" src="assets/hero-prkenko.png" alt="Prkénko s klobásou, olivami a sklenkou vína ve vinotéce" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block">
     </div>
@@ -211,14 +215,14 @@ a:hover{color:var(--color-brand-hover)}
 
       <sc-if value="{{ burcak.nextDelivery.hasContent }}" hint-placeholder-val="{{ false }}">
         <div style="max-width:1560px;margin:clamp(32px,4vw,48px) auto 0">
-          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:28px;background:var(--white);color:var(--color-fg);border-radius:var(--radius-l);box-shadow:var(--shadow-raised);padding:clamp(24px,3vw,34px) clamp(24px,3.4vw,40px);border-left:8px solid var(--color-brand)">
+          <div class="{{ burcak.nextDelivery.cardClass }}" style="align-items:stretch;background:var(--white);color:var(--color-fg);border-radius:var(--radius-l);box-shadow:var(--shadow-raised);overflow:hidden;border-left:8px solid var(--color-brand)">
             <sc-if value="{{ burcak.nextDelivery.image }}" hint-placeholder-val="{{ false }}">
-              <div style="width:120px;height:120px;border-radius:var(--radius-m);overflow:hidden;flex-shrink:0;box-shadow:var(--shadow-card)">
+              <div class="next-delivery-img">
                 <img src="{{ burcak.nextDelivery.image }}" alt="Příští závoz burčáku" style="width:100%;height:100%;object-fit:cover;display:block">
               </div>
             </sc-if>
-            <div style="flex:1;min-width:220px">
-              <p style="display:inline-flex;align-items:center;gap:8px;background:var(--color-brand);color:var(--white);font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;border-radius:var(--radius-full);margin:0 0 14px;box-shadow:var(--shadow-brand)">Příští závoz</p>
+            <div style="padding:clamp(24px,3vw,34px) clamp(24px,3.4vw,40px);display:flex;flex-direction:column;justify-content:center">
+              <p style="display:inline-flex;align-items:center;gap:8px;background:var(--color-brand);color:var(--white);font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;border-radius:var(--radius-full);margin:0 0 14px;box-shadow:var(--shadow-brand);width:fit-content">Příští závoz</p>
               <p style="font-size:var(--text-body-l);font-weight:700;line-height:var(--lh-relaxed);margin:0 0 12px;color:var(--color-fg);text-wrap:pretty">{{ burcak.nextDelivery.text }}</p>
               <sc-if value="{{ burcak.nextDelivery.phone }}" hint-placeholder-val="{{ false }}">
                 <p style="margin:0;font-size:var(--text-h3);font-weight:800">Objednáte na čísle <a href="tel:{{ burcak.nextDelivery.phoneHref }}" style="color:var(--color-brand)">{{ burcak.nextDelivery.phone }}</a></p>
@@ -466,7 +470,9 @@ a:hover{color:var(--color-brand-hover)}
             <sc-if value="{{ p.hasUrl }}" hint-placeholder-val="{{ false }}">
               <a href="{{ p.url }}" target="_blank" rel="noopener" style="display:flex;align-items:center">
                 <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
-                  <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:34px;width:auto;max-width:160px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+                  <div style="width:140px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <img src="{{ p.logo }}" alt="{{ p.name }}" style="max-width:100%;max-height:100%;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+                  </div>
                 </sc-if>
                 <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
                   <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
@@ -475,7 +481,9 @@ a:hover{color:var(--color-brand-hover)}
             </sc-if>
             <sc-if value="{{ p.noUrl }}" hint-placeholder-val="{{ true }}">
               <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
-                <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:34px;width:auto;max-width:160px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+                <div style="width:140px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <img src="{{ p.logo }}" alt="{{ p.name }}" style="max-width:100%;max-height:100%;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+                </div>
               </sc-if>
               <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
                 <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
@@ -488,7 +496,9 @@ a:hover{color:var(--color-brand-hover)}
             <sc-if value="{{ p.hasUrl }}" hint-placeholder-val="{{ false }}">
               <a href="{{ p.url }}" tabindex="-1" target="_blank" rel="noopener" style="display:flex;align-items:center">
                 <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
-                  <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:34px;width:auto;max-width:160px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+                  <div style="width:140px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <img src="{{ p.logo }}" alt="{{ p.name }}" style="max-width:100%;max-height:100%;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+                  </div>
                 </sc-if>
                 <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
                   <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
@@ -497,7 +507,9 @@ a:hover{color:var(--color-brand-hover)}
             </sc-if>
             <sc-if value="{{ p.noUrl }}" hint-placeholder-val="{{ true }}">
               <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
-                <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:34px;width:auto;max-width:160px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+                <div style="width:140px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <img src="{{ p.logo }}" alt="{{ p.name }}" style="max-width:100%;max-height:100%;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1">
+                </div>
               </sc-if>
               <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
                 <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
@@ -689,6 +701,7 @@ class Component extends DCLogic {
         phoneHref: (nd.phone || "").replace(/\s+/g, ""),
         image: nd.image || "",
         hasContent: !!(nd.text || nd.phone || nd.image),
+        cardClass: "next-delivery-card" + (nd.image ? " has-image" : ""),
       },
     };
 
