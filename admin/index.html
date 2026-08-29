@@ -204,14 +204,20 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
               </div>
               <div><label>Text</label><textarea rows="3" value="{{ burcak.text }}" onChange="{{ burcak.setText }}"></textarea></div>
               <div><label>Cesta k fotografii</label><input type="text" value="{{ burcak.image }}" onChange="{{ burcak.setImage }}"></div>
-              <label style="margin-bottom:0">Dlaždice s cenami</label>
+              <label style="margin-bottom:0">Varianty s cenami</label>
+              <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Přidejte jednu variantu (např. jen bílý) nebo dvě najednou (bílý i červený) — počet dlaždic na webu odpovídá počtu variant zde.</p>
               <sc-for list="{{ burcak.tiles }}" as="t" hint-placeholder-count="2">
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px">
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px">
                   <div><label>Popisek</label><input type="text" value="{{ t.label }}" onChange="{{ t.setLabel }}"></div>
                   <div><label>Poznámka</label><input type="text" value="{{ t.note }}" onChange="{{ t.setNote }}"></div>
                   <div><label>Cena</label><input type="text" value="{{ t.price }}" onChange="{{ t.setPrice }}"></div>
+                  <button onClick="{{ t.remove }}" aria-label="Odebrat variantu" style="border:1px solid var(--border-subtle);background:transparent;color:var(--color-fg-muted);cursor:pointer;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:11px 16px;border-radius:var(--radius-full);white-space:nowrap">Odebrat</button>
                 </div>
               </sc-for>
+              <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+                <button onClick="{{ burcak.addTile }}" style="border:none;cursor:pointer;background:var(--color-brand);color:var(--white);font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:12px 22px;border-radius:var(--radius-full)">+ Přidat variantu</button>
+                <span style="font-size:var(--text-body-s);color:var(--color-fg-muted)">Zobrazeno variant: {{ burcak.tileCount }}</span>
+              </div>
               <div style="height:1px;background:var(--border-subtle);margin:8px 0"></div>
               <h3 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin:0">Příští závoz</h3>
               <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Zvýrazněný box nad Stáčenými víny, oddělený od aktuální nabídky. Zůstane skrytý, dokud nevyplníte alespoň jedno pole.</p>
@@ -234,14 +240,20 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
               </div>
               <div><label>Text</label><textarea rows="3" value="{{ svato.text }}" onChange="{{ svato.setText }}"></textarea></div>
               <div><label>Cesta k fotografii</label><input type="text" value="{{ svato.image }}" onChange="{{ svato.setImage }}"></div>
-              <label style="margin-bottom:0">Dlaždice s cenami</label>
+              <label style="margin-bottom:0">Varianty s cenami</label>
+              <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Přidejte jednu variantu nebo dvě najednou — počet dlaždic na webu odpovídá počtu variant zde.</p>
               <sc-for list="{{ svato.tiles }}" as="t" hint-placeholder-count="2">
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px">
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px">
                   <div><label>Popisek</label><input type="text" value="{{ t.label }}" onChange="{{ t.setLabel }}"></div>
                   <div><label>Poznámka</label><input type="text" value="{{ t.note }}" onChange="{{ t.setNote }}"></div>
                   <div><label>Cena</label><input type="text" value="{{ t.price }}" onChange="{{ t.setPrice }}"></div>
+                  <button onClick="{{ t.remove }}" aria-label="Odebrat variantu" style="border:1px solid var(--border-subtle);background:transparent;color:var(--color-fg-muted);cursor:pointer;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:11px 16px;border-radius:var(--radius-full);white-space:nowrap">Odebrat</button>
                 </div>
               </sc-for>
+              <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+                <button onClick="{{ svato.addTile }}" style="border:none;cursor:pointer;background:var(--color-brand);color:var(--white);font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:12px 22px;border-radius:var(--radius-full)">+ Přidat variantu</button>
+                <span style="font-size:var(--text-body-s);color:var(--color-fg-muted)">Zobrazeno variant: {{ svato.tileCount }}</span>
+              </div>
             </div>
 
           </div>
@@ -515,7 +527,10 @@ class Component extends DCLogic {
         setLabel: this.tileField(key, i, "label"),
         setNote: this.tileField(key, i, "note"),
         setPrice: this.tileField(key, i, "price"),
+        remove: () => this.seasonalPatch(key, ss => { ss.tiles.splice(i, 1); }),
       })),
+      tileCount: s.tiles.length,
+      addTile: () => this.seasonalPatch(key, ss => { ss.tiles.push({ label: "Nová varianta", note: "", price: "" }); }),
       nextDelivery: {
         text: (s.nextDelivery && s.nextDelivery.text) || "",
         setText: (e) => { const v = e.target.value; this.seasonalPatch(key, ss => { ss.nextDelivery = ss.nextDelivery || {}; ss.nextDelivery.text = v; }); },
