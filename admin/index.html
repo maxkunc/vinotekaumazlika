@@ -78,7 +78,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
         <button onClick="{{ tab.select }}" style="{{ tab.style }}">{{ tab.label }}</button>
       </sc-for>
       <div style="height:1px;background:var(--border-subtle);margin:20px 12px"></div>
-      <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 12px;line-height:var(--lh-relaxed)">Změny se ukládají do databáze a projeví se na webu ihned po uložení.</p>
+      <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 12px;line-height:var(--lh-relaxed)">Změny se ukládají do databáze a&nbsp;projeví se na webu ihned po uložení.</p>
     </nav>
 
     <main style="min-width:0;padding:clamp(28px,3.5vw,48px)">
@@ -90,7 +90,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
             <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Stáčená</span>
             <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">vína</span>
           </h1>
-          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Ceník na hlavní stránce. Řádky lze přidávat, mazat i přeřazovat — pořadí odpovídá pořadí na webu.</p>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Ceník na hlavní stránce. Řádky lze přidávat, mazat i&nbsp;přeřazovat — pořadí odpovídá pořadí na webu.</p>
 
           <div style="display:flex;flex-direction:column;gap:12px">
             <sc-for list="{{ wines }}" as="w" hint-placeholder-count="4">
@@ -123,6 +123,20 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
             <label>Cena za kus</label>
             <input type="text" value="{{ bottlePrice }}" onChange="{{ setBottlePrice }}">
           </div>
+
+          <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:24px;margin-top:20px;max-width:640px">
+            <h2 style="font-size:var(--text-h3);font-weight:800;margin:0 0 6px">Bag-in-box</h2>
+            <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 0 18px">Varianty a&nbsp;fotografie v&nbsp;sekci Bag-in-box.</p>
+            <label>Cesta k&nbsp;fotografii</label>
+            <input type="text" value="{{ bagInBox.image }}" onChange="{{ bagInBox.setImage }}" style="margin-bottom:16px">
+            <sc-for list="{{ bagInBox.tiles }}" as="t" hint-placeholder-count="2">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px;margin-bottom:10px">
+                <div><label>Velikost</label><input type="text" value="{{ t.label }}" onChange="{{ t.setLabel }}"></div>
+                <div><label>Poznámka</label><input type="text" value="{{ t.note }}" onChange="{{ t.setNote }}"></div>
+                <div><label>Cena</label><input type="text" value="{{ t.price }}" onChange="{{ t.setPrice }}"></div>
+              </div>
+            </sc-for>
+          </div>
         </section>
       </sc-if>
 
@@ -133,7 +147,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
             <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Partneři</span>
             <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">a loga</span>
           </h1>
-          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Loga v pohyblivém pásu. Bez nahraného loga se zobrazí název partnera jako text.</p>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Loga v&nbsp;pohyblivém pásu. Bez nahraného loga se zobrazí název partnera jako text.</p>
 
           <div style="display:flex;flex-direction:column;gap:12px">
             <sc-for list="{{ partners }}" as="p" hint-placeholder-count="6">
@@ -143,7 +157,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
                   <input type="text" value="{{ p.name }}" onChange="{{ p.setName }}">
                 </div>
                 <div>
-                  <label>Logo (cesta k souboru)</label>
+                  <label>Logo (cesta k&nbsp;souboru)</label>
                   <input type="text" value="{{ p.logo }}" onChange="{{ p.setLogo }}">
                 </div>
                 <div>
@@ -165,7 +179,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
             <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Otevírací</span>
             <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">doba</span>
           </h1>
-          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Zobrazuje se v sekci Návštěva a v patičce webu.</p>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Zobrazuje se v&nbsp;sekci Návštěva a&nbsp;v&nbsp;patičce webu.</p>
 
           <div style="display:flex;flex-direction:column;gap:12px;max-width:640px">
             <sc-for list="{{ hours }}" as="h" hint-placeholder-count="3">
@@ -208,9 +222,9 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
                 <div><label>Titulek (zvýrazněný)</label><input type="text" value="{{ burcak.titleAccent }}" onChange="{{ burcak.setTitleAccent }}"></div>
               </div>
               <div><label>Text</label><textarea rows="3" value="{{ burcak.text }}" onChange="{{ burcak.setText }}"></textarea></div>
-              <div><label>Cesta k fotografii</label><input type="text" value="{{ burcak.image }}" onChange="{{ burcak.setImage }}"></div>
-              <label style="margin-bottom:0">Varianty s cenami</label>
-              <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Přidejte jednu variantu (např. jen bílý) nebo dvě najednou (bílý i červený) — počet dlaždic na webu odpovídá počtu variant zde.</p>
+              <div><label>Cesta k&nbsp;fotografii</label><input type="text" value="{{ burcak.image }}" onChange="{{ burcak.setImage }}"></div>
+              <label style="margin-bottom:0">Varianty s&nbsp;cenami</label>
+              <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Přidejte jednu variantu (např. jen bílý) nebo dvě najednou (bílý i&nbsp;červený) — počet dlaždic na webu odpovídá počtu variant zde.</p>
               <sc-for list="{{ burcak.tiles }}" as="t" hint-placeholder-count="2">
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px">
                   <div><label>Popisek</label><input type="text" value="{{ t.label }}" onChange="{{ t.setLabel }}"></div>
@@ -229,7 +243,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
               <div><label>Text</label><textarea rows="2" value="{{ burcak.nextDelivery.text }}" onChange="{{ burcak.nextDelivery.setText }}"></textarea></div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
                 <div><label>Telefon pro objednávky</label><input type="text" value="{{ burcak.nextDelivery.phone }}" onChange="{{ burcak.nextDelivery.setPhone }}"></div>
-                <div><label>Cesta k fotografii</label><input type="text" value="{{ burcak.nextDelivery.image }}" onChange="{{ burcak.nextDelivery.setImage }}"></div>
+                <div><label>Cesta k&nbsp;fotografii</label><input type="text" value="{{ burcak.nextDelivery.image }}" onChange="{{ burcak.nextDelivery.setImage }}"></div>
               </div>
             </div>
 
@@ -244,8 +258,8 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
                 <div><label>Titulek (zvýrazněný)</label><input type="text" value="{{ svato.titleAccent }}" onChange="{{ svato.setTitleAccent }}"></div>
               </div>
               <div><label>Text</label><textarea rows="3" value="{{ svato.text }}" onChange="{{ svato.setText }}"></textarea></div>
-              <div><label>Cesta k fotografii</label><input type="text" value="{{ svato.image }}" onChange="{{ svato.setImage }}"></div>
-              <label style="margin-bottom:0">Varianty s cenami</label>
+              <div><label>Cesta k&nbsp;fotografii</label><input type="text" value="{{ svato.image }}" onChange="{{ svato.setImage }}"></div>
+              <label style="margin-bottom:0">Varianty s&nbsp;cenami</label>
               <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Přidejte jednu variantu nebo dvě najednou — počet dlaždic na webu odpovídá počtu variant zde.</p>
               <sc-for list="{{ svato.tiles }}" as="t" hint-placeholder-count="2">
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px">
@@ -272,13 +286,13 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
             <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Kontakt</span>
             <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">a údaje</span>
           </h1>
-          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Kontaktní a fakturační údaje v patičce, sekci Návštěva a na právních podstránkách.</p>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Kontaktní a&nbsp;fakturační údaje v&nbsp;patičce, sekci Návštěva a&nbsp;na právních podstránkách.</p>
 
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:1000px">
             <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:16px">
               <h2 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin:0">Prodejna</h2>
               <div><label>Adresa</label><input type="text" value="{{ contact.street }}" onChange="{{ setStreet }}"></div>
-              <div><label>Město a PSČ</label><input type="text" value="{{ contact.city }}" onChange="{{ setCity }}"></div>
+              <div><label>Město a&nbsp;PSČ</label><input type="text" value="{{ contact.city }}" onChange="{{ setCity }}"></div>
               <div><label>Telefon</label><input type="text" value="{{ contact.phone }}" onChange="{{ setPhone }}"></div>
               <div><label>E-mail</label><input type="text" value="{{ contact.email }}" onChange="{{ setEmail }}"></div>
             </div>
@@ -287,7 +301,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
               <div><label>Provozovatel</label><input type="text" value="{{ contact.company }}" onChange="{{ setCompany }}"></div>
               <div><label>IČO</label><input type="text" value="{{ contact.ico }}" onChange="{{ setIco }}"></div>
               <div><label>DIČ</label><input type="text" value="{{ contact.dic }}" onChange="{{ setDic }}"></div>
-              <div><label>Zápis v OR</label><input type="text" value="{{ contact.registry }}" onChange="{{ setRegistry }}"></div>
+              <div><label>Zápis v&nbsp;OR</label><input type="text" value="{{ contact.registry }}" onChange="{{ setRegistry }}"></div>
             </div>
             <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:16px">
               <h2 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin:0">Sociální sítě</h2>
@@ -305,7 +319,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
   <sc-if value="{{ showCookieBanner }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;left:0;right:0;bottom:0;z-index:9997;background:var(--surface-dark);color:var(--cream-50);padding:20px clamp(20px,3.5vw,48px);box-shadow:0 -4px 24px rgba(0,0,0,0.22)">
       <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px">
-        <p style="margin:0;font-size:var(--text-body-s);line-height:var(--lh-relaxed);color:var(--charcoal-100);max-width:70ch">Používáme pouze technická uložení nezbytná pro chod webu a — s vaším souhlasem — analytické cookies Google Analytics ke zlepšování webu. Více v <a href="../gdpr/" style="color:var(--white);text-decoration:underline">zásadách ochrany osobních údajů</a>.</p>
+        <p style="margin:0;font-size:var(--text-body-s);line-height:var(--lh-relaxed);color:var(--charcoal-100);max-width:70ch">Používáme pouze technická uložení nezbytná pro chod webu a&nbsp;— s&nbsp;vaším souhlasem — analytické cookies Google Analytics ke zlepšování webu. Více v&nbsp;<a href="../gdpr/" style="color:var(--white);text-decoration:underline">zásadách ochrany osobních údajů</a>.</p>
         <div style="display:flex;gap:10px;flex-shrink:0">
           <button onClick="{{ rejectCookies }}" style="border:1px solid rgba(255,255,255,0.35);background:transparent;color:var(--white);cursor:pointer;font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:12px 22px;border-radius:var(--radius-full);white-space:nowrap">Odmítnout</button>
           <button onClick="{{ acceptCookies }}" style="border:none;background:var(--color-brand);color:var(--white);cursor:pointer;font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:12px 22px;border-radius:var(--radius-full);box-shadow:var(--shadow-brand);white-space:nowrap">Přijmout</button>
@@ -331,6 +345,13 @@ const DEFAULTS = {
     { name: "Aperol Spritz", desc: "míchaný, aperitiv", price: "159 Kč" },
   ],
   bottlePrice: "10 Kč",
+  bagInBox: {
+    image: "assets/bag-in-box.webp",
+    tiles: [
+      { label: "3 l", note: "bílé · rosé · červené", price: "od 349 Kč" },
+      { label: "10 l", note: "bílé · rosé · červené", price: "od 990 Kč" },
+    ],
+  },
   partners: [
     "Mountfield HK", "FC Hradec Králové", "PIZZZZA.CZ", "Podroužek, Moník, Petera",
     "ELKUM CZ", "BK GAPA HK", "CK Verana", "ENERGYPACK",
@@ -448,6 +469,7 @@ class Component extends DCLogic {
       const merged = JSON.parse(JSON.stringify(DEFAULTS));
       Object.assign(merged, data.data);
       merged.seasonal = Object.assign(JSON.parse(JSON.stringify(DEFAULTS.seasonal)), data.data.seasonal || {});
+      merged.bagInBox = Object.assign(JSON.parse(JSON.stringify(DEFAULTS.bagInBox)), data.data.bagInBox || {});
       this.setState({ data: merged, dirty: false });
     }
   }
@@ -597,6 +619,17 @@ class Component extends DCLogic {
 
       bottlePrice: d.bottlePrice,
       setBottlePrice: (e) => { const v = e.target.value; this.patch(dd => { dd.bottlePrice = v; }); },
+
+      bagInBox: {
+        image: d.bagInBox.image,
+        setImage: (e) => { const v = e.target.value; this.patch(dd => { dd.bagInBox.image = v; }); },
+        tiles: d.bagInBox.tiles.map((t, i) => ({
+          label: t.label, note: t.note, price: t.price,
+          setLabel: (e) => { const v = e.target.value; this.patch(dd => { dd.bagInBox.tiles[i].label = v; }); },
+          setNote: (e) => { const v = e.target.value; this.patch(dd => { dd.bagInBox.tiles[i].note = v; }); },
+          setPrice: (e) => { const v = e.target.value; this.patch(dd => { dd.bagInBox.tiles[i].price = v; }); },
+        })),
+      },
 
       partners: d.partners.map((p, i) => ({
         name: p.name, logo: p.logo, url: p.url,
