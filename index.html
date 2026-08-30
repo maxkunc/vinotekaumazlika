@@ -703,7 +703,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const c = this.state.content;
-    const mapHref = (street, city) => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(street + ", " + city);
+    const mapHref = (street, city) => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("Vinotéka u Mazlíka, " + street + ", " + city);
     const burcak = c.seasonal.burcak || {};
     const svato = c.seasonal.svatomartinska || {};
     const nd = burcak.nextDelivery || {};
