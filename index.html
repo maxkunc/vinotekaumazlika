@@ -67,7 +67,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 html,body{width:100%;margin:0;overflow-x:hidden}
-html{scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
+html{scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none;background:var(--surface-dark)}
 html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}
 body{background:var(--surface-page);color:var(--color-fg);font-family:var(--font-sans)}
 a{color:var(--color-brand);text-decoration:none}
@@ -701,7 +701,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const c = this.state.content;
-    const mapHref = (street, city) => "geo:0,0?q=" + encodeURIComponent(street + ", " + city);
+    const mapHref = (street, city) => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(street + ", " + city);
     const burcak = c.seasonal.burcak || {};
     const svato = c.seasonal.svatomartinska || {};
     const nd = burcak.nextDelivery || {};
