@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png" media="(prefers-color-scheme: light)">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" media="(prefers-color-scheme: light)">
@@ -527,7 +527,7 @@ a:hover{color:var(--color-brand-hover)}
     </div>
   </section>
 
-  <footer id="kontakt" data-screen-label="Kontakt / patička" style="scroll-margin-top:76px;width:100%;position:relative;background:var(--surface-dark);color:var(--cream-50);padding:clamp(56px,7vw,88px) clamp(20px,3.5vw,48px) 36px;overflow:hidden">
+  <footer id="kontakt" data-screen-label="Kontakt / patička" style="scroll-margin-top:76px;width:100%;position:relative;background:var(--surface-dark);color:var(--cream-50);padding:clamp(56px,7vw,88px) clamp(20px,3.5vw,48px) calc(36px + env(safe-area-inset-bottom));overflow:hidden">
     <svg viewBox="0 0 120 200" fill="none" stroke="var(--wine-400)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position:absolute;right:-10px;bottom:-20px;height:230px;opacity:0.28;pointer-events:none">
       <path d="M52 62h16v26c0 8 14 14 14 30v70H38V118c0-16 14-22 14-30z"></path>
       <path d="M38 140h44"></path><path d="M38 164h44"></path>
