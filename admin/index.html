@@ -57,7 +57,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
 
   <sc-if value="{{ isAuthed }}" hint-placeholder-val="{{ false }}">
 
-  <header style="position:sticky;top:0;z-index:50;width:100%;background:var(--color-brand);color:var(--white)">
+  <header style="position:sticky;top:0;z-index:50;width:100%;padding-top:env(safe-area-inset-top);background:linear-gradient(to bottom, var(--surface-dark) 0, var(--surface-dark) env(safe-area-inset-top), var(--color-brand) env(safe-area-inset-top));color:var(--white)">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px clamp(20px,3.5vw,48px)">
       <div style="display:flex;align-items:center;gap:18px">
         <img src="../assets/vinoteka-u-mazlika-logo.webp" alt="Vinotéka u Mazlíka" style="height:38px;width:auto;display:block;filter:brightness(0) invert(1)">
