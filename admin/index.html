@@ -243,10 +243,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
               <h3 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin:0">Příští závoz</h3>
               <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Zvýrazněný box nad Stáčenými víny, oddělený od aktuální nabídky. Zůstane skrytý, dokud nevyplníte alespoň jedno pole.</p>
               <div><label>Text</label><textarea rows="2" value="{{ burcak.nextDelivery.text }}" onChange="{{ burcak.nextDelivery.setText }}"></textarea></div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-                <div><label>Telefon pro objednávky</label><input type="text" value="{{ burcak.nextDelivery.phone }}" onChange="{{ burcak.nextDelivery.setPhone }}"></div>
-                <div><label>Cesta k&nbsp;fotografii</label><input type="text" value="{{ burcak.nextDelivery.image }}" onChange="{{ burcak.nextDelivery.setImage }}"></div>
-              </div>
+              <div><label>Telefon pro objednávky</label><input type="text" value="{{ burcak.nextDelivery.phone }}" onChange="{{ burcak.nextDelivery.setPhone }}"></div>
             </div>
 
             <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:14px">
@@ -388,7 +385,7 @@ const DEFAULTS = {
         { label: "bílý", note: "polosladký", price: "od 79 Kč / l" },
         { label: "červený", note: "polosladký", price: "od 79 Kč / l" },
       ],
-      nextDelivery: { text: "", phone: "", image: "" },
+      nextDelivery: { text: "", phone: "" },
     },
     svatomartinska: {
       enabled: false,
@@ -565,8 +562,6 @@ class Component extends DCLogic {
         setText: (e) => { const v = e.target.value; this.seasonalPatch(key, ss => { ss.nextDelivery = ss.nextDelivery || {}; ss.nextDelivery.text = v; }); },
         phone: (s.nextDelivery && s.nextDelivery.phone) || "",
         setPhone: (e) => { const v = e.target.value; this.seasonalPatch(key, ss => { ss.nextDelivery = ss.nextDelivery || {}; ss.nextDelivery.phone = v; }); },
-        image: (s.nextDelivery && s.nextDelivery.image) || "",
-        setImage: (e) => { const v = e.target.value; this.seasonalPatch(key, ss => { ss.nextDelivery = ss.nextDelivery || {}; ss.nextDelivery.image = v; }); },
       },
     };
   }
