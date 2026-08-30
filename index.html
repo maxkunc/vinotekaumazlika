@@ -704,7 +704,7 @@ class Component extends DCLogic {
     const mapHref = (street, city) => {
       const q = encodeURIComponent("Vinotéka u Mazlíka, " + street + ", " + city);
       if (isAndroid) return "geo:0,0?q=" + q;
-      if (isIOS) return "https://maps.apple.com/?q=" + q;
+      if (isIOS) return "https://maps.apple/p/WaWSVr0ftyvaZh";
       return "https://www.google.com/maps/search/?api=1&query=" + q;
     };
     const burcak = c.seasonal.burcak || {};
