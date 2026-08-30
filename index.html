@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="/favicon.ico" sizes="32x32">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#AE2143">
 <title>Vinotéka u Mazlíka | Vinotéka a vinný bar v Hradci Králové</title>
 <meta name="description" content="Rodinná vinotéka v Hradci Králové s pečlivě vybranou nabídkou stáčených i lahvových vín, sektů, destilátů, delikates a dárkových balení na míru.">
@@ -48,7 +48,7 @@
     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "14:00", "closes": "21:00" },
     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday","Sunday"], "opens": "16:00", "closes": "21:00" }
   ],
-  "sameAs": ["https://www.facebook.com/", "https://www.instagram.com/"]
+  "sameAs": ["https://www.facebook.com/vinotekaumazlika", "https://www.instagram.com/vinotekaumazlika"]
 }
 </script>
 <script src="./support.js"></script>
@@ -66,7 +66,7 @@
 <script src="./image-slot.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
-html,body{width:100%;margin:0}
+html,body{width:100%;margin:0;overflow-x:hidden}
 html{scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
 html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}
 body{background:var(--surface-page);color:var(--color-fg);font-family:var(--font-sans)}
@@ -93,11 +93,11 @@ a:hover{color:var(--color-brand-hover)}
   </div>
 </div>
 
-<div style="width:100%;background:var(--surface-page);min-height:100vh;overflow-x:hidden">
+<div style="width:100%;background:var(--surface-page);min-height:100vh">
 
   <header style="position:sticky;top:0;z-index:50;width:100%;background:var(--color-brand);color:var(--white)">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:28px;padding:14px clamp(20px,3.5vw,48px)">
-      <a href="#uvod" style="flex-shrink:0;display:block">
+      <a href="./" style="flex-shrink:0;display:block">
         <img src="assets/vinoteka-u-mazlika-logo.webp" alt="Vinotéka u Mazlíka" style="height:42px;width:auto;display:block;filter:brightness(0) invert(1)">
       </a>
       <nav class="nav-desktop" aria-label="Hlavní navigace" style="display:flex;align-items:center;gap:24px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase">
@@ -113,7 +113,7 @@ a:hover{color:var(--color-brand-hover)}
       </nav>
       <div style="display:flex;gap:18px;align-items:center;flex-shrink:0">
         <a href="mailto:vinoteka@vinotekaumazlika.cz" aria-label="Napsat e-mail" style="display:flex"><img src="https://unpkg.com/lucide-static@latest/icons/mail.svg" alt="" style="width:18px;height:18px;filter:brightness(0) invert(1)"></a>
-        <a href="#kontakt" aria-label="Kde nás najdete" style="display:flex"><img src="https://unpkg.com/lucide-static@latest/icons/map-pin.svg" alt="" style="width:18px;height:18px;filter:brightness(0) invert(1)"></a>
+        <a href="{{ mapHref }}" aria-label="Kde nás najdete" style="display:flex"><img src="https://unpkg.com/lucide-static@latest/icons/map-pin.svg" alt="" style="width:18px;height:18px;filter:brightness(0) invert(1)"></a>
         <a href="tel:+420604734956" aria-label="Zavolat" style="display:flex"><img src="https://unpkg.com/lucide-static@latest/icons/phone.svg" alt="" style="width:18px;height:18px;filter:brightness(0) invert(1)"></a>
         <button class="nav-burger" onClick="{{ toggleMenu }}" aria-label="Menu" style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:44px;height:44px;border:none;background:transparent;cursor:pointer;padding:0">
           <span style="display:block;width:20px;height:2px;background:var(--white)"></span>
@@ -644,8 +644,8 @@ const CONTENT_DEFAULTS = {
     ico: "29031168",
     dic: "CZ29031168",
     registry: "Městský soud v Praze, oddíl C, vložka 161341",
-    facebook: "https://www.facebook.com/",
-    instagram: "https://www.instagram.com/",
+    facebook: "https://www.facebook.com/vinotekaumazlika",
+    instagram: "https://www.instagram.com/vinotekaumazlika",
   },
   seasonal: {
     burcak: { enabled: false, eyebrow: "", titleMain: "", titleAccent: "", text: "", image: "", tiles: [], nextDelivery: { text: "", phone: "", image: "" } },
