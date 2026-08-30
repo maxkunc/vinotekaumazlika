@@ -77,7 +77,6 @@ a:hover{color:var(--color-brand-hover)}
 .nav-burger{display:none}
 @media (max-width:1400px){.nav-desktop{display:none !important}.nav-burger{display:inline-flex !important}}
 @media (max-width:1024px){.hero-bg-img{object-position:right center !important}}
-.next-delivery-card{display:grid;grid-template-columns:1fr}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes loaderSweep{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
 #__loader{position:fixed;inset:0;z-index:9999;background:#FFFFFF;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:1;transition:opacity 420ms var(--ease-standard)}
@@ -220,17 +219,11 @@ a:hover{color:var(--color-brand-hover)}
         </div>
       </div>
 
-      <sc-if value="{{ burcak.nextDelivery.hasContent }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ burcak.nextDeliveryLabel }}" hint-placeholder-val="{{ false }}">
         <div style="max-width:1560px;margin:clamp(32px,4vw,48px) auto 0">
-          <div class="next-delivery-card" style="align-items:stretch;background:var(--white);color:var(--color-fg);border-radius:var(--radius-l);box-shadow:var(--shadow-raised);overflow:hidden;border-left:8px solid var(--color-brand)">
-            <div style="padding:clamp(24px,3vw,34px) clamp(24px,3.4vw,40px);display:flex;flex-direction:column;justify-content:center">
-              <p style="display:inline-flex;align-items:center;gap:8px;background:var(--color-brand);color:var(--white);font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;border-radius:var(--radius-full);margin:0 0 14px;box-shadow:var(--shadow-brand);width:fit-content">Příští závoz</p>
-              <p style="font-size:var(--text-body-l);font-weight:700;line-height:var(--lh-relaxed);margin:0 0 12px;color:var(--color-fg);text-wrap:pretty">{{ burcak.nextDelivery.text }}</p>
-              <sc-if value="{{ burcak.nextDelivery.phone }}" hint-placeholder-val="{{ false }}">
-                <p style="margin:0;font-size:var(--text-h3);font-weight:800">Objednáte na čísle <a href="tel:{{ burcak.nextDelivery.phoneHref }}" style="color:var(--color-brand)">{{ burcak.nextDelivery.phone }}</a></p>
-              </sc-if>
-            </div>
-          </div>
+          <p style="display:inline-flex;align-items:center;gap:8px;background:var(--white);color:var(--color-fg);font-size:var(--text-body);font-weight:700;padding:12px 22px;border-radius:var(--radius-full);box-shadow:var(--shadow-card);margin:0">
+            <span style="color:var(--color-brand);font-weight:800">Příští závoz:</span> {{ burcak.nextDeliveryLabel }}
+          </p>
         </div>
       </sc-if>
     </section>
@@ -642,7 +635,7 @@ const CONTENT_DEFAULTS = {
     instagram: "https://www.instagram.com/vinotekaumazlika",
   },
   seasonal: {
-    burcak: { enabled: false, eyebrow: "", titleMain: "", titleAccent: "", text: "", image: "", tiles: [], nextDelivery: { text: "", phone: "" } },
+    burcak: { enabled: false, eyebrow: "", titleMain: "", titleAccent: "", text: "", image: "", tiles: [], nextDeliveryDate: "" },
     svatomartinska: { enabled: false, eyebrow: "", titleMain: "", titleAccent: "", text: "", image: "", tiles: [] },
   },
 };
@@ -706,15 +699,16 @@ class Component extends DCLogic {
     };
     const burcak = c.seasonal.burcak || {};
     const svato = c.seasonal.svatomartinska || {};
-    const nd = burcak.nextDelivery || {};
+    const formatCzechDate = (iso) => {
+      const parts = (iso || "").split("-");
+      if (parts.length !== 3) return "";
+      const [y, m, d] = parts.map(Number);
+      if (!y || !m || !d) return "";
+      return d + ". " + m + ". " + y;
+    };
     const burcakWithDelivery = {
       ...burcak,
-      nextDelivery: {
-        text: nd.text || "",
-        phone: nd.phone || "",
-        phoneHref: (nd.phone || "").replace(/\s+/g, ""),
-        hasContent: !!(nd.text || nd.phone),
-      },
+      nextDeliveryLabel: formatCzechDate(burcak.nextDeliveryDate),
     };
 
     return {
