@@ -703,10 +703,14 @@ class Component extends DCLogic {
 
   renderVals() {
     const c = this.state.content;
-    const isMobileOrTablet = /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent);
+    const ua = navigator.userAgent;
+    const isAndroid = /Android/i.test(ua);
+    const isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
     const mapHref = (street, city) => {
       const q = encodeURIComponent("Vinotéka u Mazlíka, " + street + ", " + city);
-      return isMobileOrTablet ? "geo:0,0?q=" + q : "https://www.google.com/maps/search/?api=1&query=" + q;
+      if (isAndroid) return "geo:0,0?q=" + q;
+      if (isIOS) return "https://maps.apple.com/?q=" + q;
+      return "https://www.google.com/maps/search/?api=1&query=" + q;
     };
     const burcak = c.seasonal.burcak || {};
     const svato = c.seasonal.svatomartinska || {};
