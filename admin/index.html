@@ -31,6 +31,7 @@ body{background:var(--surface-dark);color:var(--color-fg);font-family:var(--font
 a{color:var(--color-brand);text-decoration:none}
 a:hover{color:var(--color-brand-hover)}
 input,select,textarea{font-family:var(--font-sans);font-size:14px;color:var(--color-fg);background:var(--white);border:1px solid var(--border-subtle);border-radius:var(--radius-full);padding:10px 16px;width:100%;box-sizing:border-box}
+div:has(> label){min-width:0}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--color-brand);outline-offset:1px}
 textarea{border-radius:var(--radius-s);resize:vertical}
 label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin-bottom:7px}
@@ -442,6 +443,8 @@ class Component extends DCLogic {
     this.client.auth.getSession().then(({ data }) => {
       this.setState({ session: data.session, authChecked: true });
       if (data.session) this.loadContent();
+    }).catch(() => {
+      this.setState({ authChecked: true });
     });
 
     const { data: sub } = this.client.auth.onAuthStateChange((_event, session) => {
