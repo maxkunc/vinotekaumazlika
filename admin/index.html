@@ -35,6 +35,14 @@ div:has(> label){min-width:0}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--color-brand);outline-offset:1px}
 textarea{border-radius:var(--radius-s);resize:vertical}
 label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin-bottom:7px}
+@media (max-width:1024px){
+  .admin-shell{grid-template-columns:1fr !important}
+  .admin-nav{position:static !important;flex-direction:row !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch;min-height:auto !important;border-right:none !important;border-bottom:1px solid var(--border-subtle) !important;padding:14px 18px !important;gap:6px !important}
+  .admin-nav button{white-space:nowrap}
+  .admin-nav-hide{display:none !important}
+  .admin-stack-grid{grid-template-columns:1fr !important}
+  .admin-header-row{flex-wrap:wrap !important;row-gap:10px !important}
+}
 </style>
 </helmet>
 
@@ -59,12 +67,12 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
   <sc-if value="{{ isAuthed }}" hint-placeholder-val="{{ false }}">
 
   <header style="position:sticky;top:0;z-index:50;width:100%;padding-top:env(safe-area-inset-top);background:linear-gradient(to bottom, var(--surface-dark) 0, var(--surface-dark) env(safe-area-inset-top), var(--color-brand) env(safe-area-inset-top));color:var(--white)">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px clamp(20px,3.5vw,48px)">
+    <div class="admin-header-row" style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px clamp(20px,3.5vw,48px)">
       <div style="display:flex;align-items:center;gap:18px">
         <img src="../assets/vinoteka-u-mazlika-logo.webp" alt="Vinotéka u Mazlíka" style="height:38px;width:auto;display:block;filter:brightness(0) invert(1)">
         <span style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;color:var(--wine-200);border-left:1px solid rgba(255,255,255,0.3);padding-left:18px">Správa obsahu</span>
       </div>
-      <div style="display:flex;align-items:center;gap:18px">
+      <div class="admin-header-row" style="display:flex;align-items:center;gap:18px">
         <span style="font-size:12px;color:var(--wine-100);display:{{ dirtyDisplay }}">Neuložené změny</span>
         <button onClick="{{ save }}" style="border:none;cursor:pointer;background:var(--white);color:var(--color-brand);font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:12px 24px;border-radius:var(--radius-full)">{{ saveLabel }}</button>
         <a href="../" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--white);white-space:nowrap">Zobrazit web →</a>
@@ -73,15 +81,15 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
     </div>
   </header>
 
-  <div style="display:grid;grid-template-columns:minmax(200px,240px) minmax(0,1fr);gap:0;align-items:start">
+  <div class="admin-shell" style="display:grid;grid-template-columns:minmax(200px,240px) minmax(0,1fr);gap:0;align-items:start">
 
-    <nav aria-label="Sekce správy" style="position:sticky;top:66px;display:flex;flex-direction:column;gap:2px;padding:28px 18px;border-right:1px solid var(--border-subtle);min-height:calc(100vh - 66px)">
-      <p style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin:0 12px 14px">Sekce</p>
+    <nav class="admin-nav" aria-label="Sekce správy" style="position:sticky;top:66px;display:flex;flex-direction:column;gap:2px;padding:28px 18px;border-right:1px solid var(--border-subtle);min-height:calc(100vh - 66px)">
+      <p class="admin-nav-hide" style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--color-fg-muted);margin:0 12px 14px">Sekce</p>
       <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="5">
         <button onClick="{{ tab.select }}" style="{{ tab.style }}">{{ tab.label }}</button>
       </sc-for>
-      <div style="height:1px;background:var(--border-subtle);margin:20px 12px"></div>
-      <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 12px;line-height:var(--lh-relaxed)">Změny se ukládají do databáze a&nbsp;projeví se na webu ihned po uložení.</p>
+      <div class="admin-nav-hide" style="height:1px;background:var(--border-subtle);margin:20px 12px"></div>
+      <p class="admin-nav-hide" style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0 12px;line-height:var(--lh-relaxed)">Změny se ukládají do databáze a&nbsp;projeví se na webu ihned po uložení.</p>
     </nav>
 
     <main style="min-width:0;padding:clamp(28px,3.5vw,48px)">
@@ -97,7 +105,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
 
           <div style="display:flex;flex-direction:column;gap:12px">
             <sc-for list="{{ wines }}" as="w" hint-placeholder-count="4">
-              <div style="display:grid;grid-template-columns:2fr 1.4fr 0.9fr auto;gap:14px;align-items:end;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:20px 22px">
+              <div class="admin-stack-grid" style="display:grid;grid-template-columns:2fr 1.4fr 0.9fr auto;gap:14px;align-items:end;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:20px 22px">
                 <div>
                   <label>Odrůda</label>
                   <input type="text" value="{{ w.name }}" onChange="{{ w.setName }}">
@@ -133,7 +141,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
             <label>Cesta k&nbsp;fotografii</label>
             <input type="text" value="{{ bagInBox.image }}" onChange="{{ bagInBox.setImage }}" style="margin-bottom:16px">
             <sc-for list="{{ bagInBox.tiles }}" as="t" hint-placeholder-count="2">
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px;margin-bottom:10px">
+              <div class="admin-stack-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px;margin-bottom:10px">
                 <div><label>Velikost</label><input type="text" value="{{ t.label }}" onChange="{{ t.setLabel }}"></div>
                 <div><label>Poznámka</label><input type="text" value="{{ t.note }}" onChange="{{ t.setNote }}"></div>
                 <div><label>Cena</label><input type="text" value="{{ t.price }}" onChange="{{ t.setPrice }}"></div>
@@ -154,7 +162,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
 
           <div style="display:flex;flex-direction:column;gap:12px">
             <sc-for list="{{ partners }}" as="p" hint-placeholder-count="6">
-              <div style="display:grid;grid-template-columns:1.4fr 1.6fr 1.6fr auto;gap:14px;align-items:end;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:20px 22px">
+              <div class="admin-stack-grid" style="display:grid;grid-template-columns:1.4fr 1.6fr 1.6fr auto;gap:14px;align-items:end;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:20px 22px">
                 <div>
                   <label>Název</label>
                   <input type="text" value="{{ p.name }}" onChange="{{ p.setName }}">
@@ -186,7 +194,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
 
           <div style="display:flex;flex-direction:column;gap:12px;max-width:640px">
             <sc-for list="{{ hours }}" as="h" hint-placeholder-count="3">
-              <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:end;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:20px 22px">
+              <div class="admin-stack-grid" style="display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:end;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:20px 22px">
                 <div>
                   <label>Dny</label>
                   <input type="text" value="{{ h.days }}" onChange="{{ h.setDays }}">
@@ -212,7 +220,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
           </h1>
           <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Zapněte sekci jen na dobu sezóny. Zobrazí se na webu hned nad Stáčenými víny.</p>
 
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:20px">
+          <div class="admin-stack-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:20px">
 
             <div style="background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:14px">
               <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
@@ -220,7 +228,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
                 <button onClick="{{ burcak.toggle }}" style="{{ burcak.toggleStyle }}">{{ burcak.toggleLabel }}</button>
               </div>
               <div><label>Nadpis (malý, nad titulkem)</label><input type="text" value="{{ burcak.eyebrow }}" onChange="{{ burcak.setEyebrow }}"></div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div class="admin-stack-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
                 <div><label>Titulek</label><input type="text" value="{{ burcak.titleMain }}" onChange="{{ burcak.setTitleMain }}"></div>
                 <div><label>Titulek (zvýrazněný)</label><input type="text" value="{{ burcak.titleAccent }}" onChange="{{ burcak.setTitleAccent }}"></div>
               </div>
@@ -229,7 +237,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
               <label style="margin-bottom:0">Varianty s&nbsp;cenami</label>
               <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Přidejte jednu variantu (např. jen bílý) nebo dvě najednou (bílý i&nbsp;červený) — počet dlaždic na webu odpovídá počtu variant zde.</p>
               <sc-for list="{{ burcak.tiles }}" as="t" hint-placeholder-count="2">
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px">
+                <div class="admin-stack-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px">
                   <div><label>Popisek</label><input type="text" value="{{ t.label }}" onChange="{{ t.setLabel }}"></div>
                   <div><label>Poznámka</label><input type="text" value="{{ t.note }}" onChange="{{ t.setNote }}"></div>
                   <div><label>Cena</label><input type="text" value="{{ t.price }}" onChange="{{ t.setPrice }}"></div>
@@ -252,7 +260,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
                 <button onClick="{{ svato.toggle }}" style="{{ svato.toggleStyle }}">{{ svato.toggleLabel }}</button>
               </div>
               <div><label>Nadpis (malý, nad titulkem)</label><input type="text" value="{{ svato.eyebrow }}" onChange="{{ svato.setEyebrow }}"></div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div class="admin-stack-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
                 <div><label>Titulek</label><input type="text" value="{{ svato.titleMain }}" onChange="{{ svato.setTitleMain }}"></div>
                 <div><label>Titulek (zvýrazněný)</label><input type="text" value="{{ svato.titleAccent }}" onChange="{{ svato.setTitleAccent }}"></div>
               </div>
@@ -261,7 +269,7 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
               <label style="margin-bottom:0">Varianty s&nbsp;cenami</label>
               <p style="font-size:var(--text-body-s);color:var(--color-fg-muted);margin:0">Přidejte jednu variantu nebo dvě najednou — počet dlaždic na webu odpovídá počtu variant zde.</p>
               <sc-for list="{{ svato.tiles }}" as="t" hint-placeholder-count="2">
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px">
+                <div class="admin-stack-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;background:var(--surface-sunken);border-radius:var(--radius-s);padding:12px">
                   <div><label>Popisek</label><input type="text" value="{{ t.label }}" onChange="{{ t.setLabel }}"></div>
                   <div><label>Poznámka</label><input type="text" value="{{ t.note }}" onChange="{{ t.setNote }}"></div>
                   <div><label>Cena</label><input type="text" value="{{ t.price }}" onChange="{{ t.setPrice }}"></div>
