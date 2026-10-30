@@ -500,7 +500,14 @@ class Component extends DCLogic {
         password: this.state.loginPassword,
       });
       if (error) {
-        this.setState({ loginBusy: false, loginError: "Nesprávný e-mail nebo heslo." });
+        console.error("Sign-in error:", error);
+        const isNetworkError = error.name === "AuthRetryableFetchError" || /fetch/i.test(error.message || "");
+        this.setState({
+          loginBusy: false,
+          loginError: isNetworkError
+            ? "Nelze se připojit k serveru Supabase. Zkontrolujte internetové připojení (DNS) a zkuste to znovu."
+            : "Nesprávný e-mail nebo heslo.",
+        });
       } else {
         this.setState({ loginBusy: false, loginPassword: "" });
       }
