@@ -692,8 +692,12 @@ class Component extends DCLogic {
         merged.seasonal = Object.assign(merged.seasonal || {}, data.data.seasonal || {});
         merged.bagInBox = Object.assign(JSON.parse(JSON.stringify(CONTENT_DEFAULTS.bagInBox)), data.data.bagInBox || {});
         this.setState({ content: merged });
+      } else if (error) {
+        console.error("Supabase content load failed, showing defaults:", error);
       }
-    } catch (e) { /* keep defaults */ }
+    } catch (e) {
+      console.error("Supabase content load failed, showing defaults:", e);
+    }
   }
 
   renderVals() {

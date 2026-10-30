@@ -438,12 +438,18 @@ class Component extends DCLogic {
   };
 
   componentDidMount() {
+    if (!window.supabase) {
+      console.error("Supabase client library failed to load (CDN script didn't run).");
+      this.setState({ authChecked: true, loginError: "Nelze se připojit k serveru. Zkontrolujte připojení a obnovte stránku." });
+      return;
+    }
     this.client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     this.client.auth.getSession().then(({ data }) => {
       this.setState({ session: data.session, authChecked: true });
       if (data.session) this.loadContent();
-    }).catch(() => {
+    }).catch((e) => {
+      console.error("Supabase getSession() failed:", e);
       this.setState({ authChecked: true });
     });
 
@@ -484,14 +490,23 @@ class Component extends DCLogic {
 
   login = async () => {
     this.setState({ loginBusy: true, loginError: "" });
-    const { error } = await this.client.auth.signInWithPassword({
-      email: this.state.loginEmail,
-      password: this.state.loginPassword,
-    });
-    if (error) {
-      this.setState({ loginBusy: false, loginError: "Nesprávný e-mail nebo heslo." });
-    } else {
-      this.setState({ loginBusy: false, loginPassword: "" });
+    if (!this.client) {
+      this.setState({ loginBusy: false, loginError: "Nelze se připojit k serveru. Zkontrolujte připojení a obnovte stránku." });
+      return;
+    }
+    try {
+      const { error } = await this.client.auth.signInWithPassword({
+        email: this.state.loginEmail,
+        password: this.state.loginPassword,
+      });
+      if (error) {
+        this.setState({ loginBusy: false, loginError: "Nesprávný e-mail nebo heslo." });
+      } else {
+        this.setState({ loginBusy: false, loginPassword: "" });
+      }
+    } catch (e) {
+      console.error("Login request failed:", e);
+      this.setState({ loginBusy: false, loginError: "Přihlášení se nezdařilo. Zkuste to znovu." });
     }
   };
 
