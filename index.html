@@ -472,7 +472,7 @@ a:hover{color:var(--color-brand-hover)}
               <a href="{{ p.url }}" target="_blank" rel="noopener" style="display:flex;align-items:center">
                 <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
                   <div style="height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                    <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1" loading="lazy" decoding="async">
+                    <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transform:scale({{ p.logoScale }});transition:opacity 180ms var(--ease-standard),filter 180ms var(--ease-standard)" style-hover="opacity:1;filter:grayscale(0)" loading="lazy" decoding="async">
                   </div>
                 </sc-if>
                 <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
@@ -483,7 +483,7 @@ a:hover{color:var(--color-brand-hover)}
             <sc-if value="{{ p.noUrl }}" hint-placeholder-val="{{ true }}">
               <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
                 <div style="height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                  <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1" loading="lazy" decoding="async">
+                  <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transform:scale({{ p.logoScale }});transition:opacity 180ms var(--ease-standard),filter 180ms var(--ease-standard)" style-hover="opacity:1;filter:grayscale(0)" loading="lazy" decoding="async">
                 </div>
               </sc-if>
               <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
@@ -498,7 +498,7 @@ a:hover{color:var(--color-brand-hover)}
               <a href="{{ p.url }}" tabindex="-1" target="_blank" rel="noopener" style="display:flex;align-items:center">
                 <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
                   <div style="height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                    <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1" loading="lazy" decoding="async">
+                    <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transform:scale({{ p.logoScale }});transition:opacity 180ms var(--ease-standard),filter 180ms var(--ease-standard)" style-hover="opacity:1;filter:grayscale(0)" loading="lazy" decoding="async">
                   </div>
                 </sc-if>
                 <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
@@ -509,7 +509,7 @@ a:hover{color:var(--color-brand-hover)}
             <sc-if value="{{ p.noUrl }}" hint-placeholder-val="{{ true }}">
               <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
                 <div style="height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                  <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transition:opacity 180ms var(--ease-standard)" style-hover="opacity:1" loading="lazy" decoding="async">
+                  <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transform:scale({{ p.logoScale }});transition:opacity 180ms var(--ease-standard),filter 180ms var(--ease-standard)" style-hover="opacity:1;filter:grayscale(0)" loading="lazy" decoding="async">
                 </div>
               </sc-if>
               <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
@@ -740,7 +740,8 @@ class Component extends DCLogic {
       bagInBox: c.bagInBox,
       partners: c.partners.map(p => {
         const url = p.url && !/^https?:\/\//i.test(p.url) ? "https://" + p.url : p.url;
-        return { name: p.name, logo: p.logo, noLogo: !p.logo, url, hasUrl: !!url, noUrl: !url };
+        const logoScale = Number(p.logoScale) || 1;
+        return { name: p.name, logo: p.logo, noLogo: !p.logo, url, hasUrl: !!url, noUrl: !url, logoScale };
       }),
       hours: c.hours,
       contact: {

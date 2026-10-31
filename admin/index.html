@@ -158,11 +158,11 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
             <span style="font-size:clamp(20px,2.2vw,28px);font-weight:800;text-transform:uppercase;white-space:nowrap">Partneři</span>
             <span style="font-family:var(--font-display);font-weight:500;color:var(--color-brand);font-size:clamp(42px,4.6vw,59px);line-height:0.75;white-space:nowrap">a loga</span>
           </h1>
-          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Loga v&nbsp;pohyblivém pásu. Bez nahraného loga se zobrazí název partnera jako text.</p>
+          <p style="font-size:var(--text-body);color:var(--color-fg-muted);margin:0 0 28px;max-width:70ch">Loga v&nbsp;pohyblivém pásu. Bez nahraného loga se zobrazí název partnera jako text. Pokud logo v&nbsp;pásu působí příliš velké, snižte Velikost (např. na 0,7) — výchozí hodnota je 1.</p>
 
           <div style="display:flex;flex-direction:column;gap:12px">
             <sc-for list="{{ partners }}" as="p" hint-placeholder-count="6">
-              <div class="admin-stack-grid" style="display:grid;grid-template-columns:1.4fr 1.6fr 1.6fr auto;gap:14px;align-items:end;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:20px 22px">
+              <div class="admin-stack-grid" style="display:grid;grid-template-columns:1.2fr 1.4fr 1.4fr 0.8fr auto;gap:14px;align-items:end;background:var(--surface-card);border-radius:var(--radius-m);box-shadow:var(--shadow-card);padding:20px 22px">
                 <div>
                   <label>Název</label>
                   <input type="text" value="{{ p.name }}" onChange="{{ p.setName }}">
@@ -174,6 +174,10 @@ label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercas
                 <div>
                   <label>Odkaz</label>
                   <input type="text" value="{{ p.url }}" onChange="{{ p.setUrl }}">
+                </div>
+                <div>
+                  <label>Velikost loga</label>
+                  <input type="number" step="0.05" min="0.3" max="1.5" value="{{ p.logoScale }}" onChange="{{ p.setLogoScale }}">
                 </div>
                 <button onClick="{{ p.remove }}" style="border:1px solid var(--border-subtle);background:transparent;color:var(--color-fg-muted);cursor:pointer;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:11px 18px;border-radius:var(--radius-full);white-space:nowrap">Odebrat</button>
               </div>
@@ -363,7 +367,7 @@ const DEFAULTS = {
     "Mountfield HK", "FC Hradec Králové", "PIZZZZA.CZ", "Podroužek, Moník, Petera",
     "ELKUM CZ", "BK GAPA HK", "CK Verana", "ENERGYPACK",
     "NAVITASCZ", "BlackFox Art", "La Vital", "reddos productions",
-  ].map(name => ({ name, logo: "", url: "" })),
+  ].map(name => ({ name, logo: "", url: "", logoScale: 1 })),
   hours: [
     { days: "Pondělí–Pátek", time: "14:00–21:00" },
     { days: "Sobota–Neděle", time: "16:00–21:00" },
@@ -657,13 +661,14 @@ class Component extends DCLogic {
       },
 
       partners: d.partners.map((p, i) => ({
-        name: p.name, logo: p.logo, url: p.url,
+        name: p.name, logo: p.logo, url: p.url, logoScale: p.logoScale || 1,
         setName: this.field("partners", i, "name"),
         setLogo: this.field("partners", i, "logo"),
         setUrl: this.field("partners", i, "url"),
+        setLogoScale: this.field("partners", i, "logoScale"),
         remove: () => this.patch(dd => dd.partners.splice(i, 1)),
       })),
-      addPartner: () => this.patch(dd => dd.partners.push({ name: "Nový partner", logo: "", url: "" })),
+      addPartner: () => this.patch(dd => dd.partners.push({ name: "Nový partner", logo: "", url: "", logoScale: 1 })),
 
       hours: d.hours.map((h, i) => ({
         days: h.days, time: h.time,
