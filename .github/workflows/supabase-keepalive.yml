@@ -1,0 +1,34 @@
+name: Supabase keepalive
+
+# Supabase's free tier pauses a project after 7 days with no API
+# activity, which would make the live site fall back to its hardcoded
+# defaults (burčák banner, partner logos, admin edits, etc. would stop
+# showing). This pings the project's REST API twice a week - well
+# under the 7-day pause window - with a trivial read-only request,
+# which counts as activity and resets the inactivity clock.
+
+on:
+  schedule:
+    - cron: "0 7 * * 1,4" # Monday and Thursday, 07:00 UTC
+  workflow_dispatch: {} # lets you trigger it manually from the Actions tab
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        run: |
+          STATUS=$(curl -sS -o /tmp/resp.json -w "%{http_code}" \
+            "https://zvvjuhqxaefkfdawnhkt.supabase.co/rest/v1/site_content?select=id&limit=1" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}")
+          echo "HTTP status: $STATUS"
+          cat /tmp/resp.json
+          if [ "$STATUS" -ge 400 ]; then
+            echo "::error::Supabase keepalive ping failed with status $STATUS"
+            exit 1
+          fi
+        env:
+          # Same publishable anon key already shipped client-side in
+          # index.html/admin/index.html - not a secret, safe here.
+          SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2dmp1aHF4YWVma2ZkYXduaGt0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MDk4MTEsImV4cCI6MjEwMjk4NTgxMX0.BTv33pwLdBs2Qqe9LyeEfuSe79Scm1SSQTLtsVd-HkI"
