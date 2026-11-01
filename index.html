@@ -84,6 +84,10 @@ a:hover{color:var(--color-brand-hover)}
   .hero-desc{text-align:center;font-size:var(--text-body-s) !important;margin-left:auto !important;margin-right:auto !important;margin-top:15px !important}
   .hero-eyebrow{justify-content:center;font-size:10px !important}
   .hero-eyebrow .eyebrow-line{display:none !important}
+  .partners-track{gap:20px !important;padding:0 14px !important}
+  .partners-logo-box{height:36px !important}
+  .partners-logo-img{max-width:110px !important}
+  .partners-noLogo{font-size:14px !important}
 }
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes loaderSweep{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
@@ -466,54 +470,54 @@ a:hover{color:var(--color-brand-hover)}
     </div>
     <div style="position:relative">
       <div style="display:flex;width:max-content;animation:marquee 44s linear infinite" style-hover="animation-play-state:paused">
-        <div style="display:flex;align-items:center;gap:56px;padding:0 28px;flex-shrink:0">
+        <div class="partners-track" style="display:flex;align-items:center;gap:56px;padding:0 28px;flex-shrink:0">
           <sc-for list="{{ partners }}" as="p" hint-placeholder-count="12">
             <sc-if value="{{ p.hasUrl }}" hint-placeholder-val="{{ false }}">
               <a href="{{ p.url }}" target="_blank" rel="noopener" style="display:flex;align-items:center">
                 <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
-                  <div style="height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                    <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transform:scale({{ p.logoScale }});transition:opacity 180ms var(--ease-standard),filter 180ms var(--ease-standard)" style-hover="opacity:1;filter:grayscale(0)" loading="lazy" decoding="async">
+                  <div class="partners-logo-box" style="height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <img class="partners-logo-img" src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transform:scale({{ p.logoScale }});transition:opacity 180ms var(--ease-standard),filter 180ms var(--ease-standard)" style-hover="opacity:1;filter:grayscale(0)" loading="lazy" decoding="async">
                   </div>
                 </sc-if>
                 <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
-                  <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
+                  <span class="partners-noLogo" style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
                 </sc-if>
               </a>
             </sc-if>
             <sc-if value="{{ p.noUrl }}" hint-placeholder-val="{{ true }}">
               <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
-                <div style="height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                  <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transform:scale({{ p.logoScale }});transition:opacity 180ms var(--ease-standard),filter 180ms var(--ease-standard)" style-hover="opacity:1;filter:grayscale(0)" loading="lazy" decoding="async">
+                <div class="partners-logo-box" style="height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <img class="partners-logo-img" src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transform:scale({{ p.logoScale }});transition:opacity 180ms var(--ease-standard),filter 180ms var(--ease-standard)" style-hover="opacity:1;filter:grayscale(0)" loading="lazy" decoding="async">
                 </div>
               </sc-if>
               <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
-                <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
+                <span class="partners-noLogo" style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
               </sc-if>
             </sc-if>
           </sc-for>
         </div>
-        <div aria-hidden="true" style="display:flex;align-items:center;gap:56px;padding:0 28px;flex-shrink:0">
+        <div aria-hidden="true" class="partners-track" style="display:flex;align-items:center;gap:56px;padding:0 28px;flex-shrink:0">
           <sc-for list="{{ partners }}" as="p" hint-placeholder-count="12">
             <sc-if value="{{ p.hasUrl }}" hint-placeholder-val="{{ false }}">
               <a href="{{ p.url }}" tabindex="-1" target="_blank" rel="noopener" style="display:flex;align-items:center">
                 <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
-                  <div style="height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                    <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transform:scale({{ p.logoScale }});transition:opacity 180ms var(--ease-standard),filter 180ms var(--ease-standard)" style-hover="opacity:1;filter:grayscale(0)" loading="lazy" decoding="async">
+                  <div class="partners-logo-box" style="height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <img class="partners-logo-img" src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transform:scale({{ p.logoScale }});transition:opacity 180ms var(--ease-standard),filter 180ms var(--ease-standard)" style-hover="opacity:1;filter:grayscale(0)" loading="lazy" decoding="async">
                   </div>
                 </sc-if>
                 <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
-                  <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
+                  <span class="partners-noLogo" style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
                 </sc-if>
               </a>
             </sc-if>
             <sc-if value="{{ p.noUrl }}" hint-placeholder-val="{{ true }}">
               <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
-                <div style="height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                  <img src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transform:scale({{ p.logoScale }});transition:opacity 180ms var(--ease-standard),filter 180ms var(--ease-standard)" style-hover="opacity:1;filter:grayscale(0)" loading="lazy" decoding="async">
+                <div class="partners-logo-box" style="height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <img class="partners-logo-img" src="{{ p.logo }}" alt="{{ p.name }}" style="height:100%;width:auto;max-width:220px;object-fit:contain;filter:grayscale(1);opacity:0.55;transform:scale({{ p.logoScale }});transition:opacity 180ms var(--ease-standard),filter 180ms var(--ease-standard)" style-hover="opacity:1;filter:grayscale(0)" loading="lazy" decoding="async">
                 </div>
               </sc-if>
               <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}">
-                <span style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
+                <span class="partners-noLogo" style="font-size:18px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--charcoal-900);filter:grayscale(1);opacity:0.42;transition:opacity 180ms var(--ease-standard),color 180ms var(--ease-standard);white-space:nowrap" style-hover="opacity:1;color:var(--color-brand)">{{ p.name }}</span>
               </sc-if>
             </sc-if>
           </sc-for>
