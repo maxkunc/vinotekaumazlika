@@ -460,8 +460,16 @@ a:hover{color:var(--color-brand-hover)}
 
   <section id="prodejna" data-screen-label="Naše prodejna" data-reveal="" style="scroll-margin-top:76px;width:100%;background:var(--surface-brand);color:var(--white);padding:clamp(64px,8vw,104px) clamp(20px,3.5vw,48px)">
     <div style="max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(32px,4vw,64px);align-items:center">
-      <div style="position:relative;height:clamp(300px,34vw,430px);border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-card)">
-        <img src="assets/prodejna-regaly.webp" alt="Regály s&nbsp;lahvovými víny ve vinotéce" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy" decoding="async">
+      <div>
+        <div style="position:relative;height:clamp(300px,34vw,430px);border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-card)">
+          <img src="{{ prodejnaPhotoSrc }}" alt="Vinotéka u&nbsp;Mazlíka — vstup do&nbsp;prodejny" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy" decoding="async">
+        </div>
+        <button onClick="{{ nextProdejnaPhoto }}" aria-label="Zobrazit další fotku" style="display:flex;align-items:center;justify-content:center;gap:8px;margin:14px auto 0;border:1px solid var(--wine-200);background:transparent;color:var(--white);cursor:pointer;font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:10px 18px;border-radius:var(--radius-full)">
+          Další fotka
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:14px;height:14px">
+            <path d="M9 6l6 6-6 6"></path>
+          </svg>
+        </button>
       </div>
       <div>
         <p style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--wine-200);font-weight:700;margin:0 0 18px">
@@ -684,6 +692,7 @@ const CONTENT_DEFAULTS = {
 // TODO: paste your GA4 Measurement ID (looks like G-XXXXXXXXXX) here to enable Google Analytics.
 const GA_MEASUREMENT_ID = "";
 const COOKIE_CONSENT_KEY = "vum-cookie-consent";
+const PRODEJNA_PHOTOS = ["assets/prodejna-storefront-a.webp", "assets/prodejna-storefront-b.webp"];
 
 function loadGoogleAnalytics() {
   if (!GA_MEASUREMENT_ID || window.__gaLoaded) return;
@@ -700,7 +709,7 @@ function loadGoogleAnalytics() {
 }
 
 class Component extends DCLogic {
-  state = { menuOpen: false, cookieConsent: null, content: JSON.parse(JSON.stringify(CONTENT_DEFAULTS)) };
+  state = { menuOpen: false, cookieConsent: null, content: JSON.parse(JSON.stringify(CONTENT_DEFAULTS)), prodejnaPhotoIndex: 0 };
 
   acceptCookies = () => {
     try { localStorage.setItem(COOKIE_CONSENT_KEY, "accepted"); } catch (e) { /* ignore */ }
@@ -764,6 +773,9 @@ class Component extends DCLogic {
       showCookieBanner: this.state.cookieConsent === null,
       acceptCookies: this.acceptCookies,
       rejectCookies: this.rejectCookies,
+
+      prodejnaPhotoSrc: PRODEJNA_PHOTOS[this.state.prodejnaPhotoIndex],
+      nextProdejnaPhoto: () => this.setState(s => ({ prodejnaPhotoIndex: (s.prodejnaPhotoIndex + 1) % PRODEJNA_PHOTOS.length })),
 
       wines: c.wines,
       bottlePrice: c.bottlePrice,
